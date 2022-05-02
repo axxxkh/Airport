@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,14 +17,21 @@ import java.time.LocalDateTime;
 public class Flight {
     @Id
     private int id;
+    @Column(name = "flight_number")
     private int flightNumber;
     private LocalDateTime time;
     @Column(name = "flight_status")
     private int flightStatus;
-    @Column(name = "terminal_id")
-    private int terminalId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "terminal_id", referencedColumnName = "id")
+    private Terminal terminalId;
     @ManyToOne
+    @JoinColumn(name = "avialine_id")
     private Avialine avialine;
+    @Column(name = "craft_id")
     private int craftId;
+    @Column(name = "gate_id")
     private int gateId;
+
 }
+

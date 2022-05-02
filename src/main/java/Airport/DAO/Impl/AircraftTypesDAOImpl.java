@@ -1,7 +1,7 @@
 package Airport.DAO.Impl;
 
 import Airport.DAO.GenericDAO;
-import Airport.Entity.Avialine;
+import Airport.Entity.AircraftTypes;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,7 +9,8 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.List;
 
-public class AvialineDAOImpl implements GenericDAO<Avialine> {
+
+public class AircraftTypesDAOImpl implements GenericDAO<AircraftTypes> {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -22,40 +23,51 @@ public class AvialineDAOImpl implements GenericDAO<Avialine> {
     }
 
     @Override
-    public Avialine add(Avialine avialine) {
+    public AircraftTypes add(AircraftTypes aircraftTypes) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(avialine);
+        session.save(aircraftTypes);
         transaction.commit();
         session.close();
-        return avialine;
+        return aircraftTypes;
     }
 
     @Override
-    public Avialine getById(int id) {
+    public AircraftTypes getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Avialine avialine = session.get(Avialine.class, id);
+        AircraftTypes aircraftTypes = session.get(AircraftTypes.class, id);
         transaction.commit();
         session.close();
-        return avialine;
+        return aircraftTypes;
     }
 
     @Override
-    public Avialine update(Avialine avialine) {
+    public List<AircraftTypes> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.saveOrUpdate(avialine);
+        List<AircraftTypes> aircraftTypesList = session.createQuery("Select a from "
+                + AircraftTypes.class.getSimpleName() + " a", AircraftTypes.class).getResultList();
         transaction.commit();
         session.close();
-        return avialine;
+        return aircraftTypesList;
     }
 
     @Override
-    public boolean delete(Avialine avialine) {
+    public AircraftTypes update(AircraftTypes aircraftTypes) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Avialine persistance = session.load(Avialine.class, avialine.getId());
+        session.saveOrUpdate(aircraftTypes);
+        transaction.commit();
+        session.close();
+        return aircraftTypes;
+    }
+
+    @Override
+    public boolean delete(AircraftTypes aircraftTypes) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        AircraftTypes persistance = session.load(AircraftTypes.class, aircraftTypes.getId());
         if (persistance != null) {
             session.delete(persistance);
             transaction.commit();
@@ -64,15 +76,5 @@ public class AvialineDAOImpl implements GenericDAO<Avialine> {
         }
         session.close();
         return false;
-    }
-
-    @Override
-    public List<Avialine> getAll() {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        List<Avialine> avialineList = session.createQuery("Select a from " + Avialine.class.getSimpleName()
-                + " a", Avialine.class).getResultList();
-        session.close();
-        return avialineList;
     }
 }

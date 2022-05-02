@@ -42,11 +42,6 @@ public class PassengerDAOImpl implements GenericDAO<Passenger> {
     }
 
     @Override
-    public List<Passenger> getAll() {
-        return null;
-    }
-
-    @Override
     public Passenger update(Passenger passenger) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -69,5 +64,16 @@ public class PassengerDAOImpl implements GenericDAO<Passenger> {
         }
         session.close();
         return false;
+    }
+
+    @Override
+    public List<Passenger> getAll() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Passenger> passengerList = session.createQuery("Select a from "
+                + Passenger.class.getSimpleName()
+                + " a", Passenger.class).getResultList();
+        session.close();
+        return passengerList;
     }
 }

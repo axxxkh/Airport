@@ -10,7 +10,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 public class DAOImpl<T> implements GenericDAO<T> {
-    private Class<T> entityClass;
+    private final Class<T> entityClass;
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {

@@ -6,10 +6,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class TicketDAOImpl  implements GenericDAO<Ticket> {
+public class TicketDAOImpl implements GenericDAO<Ticket> {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -43,7 +44,14 @@ public class TicketDAOImpl  implements GenericDAO<Ticket> {
 
     @Override
     public List<Ticket> getAll() {
-        return null;
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Ticket> query = session.createQuery("Select a from "
+                + Ticket.class.getSimpleName() + " a", Ticket.class);
+        List<Ticket> ticketList = query.getResultList();
+        transaction.commit();
+        session.close();
+        return ticketList;
     }
 
     @Override

@@ -14,8 +14,8 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Route {
+public class Routes {
     @Id
     private int id;
-    private String path;
+    private String route;
 }

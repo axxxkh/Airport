@@ -42,15 +42,6 @@ public class AircraftDAOImpl implements GenericDAO<Aircraft> {
     }
 
     @Override
-    public List<Aircraft> getAll() {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        List<Aircraft> allEntity = session.createQuery("Select a from " + Aircraft.class.getSimpleName()
-                + " a", Aircraft.class).getResultList();
-        return allEntity;
-    }
-
-    @Override
     public Aircraft update(Aircraft aircraft) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -73,5 +64,15 @@ public class AircraftDAOImpl implements GenericDAO<Aircraft> {
         }
         session.close();
         return false;
+    }
+
+    @Override
+    public List<Aircraft> getAll() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Aircraft> aircraftList = session.createQuery("Select a from " + Aircraft.class.getSimpleName()
+                + " a", Aircraft.class).getResultList();
+        session.close();
+        return aircraftList;
     }
 }

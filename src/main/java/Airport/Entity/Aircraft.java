@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -16,11 +15,12 @@ import javax.persistence.*;
 
 public class Aircraft {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private AircraftTypes typeId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "avialine_id")
     private Avialine avialine;
 
@@ -28,7 +28,8 @@ public class Aircraft {
     public String toString() {
         return "Aircraft{" +
                 "id=" + id +
-                ", avialine=" + avialine +
+//                ", avialine=" + avialine +
                 '}';
+//        return null;
     }
 }

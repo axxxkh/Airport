@@ -10,7 +10,7 @@
         </property>
 
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">!!!!!!!!</property>
+        <property name="hibernate.connection.password">12345678</property>
         <property name="connection.pool_size">20</property>
 
         <property name="hbm2ddl.auto">none</property>
@@ -22,7 +22,7 @@
         <mapping class="Airport.Entity.Flight"/>
         <mapping class="Airport.Entity.Gate"/>
         <mapping class="Airport.Entity.Passenger"/>
-        <mapping class="Airport.Entity.Route"/>
+        <mapping class="Airport.Entity.Routes"/>
         <mapping class="Airport.Entity.Terminal"/>
         <mapping class="Airport.Entity.Ticket"/>
 
