@@ -32,10 +32,8 @@ public class Ticket {
         return "Ticket{" +
                 "id=" + id +
                 ", number=" + number +
-//                ", flight=" + flight +
                 ", seat=" + seat +
                 ", ticketStatus=" + ticketStatus +
-//                ", passenger=" + passenger +
                 '}';
     }
 }

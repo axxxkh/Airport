@@ -28,8 +28,7 @@ public class Aircraft {
     public String toString() {
         return "Aircraft{" +
                 "id=" + id +
-//                ", avialine=" + avialine +
+                ", avialine=" + avialine +
                 '}';
-//        return null;
     }
 }

@@ -1,4 +1,7 @@
 package Airport.DAO;
 
-public class AircraftTypesDAO {
+import Airport.Entity.AircraftTypes;
+
+public interface AircraftTypesDAO extends GenericDAO<AircraftTypes> {
+
 }

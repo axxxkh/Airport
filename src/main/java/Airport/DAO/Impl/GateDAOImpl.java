@@ -1,15 +1,18 @@
 package Airport.DAO.Impl;
 
-import Airport.DAO.GenericDAO;
+import Airport.DAO.GateDAO;
 import Airport.Entity.Gate;
+import Airport.Entity.Terminal;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.Optional;
 
-public class GateDAOImpl implements GenericDAO<Gate> {
+public class GateDAOImpl implements GateDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -32,10 +35,10 @@ public class GateDAOImpl implements GenericDAO<Gate> {
     }
 
     @Override
-    public Gate getById(int id) {
+    public Optional <Gate> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Gate gate = session.get(Gate.class, id);
+        Optional <Gate> gate = Optional.ofNullable(session.get(Gate.class, id));
         transaction.commit();
         session.close();
         return gate;
@@ -45,7 +48,7 @@ public class GateDAOImpl implements GenericDAO<Gate> {
     public Gate update(Gate gate) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.saveOrUpdate(gate);
+        session.update(gate);
         transaction.commit();
         session.close();
         return gate;
@@ -72,6 +75,20 @@ public class GateDAOImpl implements GenericDAO<Gate> {
         Transaction transaction = session.beginTransaction();
         List<Gate> gateList = session.createQuery("Select a from " + Gate.class.getSimpleName()
                 + " a", Gate.class).getResultList();
+        session.close();
+        return gateList;
+    }
+
+    @Override
+    public List<Gate> getGatesByTerminal(Terminal terminal) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query <Gate> query = session.createQuery("from Gate g " +
+                "LEFT JOIN FETCH g.terminal t" +
+                "where t.id =:id");
+        query.setParameter("id", terminal.getId());
+        List<Gate> gateList = query.getResultList();
+        transaction.commit();
         session.close();
         return gateList;
     }

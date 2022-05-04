@@ -2,6 +2,7 @@ package Airport.Logic;
 
 import Airport.DAO.GenericDAO;
 import Airport.DAO.Impl.*;
+import Airport.DAO.PassengerDAO;
 import Airport.Entity.*;
 
 import java.time.LocalDate;
@@ -38,7 +39,7 @@ public class Main {
         List<Routes> routeList = routeGenericDAO.getAll();
         List<Terminal> terminalList = terminalGenericDAO.getAll();
         List<Ticket> ticketList = ticketGenericDAO.getAll();
-
+        System.out.println(passengerGenericDAO.getById(100));
 
         aircraftList.forEach(System.out::println);
         aircraftTypesList.forEach(System.out::println);
@@ -50,12 +51,8 @@ public class Main {
         terminalList.forEach(System.out::println);
         ticketList.forEach(System.out::println);
 
-        Ticket ticketById = ticketGenericDAO.getById(11);
+        Ticket ticketById = ticketGenericDAO.getById(11).orElseThrow();
         System.out.println(ticketById);
-
-//        ComplexLogic.getPassengersByFlight(flightGenericDAO.getById(1));
-//        ComplexLogic.getTicketsByFlight(flightGenericDAO.getById(1));
-        ComplexLogic.getFlightsByAvialine(avialineGenericDAO.getById(3));
 
         Passenger newPassanger = Passenger.builder()
                 .birthdate(LocalDate.of(1990, 10, 10))
@@ -65,8 +62,7 @@ public class Main {
                 .build();
 //        passengerGenericDAO.add(newPassanger);
 
-        ComplexLogic.buyTicket(newPassanger, flightGenericDAO.getById(1));
-        ComplexLogic.getAllFlightsByTerminal(terminalGenericDAO.getById(1)).forEach(System.out::println);
-
+        PassengerDAO passengerPassengerDAO = new PassengerDAOImpl();
+        passengerPassengerDAO.getPassengersByAvialine(avialineGenericDAO.getById(1).orElseThrow()).forEach(System.out::println);
     }
 }

@@ -1,6 +1,6 @@
 package Airport.DAO.Impl;
 
-import Airport.DAO.GenericDAO;
+import Airport.DAO.RoutesDAO;
 import Airport.Entity.Routes;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,8 +8,9 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
+import java.util.Optional;
 
-public class RoutesDAOImpl implements GenericDAO<Routes> {
+public class RoutesDAOImpl implements RoutesDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -32,10 +33,10 @@ public class RoutesDAOImpl implements GenericDAO<Routes> {
     }
 
     @Override
-    public Routes getById(int id) {
+    public Optional <Routes> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Routes route = session.get(Routes.class, id);
+        Optional <Routes> route = Optional.ofNullable(session.get(Routes.class, id));
         transaction.commit();
         session.close();
         return route;
@@ -45,7 +46,7 @@ public class RoutesDAOImpl implements GenericDAO<Routes> {
     public Routes update(Routes route) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.saveOrUpdate(route);
+        session.update(route);
         transaction.commit();
         session.close();
         return route;

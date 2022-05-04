@@ -1,4 +1,6 @@
 package Airport.DAO;
 
-public class TerminalDAO {
+import Airport.Entity.Terminal;
+
+public interface TerminalDAO extends GenericDAO<Terminal>{
 }

@@ -1,6 +1,6 @@
 package Airport.DAO.Impl;
 
-import Airport.DAO.GenericDAO;
+import Airport.DAO.TerminalDAO;
 import Airport.Entity.Terminal;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,8 +8,9 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
+import java.util.Optional;
 
-public class TerminalDAOImpl implements GenericDAO<Terminal> {
+public class TerminalDAOImpl implements TerminalDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -32,10 +33,10 @@ public class TerminalDAOImpl implements GenericDAO<Terminal> {
     }
 
     @Override
-    public Terminal getById(int id) {
+    public Optional <Terminal> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Terminal terminal = session.get(Terminal.class, id);
+        Optional <Terminal> terminal = Optional.ofNullable(session.get(Terminal.class, id));
         transaction.commit();
         session.close();
         return terminal;
@@ -45,7 +46,7 @@ public class TerminalDAOImpl implements GenericDAO<Terminal> {
     public Terminal update(Terminal terminal) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.saveOrUpdate(terminal);
+        session.update(terminal);
         transaction.commit();
         session.close();
         return terminal;

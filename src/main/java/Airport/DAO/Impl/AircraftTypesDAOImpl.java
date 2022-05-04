@@ -1,6 +1,6 @@
 package Airport.DAO.Impl;
 
-import Airport.DAO.GenericDAO;
+import Airport.DAO.AircraftTypesDAO;
 import Airport.Entity.AircraftTypes;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,9 +8,10 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
+import java.util.Optional;
 
 
-public class AircraftTypesDAOImpl implements GenericDAO<AircraftTypes> {
+public class AircraftTypesDAOImpl implements AircraftTypesDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -33,10 +34,10 @@ public class AircraftTypesDAOImpl implements GenericDAO<AircraftTypes> {
     }
 
     @Override
-    public AircraftTypes getById(int id) {
+    public Optional <AircraftTypes> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        AircraftTypes aircraftTypes = session.get(AircraftTypes.class, id);
+        Optional <AircraftTypes> aircraftTypes = Optional.ofNullable(session.get(AircraftTypes.class, id));
         transaction.commit();
         session.close();
         return aircraftTypes;
@@ -57,7 +58,7 @@ public class AircraftTypesDAOImpl implements GenericDAO<AircraftTypes> {
     public AircraftTypes update(AircraftTypes aircraftTypes) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.saveOrUpdate(aircraftTypes);
+        session.update(aircraftTypes);
         transaction.commit();
         session.close();
         return aircraftTypes;

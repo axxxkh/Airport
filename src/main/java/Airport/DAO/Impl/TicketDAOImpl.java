@@ -1,6 +1,8 @@
 package Airport.DAO.Impl;
 
-import Airport.DAO.GenericDAO;
+import Airport.DAO.TicketDAO;
+import Airport.Entity.Flight;
+import Airport.Entity.Passenger;
 import Airport.Entity.Ticket;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,8 +11,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.Optional;
 
-public class TicketDAOImpl implements GenericDAO<Ticket> {
+public class TicketDAOImpl implements TicketDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -33,10 +36,10 @@ public class TicketDAOImpl implements GenericDAO<Ticket> {
     }
 
     @Override
-    public Ticket getById(int id) {
+    public Optional <Ticket> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Ticket ticket = session.get(Ticket.class, id);
+        Optional <Ticket> ticket = Optional.ofNullable(session.get(Ticket.class, id));
         transaction.commit();
         session.close();
         return ticket;
@@ -58,7 +61,7 @@ public class TicketDAOImpl implements GenericDAO<Ticket> {
     public Ticket update(Ticket ticket) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.saveOrUpdate(ticket);
+        session.update(ticket);
         transaction.commit();
         session.close();
         return ticket;
@@ -77,5 +80,37 @@ public class TicketDAOImpl implements GenericDAO<Ticket> {
         }
         session.close();
         return false;
+    }
+
+    @Override
+    public List<Ticket> getTicketsByFlight(Flight flight) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query <Ticket> query = session.createQuery("from Ticket t " +
+                "LEFT JOIN FETCH t.flight f " +
+                "where f.id=:id");
+        query.setParameter("id", flight.getId());
+
+        List<Ticket> ticketList = query.getResultList();
+        ticketList.forEach(System.out::println);
+        transaction.commit();
+        session.close();
+        return ticketList;
+    }
+
+    @Override
+    public List<Ticket> getTicketsByPassenger(Passenger passenger) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query <Ticket> query = session.createQuery("from Ticket t " +
+                "LEFT JOIN FETCH t.passenger p " +
+                "where p.id=:id");
+        query.setParameter("id", passenger.getId());
+
+        List<Ticket> ticketList = query.getResultList();
+        ticketList.forEach(System.out::println);
+        transaction.commit();
+        session.close();
+        return ticketList;
     }
 }

@@ -1,6 +1,6 @@
 package Airport.DAO.Impl;
 
-import Airport.DAO.GenericDAO;
+import Airport.DAO.AvialineDAO;
 import Airport.Entity.Avialine;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,8 +8,9 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
+import java.util.Optional;
 
-public class AvialineDAOImpl implements GenericDAO<Avialine> {
+public class AvialineDAOImpl implements AvialineDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -32,10 +33,10 @@ public class AvialineDAOImpl implements GenericDAO<Avialine> {
     }
 
     @Override
-    public Avialine getById(int id) {
+    public Optional <Avialine> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Avialine avialine = session.get(Avialine.class, id);
+        Optional <Avialine> avialine = Optional.ofNullable(session.get(Avialine.class, id));
         transaction.commit();
         session.close();
         return avialine;
@@ -45,7 +46,7 @@ public class AvialineDAOImpl implements GenericDAO<Avialine> {
     public Avialine update(Avialine avialine) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.saveOrUpdate(avialine);
+        session.update(avialine);
         transaction.commit();
         session.close();
         return avialine;
