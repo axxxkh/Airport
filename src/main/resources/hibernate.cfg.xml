@@ -16,15 +16,19 @@
         <property name="hbm2ddl.auto">none</property>
         <property name="show_sql">true</property>
 
-        <mapping class="Airport.Entity.Aircraft"/>
-        <mapping class="Airport.Entity.AircraftTypes"/>
-        <mapping class="Airport.Entity.Avialine"/>
-        <mapping class="Airport.Entity.Flight"/>
-        <mapping class="Airport.Entity.Gate"/>
-        <mapping class="Airport.Entity.Passenger"/>
-        <mapping class="Airport.Entity.Routes"/>
-        <mapping class="Airport.Entity.Terminal"/>
-        <mapping class="Airport.Entity.Ticket"/>
+        <mapping class="airport.entity.Aircraft"/>
+        <mapping class="airport.entity.AircraftTypes"/>
+        <mapping class="airport.entity.Avialine"/>
+        <mapping class="airport.entity.Flight"/>
+        <mapping class="airport.entity.Gate"/>
+        <mapping class="airport.entity.Passenger"/>
+        <mapping class="airport.entity.Routes"/>
+        <mapping class="airport.entity.Terminal"/>
+        <mapping class="airport.entity.Ticket"/>
+        <mapping class="airport.entity.Personal"/>
+        <mapping class="airport.entity.PersonalInfo"/>
+        <mapping class="airport.entity.Salary"/>
+        <mapping class="airport.entity.Passport"/>
 
     </session-factory>
 </hibernate-configuration>
