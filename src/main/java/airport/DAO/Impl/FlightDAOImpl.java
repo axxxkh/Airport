@@ -1,7 +1,7 @@
 package airport.DAO.Impl;
 
 import airport.DAO.FlightDAO;
-import airport.entity.Avialine;
+import airport.entity.Airline;
 import airport.entity.Flight;
 import airport.entity.Gate;
 import airport.entity.Terminal;
@@ -60,8 +60,8 @@ public class FlightDAOImpl implements FlightDAO {
     public boolean delete(Flight flight) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Flight getFlight = session.load(Flight.class, flight.getId());
-        if (getFlight != null) {
+        Flight flightFromDB = session.load(Flight.class, flight.getId());
+        if (flightFromDB != null) {
             session.delete(flight);
             transaction.commit();
             session.close();
@@ -84,13 +84,13 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public List<Flight> getFlightsByAvialine(Avialine avialine) {
+    public List<Flight> getFlightsByAirline(Airline airline) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         Query<Flight> query = session.createQuery("from Flight f " +
-                "LEFT JOIN FETCH f.avialine a " +
-                "where f.id=:id");
-        query.setParameter("id", avialine.getId());
+                "LEFT JOIN FETCH f.airline a " +
+                "where f.id=:id", Flight.class);
+        query.setParameter("id", airline.getId());
 
         List<Flight> flightList = query.getResultList();
         flightList.forEach(System.out::println);
@@ -104,8 +104,8 @@ public class FlightDAOImpl implements FlightDAO {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         Query<Flight> query = session.createQuery("from Flight f " +
-                "LEFT JOIN FETCH f.avialine a " +
-                "where f.id=:id");
+                "LEFT JOIN FETCH f.airline a " +
+                "where f.id=:id", Flight.class);
         query.setParameter("id", gate.getId());
         List<Flight> flightList = query.getResultList();
         flightList.forEach(System.out::println);
@@ -119,7 +119,7 @@ public class FlightDAOImpl implements FlightDAO {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         Query<Flight> query = session.createQuery("from Flight f " +
-                "where f.id =:id");
+                "where f.id =:id", Flight.class);
         query.setParameter("id", terminal.getId());
         List<Flight> flightList = query.getResultList();
         transaction.commit();

@@ -71,9 +71,9 @@ public class TicketDAOImpl implements TicketDAO {
     public boolean delete(Ticket ticket) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Ticket persistance = session.load(Ticket.class, ticket.getId());
-        if (persistance != null) {
-            session.delete(persistance);
+        Ticket ticketFromDB = session.load(Ticket.class, ticket.getId());
+        if (ticketFromDB != null) {
+            session.delete(ticketFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -89,7 +89,7 @@ public class TicketDAOImpl implements TicketDAO {
         Transaction transaction = session.beginTransaction();
         Query <Ticket> query = session.createQuery("from Ticket t " +
                 "LEFT JOIN FETCH t.flight f " +
-                "where f.id=:id");
+                "where f.id=:id", Ticket.class);
         query.setParameter("id", flight.getId());
 
         List<Ticket> ticketList = query.getResultList();
@@ -105,7 +105,7 @@ public class TicketDAOImpl implements TicketDAO {
         Transaction transaction = session.beginTransaction();
         Query <Ticket> query = session.createQuery("from Ticket t " +
                 "LEFT JOIN FETCH t.passenger p " +
-                "where p.id=:id");
+                "where p.id=:id", Ticket.class);
         query.setParameter("id", passenger.getId());
 
         List<Ticket> ticketList = query.getResultList();

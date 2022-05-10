@@ -58,9 +58,9 @@ public class GateDAOImpl implements GateDAO {
     public boolean delete(Gate gate) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Gate persistance = session.load(Gate.class, gate.getId());
-        if (persistance != null) {
-            session.delete(persistance);
+        Gate gateFromDB = session.load(Gate.class, gate.getId());
+        if (gateFromDB != null) {
+            session.delete(gateFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -86,7 +86,7 @@ public class GateDAOImpl implements GateDAO {
         Transaction transaction = session.beginTransaction();
         Query <Gate> query = session.createQuery("from Gate g " +
                 "LEFT JOIN FETCH g.terminal t" +
-                "where t.id =:id");
+                "where t.id =:id", Gate.class);
         query.setParameter("id", terminal.getId());
         List<Gate> gateList = query.getResultList();
         transaction.commit();

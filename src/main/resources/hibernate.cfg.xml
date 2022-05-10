@@ -18,7 +18,7 @@
 
         <mapping class="airport.entity.Aircraft"/>
         <mapping class="airport.entity.AircraftTypes"/>
-        <mapping class="airport.entity.Avialine"/>
+        <mapping class="airport.entity.Airline"/>
         <mapping class="airport.entity.Flight"/>
         <mapping class="airport.entity.Gate"/>
         <mapping class="airport.entity.Passenger"/>

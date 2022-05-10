@@ -36,7 +36,9 @@ public class PersonalInfoDAOImpl implements GenericDAO<PersonalInfo> {
     public Optional<PersonalInfo> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional<PersonalInfo> personalInfo = Optional.ofNullable(session.get(PersonalInfo.class,id));
+        Optional<PersonalInfo> personalInfo = Optional.ofNullable(session.get(PersonalInfo.class, id));
+        transaction.commit();
+        session.close();
         return personalInfo;
     }
 
@@ -44,15 +46,15 @@ public class PersonalInfoDAOImpl implements GenericDAO<PersonalInfo> {
     public List<PersonalInfo> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<PersonalInfo> personalInfoList = session.createQuery("from PersonalInfo p").getResultList();
+        List<PersonalInfo> personalInfoList = session.createQuery("from PersonalInfo p", PersonalInfo.class).getResultList();
         transaction.commit();
         session.close();
-        return null;
+        return personalInfoList;
     }
 
     @Override
     public PersonalInfo update(PersonalInfo personalInfo) {
-        Session session =getSessionFactory().openSession();
+        Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.update(personalInfo);
         transaction.commit();
@@ -64,9 +66,9 @@ public class PersonalInfoDAOImpl implements GenericDAO<PersonalInfo> {
     public boolean delete(PersonalInfo personalInfo) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        PersonalInfo getPersonalInfo = session.get(PersonalInfo.class, personalInfo.getId());
-        if (getPersonalInfo!=null) {
-            session.delete(getPersonalInfo);
+        PersonalInfo personalInfoFromDB = session.get(PersonalInfo.class, personalInfo.getId());
+        if (personalInfoFromDB != null) {
+            session.delete(personalInfoFromDB);
             transaction.commit();
             session.close();
             return true;

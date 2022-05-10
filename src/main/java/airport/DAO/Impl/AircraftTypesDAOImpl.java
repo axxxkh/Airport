@@ -68,9 +68,9 @@ public class AircraftTypesDAOImpl implements AircraftTypesDAO {
     public boolean delete(AircraftTypes aircraftTypes) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        AircraftTypes persistance = session.load(AircraftTypes.class, aircraftTypes.getId());
-        if (persistance != null) {
-            session.delete(persistance);
+        AircraftTypes aircraftTypesFromDB = session.load(AircraftTypes.class, aircraftTypes.getId());
+        if (aircraftTypesFromDB != null) {
+            session.delete(aircraftTypesFromDB);
             transaction.commit();
             session.close();
             return true;

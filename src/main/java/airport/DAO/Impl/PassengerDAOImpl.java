@@ -1,9 +1,10 @@
 package airport.DAO.Impl;
 
 import airport.DAO.PassengerDAO;
-import airport.entity.Avialine;
+import airport.entity.Airline;
 import airport.entity.Flight;
 import airport.entity.Passenger;
+import airport.entity.Passport;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -51,7 +52,7 @@ public class PassengerDAOImpl implements PassengerDAO {
         Transaction transaction = session.beginTransaction();
         Query<Passenger> passengerQuery = session.createQuery("From Passenger p " +
                 "LEFT JOIN FETCH p.passports pas " +
-                "WHERE pas.id=:id");
+                "WHERE pas.id=:id", Passenger.class);
         passengerQuery.setParameter("id", id);
         Passenger passenger = passengerQuery.getSingleResult();
 //        Optional <Passenger> passenger = Optional.ofNullable(session.get(Passenger.class, id));
@@ -59,19 +60,6 @@ public class PassengerDAOImpl implements PassengerDAO {
         session.close();
         return passenger;
     }
-
-//    @Override
-//    public Optional <Passenger> getByPassport(String passport) {
-//        Session session = getSessionFactory().openSession();
-//        Transaction transaction = session.beginTransaction();
-//        Query<Passenger> passengerQuery = session.createQuery("From Passenger p " +
-//                "WHERE p.passport=:id");
-//        passengerQuery.setParameter("id", passport);
-//        Optional<Passenger> passenger = passengerQuery.uniqueResultOptional();
-//        transaction.commit();
-//        session.close();
-//        return passenger;
-//    }
 
     @Override
     public Passenger update(Passenger passenger) {
@@ -87,9 +75,9 @@ public class PassengerDAOImpl implements PassengerDAO {
     public boolean delete(Passenger passenger) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Passenger persistance = session.load(Passenger.class, passenger.getId());
-        if (persistance != null) {
-            session.delete(persistance);
+        Passenger passengerFromDB = session.load(Passenger.class, passenger.getId());
+        if (passengerFromDB != null) {
+            session.delete(passengerFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -118,10 +106,10 @@ public class PassengerDAOImpl implements PassengerDAO {
         Query<Passenger> query = session.createQuery("from Passenger p " +
                 "LEFT JOIN FETCH p.tickets t " +
                 "LEFT JOIN FETCH t.flight f " +
-                "where f.id=:id");
+                "where f.id=:id", Passenger.class);
         query.setParameter("id", flight.getId());
 
-        List<Passenger> passengerList = (List<Passenger>) query.getResultList();
+        List<Passenger> passengerList = query.getResultList();
         passengerList.forEach(System.out::println);
         transaction.commit();
         session.close();
@@ -129,17 +117,17 @@ public class PassengerDAOImpl implements PassengerDAO {
     }
 
     @Override
-    public List<Passenger> getByAvialine(Avialine avialine) {
+    public List<Passenger> getByAirline(Airline airline) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         Query<Passenger> query = session.createQuery("from Passenger p " +
                 "LEFT JOIN FETCH p.tickets t " +
                 "LEFT JOIN FETCH t.flight f " +
-                "LEFT JOIN FETCH f.avialine a " +
-                "where a.id=:id");
-        query.setParameter("id", avialine.getId());
+                "LEFT JOIN FETCH f.airline a " +
+                "where a.id=:id", Passenger.class);
+        query.setParameter("id", airline.getId());
 
-        List<Passenger> passengerList = (List<Passenger>) query.getResultList();
+        List<Passenger> passengerList = query.getResultList();
         transaction.commit();
         session.close();
         return passengerList;
@@ -151,11 +139,19 @@ public class PassengerDAOImpl implements PassengerDAO {
         Transaction transaction = session.beginTransaction();
         Query<Passenger> passengerQuery = session.createQuery("from Passenger p " +
                 "LEFT JOIN FETCH p.tickets " +
-                "where p.id=:id");
+                "where p.id=:id", Passenger.class);
         passengerQuery.setParameter("id", id);
         Optional<Passenger> passenger = passengerQuery.uniqueResultOptional();
         transaction.commit();
         session.close();
         return passenger;
+    }
+
+    @Override
+    public Optional<Passenger> getByPassport(Passport passport) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        PassengerDAO passengerDAO = new PassengerDAOImpl();
+        return passengerDAO.getById(passport.getPassenger().getId());
     }
 }

@@ -2,7 +2,7 @@ package airport.DAO.Impl;
 
 import airport.DAO.AircraftDAO;
 import airport.entity.Aircraft;
-import airport.entity.Avialine;
+import airport.entity.Airline;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -58,9 +58,9 @@ public class AircraftDAOImpl implements AircraftDAO {
     public boolean delete(Aircraft aircraft) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Aircraft persistance = session.load(Aircraft.class, aircraft.getId());
-        if (persistance != null) {
-            session.delete(persistance);
+        Aircraft aircraftFromDB = session.load(Aircraft.class, aircraft.getId());
+        if (aircraftFromDB != null) {
+            session.delete(aircraftFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -83,12 +83,12 @@ public class AircraftDAOImpl implements AircraftDAO {
     }
 
     @Override
-    public List<Aircraft> getAircraftsByAvialine(Avialine avialine) {
+    public List<Aircraft> getAircraftsByAirline(Airline airline) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         Query <Aircraft> query = session.createQuery("from Aircraft a " +
-                "where a.avialine=:id");
-        query.setParameter("id", avialine.getId());
+                "where a.airline=:id", Aircraft.class);
+        query.setParameter("id", airline.getId());
         List<Aircraft> aircraftList = query.getResultList();
         transaction.commit();
         session.close();

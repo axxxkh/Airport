@@ -5,7 +5,9 @@ import airport.DAO.Impl.*;
 import airport.DAO.PassengerDAO;
 import airport.entity.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Main {
 
@@ -13,7 +15,7 @@ public class Main {
 
         GenericDAO<Aircraft> aircraftGenericDAO = new AircraftDAOImpl();
         GenericDAO<AircraftTypes> aircraftTypesGenericDAO = new AircraftTypesDAOImpl();
-        GenericDAO<Avialine> avialineGenericDAO = new AvialineDAOImpl();
+        GenericDAO<Airline> avialineGenericDAO = new AirlineDAOImpl();
         GenericDAO<Flight> flightGenericDAO = new FlightDAOImpl();
         GenericDAO<Gate> gateGenericDAO = new GateDAOImpl();
         GenericDAO<Passenger> passengerGenericDAO = new PassengerDAOImpl();
@@ -31,8 +33,8 @@ public class Main {
 //                .build();
 //        ticketGenericDAO.update(changeTicket);
 
-        List<Aircraft> aircraftList = aircraftGenericDAO.getAll();
-        List<Avialine> avialineList = avialineGenericDAO.getAll();
+//        List<Aircraft> aircraftList = aircraftGenericDAO.getAll();
+        List<Airline> avialineList = avialineGenericDAO.getAll();
         List<AircraftTypes> aircraftTypesList = aircraftTypesGenericDAO.getAll();
         List<Flight> flightList = flightGenericDAO.getAll();
         List<Gate> gateList = gateGenericDAO.getAll();
@@ -42,7 +44,7 @@ public class Main {
         List<Ticket> ticketList = ticketGenericDAO.getAll();
         System.out.println(passengerGenericDAO.getById(100));
 
-        aircraftList.forEach(System.out::println);
+//        aircraftList.forEach(System.out::println);
         aircraftTypesList.forEach(System.out::println);
         avialineList.forEach(System.out::println);
         flightList.forEach(System.out::println);
@@ -64,7 +66,7 @@ public class Main {
 ////        passengerGenericDAO.add(newPassanger);
 
         PassengerDAO passengerPassengerDAO = new PassengerDAOImpl();
-        passengerPassengerDAO.getByAvialine(avialineGenericDAO.getById(1).orElseThrow()).forEach(System.out::println);
+        passengerPassengerDAO.getByAirline(avialineGenericDAO.getById(1).orElseThrow()).forEach(System.out::println);
 
 //        BuyTicket.buyTicket(passengerGenericDAO.getById(2).orElseThrow(),flightGenericDAO.getById(1).orElseThrow());
 

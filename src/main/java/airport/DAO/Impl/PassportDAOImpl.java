@@ -1,6 +1,6 @@
 package airport.DAO.Impl;
 
-import airport.DAO.GenericDAO;
+import airport.DAO.PassportDAO;
 import airport.entity.Passenger;
 import airport.entity.Passport;
 import org.hibernate.Session;
@@ -11,7 +11,7 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 import java.util.Optional;
 
-public class PassportDAOImpl implements GenericDAO<Passport> {
+public class PassportDAOImpl implements PassportDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -69,9 +69,9 @@ public class PassportDAOImpl implements GenericDAO<Passport> {
     public boolean delete(Passport passport) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Passenger getPassport = session.load(Passenger.class, passport.getId());
-        if (getPassport != null) {
-            session.delete(getPassport);
+        Passenger passengerFromDB = session.load(Passenger.class, passport.getId());
+        if (passengerFromDB != null) {
+            session.delete(passengerFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -79,5 +79,15 @@ public class PassportDAOImpl implements GenericDAO<Passport> {
         transaction.commit();
         session.close();
         return false;
+    }
+
+    @Override
+    public Passport getBySerialNumber(String serialNumber) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Passport passportDB = session.bySimpleNaturalId(Passport.class).load(serialNumber);
+        transaction.commit();
+        session.close();
+        return passportDB;
     }
 }

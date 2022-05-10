@@ -26,8 +26,8 @@ public class Flight {
     @JoinColumn(name = "terminal_id", referencedColumnName = "id")
     private Terminal terminalId;
     @ManyToOne
-    @JoinColumn(name = "avialine_id")
-    private Avialine avialine;
+    @JoinColumn(name = "airline_id")
+    private Airline airline;
     @Column(name = "craft_id")
     private int craftId;
     @Column(name = "gate_id")

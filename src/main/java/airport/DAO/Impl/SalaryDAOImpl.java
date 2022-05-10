@@ -47,7 +47,7 @@ public class SalaryDAOImpl implements GenericDAO<Salary> {
     public List<Salary> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<Salary> salaryList = session.createQuery("from Salary s").getResultList();
+        List<Salary> salaryList = session.createQuery("from Salary s", Salary.class).getResultList();
         transaction.commit();
         session.close();
         return salaryList;
@@ -67,9 +67,9 @@ public class SalaryDAOImpl implements GenericDAO<Salary> {
     public boolean delete(Salary salary) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Salary getSalary = session.load(Salary.class, salary.getId());
-        if (getSalary != null) {
-            session.delete(getSalary);
+        Salary salaryFromDB = session.load(Salary.class, salary.getId());
+        if (salaryFromDB != null) {
+            session.delete(salaryFromDB);
             transaction.commit();
             session.close();
             return true;

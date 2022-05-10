@@ -56,9 +56,9 @@ public class TerminalDAOImpl implements TerminalDAO {
     public boolean delete(Terminal terminal) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Terminal persistance = session.load(Terminal.class, terminal.getId());
-        if (persistance != null) {
-            session.delete(persistance);
+        Terminal terminalFromDB = session.load(Terminal.class, terminal.getId());
+        if (terminalFromDB != null) {
+            session.delete(terminalFromDB);
             transaction.commit();
             session.close();
             return true;

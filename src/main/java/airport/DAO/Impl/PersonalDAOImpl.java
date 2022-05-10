@@ -56,11 +56,27 @@ public class PersonalDAOImpl implements GenericDAO<Personal> {
 
     @Override
     public Personal update(Personal personal) {
-        return null;
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(personal);
+        transaction.commit();
+        session.close();
+        return personal;
     }
 
     @Override
     public boolean delete(Personal personal) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Personal personalFromDB = session.get(Personal.class, personal.getId());
+        if (personalFromDB != null) {
+            session.delete(personalFromDB);
+            transaction.commit();
+            session.close();
+            return true;
+        }
+        transaction.commit();
+        session.close();
         return false;
     }
 }

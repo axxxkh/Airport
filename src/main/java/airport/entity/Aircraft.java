@@ -17,18 +17,20 @@ public class Aircraft {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private AircraftTypes typeId;
     @ManyToOne
-    @JoinColumn(name = "avialine_id")
-    private Avialine avialine;
+    @JoinColumn(name = "airline_id")
+    private Airline airline;
+    @Column(name = "serial_number")
+    private int serialNumber;
 
     @Override
     public String toString() {
         return "Aircraft{" +
                 "id=" + id +
-                ", avialine=" + avialine +
+                ", airline=" + airline +
                 '}';
     }
 }

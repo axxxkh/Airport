@@ -1,7 +1,7 @@
 package airport.DAO.Impl;
 
-import airport.DAO.AvialineDAO;
-import airport.entity.Avialine;
+import airport.DAO.AirlineDAO;
+import airport.entity.Airline;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,7 +10,7 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 import java.util.Optional;
 
-public class AvialineDAOImpl implements AvialineDAO {
+public class AirlineDAOImpl implements AirlineDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -23,7 +23,7 @@ public class AvialineDAOImpl implements AvialineDAO {
     }
 
     @Override
-    public Avialine add(Avialine avialine) {
+    public Airline add(Airline avialine) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.save(avialine);
@@ -33,17 +33,17 @@ public class AvialineDAOImpl implements AvialineDAO {
     }
 
     @Override
-    public Optional <Avialine> getById(int id) {
+    public Optional <Airline> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional <Avialine> avialine = Optional.ofNullable(session.get(Avialine.class, id));
+        Optional <Airline> avialine = Optional.ofNullable(session.get(Airline.class, id));
         transaction.commit();
         session.close();
         return avialine;
     }
 
     @Override
-    public Avialine update(Avialine avialine) {
+    public Airline update(Airline avialine) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.update(avialine);
@@ -53,12 +53,12 @@ public class AvialineDAOImpl implements AvialineDAO {
     }
 
     @Override
-    public boolean delete(Avialine avialine) {
+    public boolean delete(Airline airline) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Avialine persistance = session.load(Avialine.class, avialine.getId());
-        if (persistance != null) {
-            session.delete(persistance);
+        Airline airlineFromDB = session.load(Airline.class, airline.getId());
+        if (airlineFromDB != null) {
+            session.delete(airlineFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -69,13 +69,13 @@ public class AvialineDAOImpl implements AvialineDAO {
     }
 
     @Override
-    public List<Avialine> getAll() {
+    public List<Airline> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<Avialine> avialineList = session.createQuery("Select a from " + Avialine.class.getSimpleName()
-                + " a", Avialine.class).getResultList();
+        List<Airline> airlineList = session.createQuery("Select a from " + Airline.class.getSimpleName()
+                + " a", Airline.class).getResultList();
         transaction.commit();
         session.close();
-        return avialineList;
+        return airlineList;
     }
 }

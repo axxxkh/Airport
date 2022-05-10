@@ -56,9 +56,9 @@ public class RoutesDAOImpl implements RoutesDAO {
     public boolean delete(Routes route) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Routes persistance = session.load(Routes.class, route.getId());
-        if (persistance != null) {
-            session.delete(persistance);
+        Routes routesFromDB = session.load(Routes.class, route.getId());
+        if (routesFromDB != null) {
+            session.delete(routesFromDB);
             transaction.commit();
             session.close();
             return true;

@@ -14,18 +14,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Avialine {
+public class Airline {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private int rate;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "avialine")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "airline")
     private List<Aircraft> airCrafts;
 
     @Override
     public String toString() {
-        return "Avialine{" +
+        return "Airline{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", rate=" + rate +
