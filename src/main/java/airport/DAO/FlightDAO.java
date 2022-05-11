@@ -7,7 +7,7 @@ import airport.entity.Terminal;
 
 import java.util.List;
 
-public interface FlightDAO extends GenericDAO<Flight>{
+public interface FlightDAO extends GenericDAO<Flight> {
     List<Flight> getFlightsByAirline(Airline avialine);
 
     List<Flight> getFlightsByGate(Gate gate);

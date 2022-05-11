@@ -15,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "serial_number", "passport_type" }) })
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"serial_number", "passport_type"})})
 public class Passport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

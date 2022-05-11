@@ -38,7 +38,7 @@ public class AircraftDAOImpl implements AircraftDAO {
     public Optional<Aircraft> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional <Aircraft> aircraft = Optional.ofNullable(session.get(Aircraft.class, id));
+        Optional<Aircraft> aircraft = Optional.ofNullable(session.get(Aircraft.class, id));
         transaction.commit();
         session.close();
         return aircraft;
@@ -60,7 +60,8 @@ public class AircraftDAOImpl implements AircraftDAO {
         Transaction transaction = session.beginTransaction();
         Aircraft aircraftFromDB = session.load(Aircraft.class, aircraft.getId());
         if (aircraftFromDB != null) {
-            session.delete(aircraftFromDB);
+            aircraftFromDB.setActive(false);
+            session.update(aircraftFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -86,9 +87,9 @@ public class AircraftDAOImpl implements AircraftDAO {
     public List<Aircraft> getAllActive() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-       Query<Aircraft> aircraftQuery = session.createQuery("from Aircraft a " +
-               "where a.active=true", Aircraft.class);
-       List<Aircraft> aircraftList = aircraftQuery.getResultList();
+        Query<Aircraft> aircraftQuery = session.createQuery("from Aircraft a " +
+                "where a.active=true", Aircraft.class);
+        List<Aircraft> aircraftList = aircraftQuery.getResultList();
         transaction.commit();
         session.close();
         return aircraftList;
@@ -98,7 +99,7 @@ public class AircraftDAOImpl implements AircraftDAO {
     public List<Aircraft> getAircraftsByAirline(Airline airline) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Query <Aircraft> query = session.createQuery("from Aircraft a " +
+        Query<Aircraft> query = session.createQuery("from Aircraft a " +
                 "where a.airline=:id", Aircraft.class);
         query.setParameter("id", airline.getId());
         List<Aircraft> aircraftList = query.getResultList();

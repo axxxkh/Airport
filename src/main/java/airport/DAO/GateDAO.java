@@ -5,6 +5,6 @@ import airport.entity.Terminal;
 
 import java.util.List;
 
-public interface GateDAO extends GenericDAO<Gate>{
-    List<Gate> getGatesByTerminal (Terminal terminal);
+public interface GateDAO extends GenericDAO<Gate> {
+    List<Gate> getGatesByTerminal(Terminal terminal);
 }

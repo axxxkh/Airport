@@ -21,7 +21,7 @@ public class Personal {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id", referencedColumnName = "gate_id")
     private Gate gateId;
-    @OneToOne(cascade =  CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id", referencedColumnName = "id_personal")
     private Salary salary;
     @OneToOne(cascade = CascadeType.ALL)

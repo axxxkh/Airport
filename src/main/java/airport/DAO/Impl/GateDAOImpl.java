@@ -60,7 +60,8 @@ public class GateDAOImpl implements GateDAO {
         Transaction transaction = session.beginTransaction();
         Gate gateFromDB = session.load(Gate.class, gate.getId());
         if (gateFromDB != null) {
-            session.delete(gateFromDB);
+            gateFromDB.setActive(false);
+            session.update(gateFromDB);
             transaction.commit();
             session.close();
             return true;

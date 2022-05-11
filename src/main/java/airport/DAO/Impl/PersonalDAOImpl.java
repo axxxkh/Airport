@@ -82,7 +82,8 @@ public class PersonalDAOImpl implements GenericDAO<Personal> {
         Transaction transaction = session.beginTransaction();
         Personal personalFromDB = session.get(Personal.class, personal.getId());
         if (personalFromDB != null) {
-            session.delete(personalFromDB);
+            personalFromDB.setActive(false);
+            session.update(personalFromDB);
             transaction.commit();
             session.close();
             return true;

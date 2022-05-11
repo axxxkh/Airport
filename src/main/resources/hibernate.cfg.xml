@@ -17,12 +17,12 @@
         <property name="show_sql">true</property>
 
         <mapping class="airport.entity.Aircraft"/>
-        <mapping class="airport.entity.AircraftTypes"/>
+        <mapping class="airport.entity.AircraftType"/>
         <mapping class="airport.entity.Airline"/>
         <mapping class="airport.entity.Flight"/>
         <mapping class="airport.entity.Gate"/>
         <mapping class="airport.entity.Passenger"/>
-        <mapping class="airport.entity.Routes"/>
+        <mapping class="airport.entity.Route"/>
         <mapping class="airport.entity.Terminal"/>
         <mapping class="airport.entity.Ticket"/>
         <mapping class="airport.entity.Personal"/>

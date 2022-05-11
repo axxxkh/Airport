@@ -6,21 +6,19 @@ import airport.DAO.PassengerDAO;
 import airport.DAO.PassportDAO;
 import airport.entity.*;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Main {
 
     public static void main(String[] args) {
 
         GenericDAO<Aircraft> aircraftGenericDAO = new AircraftDAOImpl();
-        GenericDAO<AircraftTypes> aircraftTypesGenericDAO = new AircraftTypesDAOImpl();
-        GenericDAO<Airline> avialineGenericDAO = new AirlineDAOImpl();
+        GenericDAO<AircraftType> aircraftTypesGenericDAO = new AircraftTypesDAOImpl();
+        GenericDAO<Airline> airlineGenericDAO = new AirlineDAOImpl();
         GenericDAO<Flight> flightGenericDAO = new FlightDAOImpl();
         GenericDAO<Gate> gateGenericDAO = new GateDAOImpl();
         GenericDAO<Passenger> passengerGenericDAO = new PassengerDAOImpl();
-        GenericDAO<Routes> routeGenericDAO = new RoutesDAOImpl();
+        GenericDAO<Route> routeGenericDAO = new RoutesDAOImpl();
         GenericDAO<Terminal> terminalGenericDAO = new TerminalDAOImpl();
         GenericDAO<Ticket> ticketGenericDAO = new TicketDAOImpl();
 
@@ -35,12 +33,12 @@ public class Main {
 //        ticketGenericDAO.update(changeTicket);
 
 //        List<Aircraft> aircraftList = aircraftGenericDAO.getAll();
-        List<Airline> avialineList = avialineGenericDAO.getAll();
-        List<AircraftTypes> aircraftTypesList = aircraftTypesGenericDAO.getAll();
+        List<Airline> avialineList = airlineGenericDAO.getAll();
+        List<AircraftType> aircraftTypesList = aircraftTypesGenericDAO.getAll();
         List<Flight> flightList = flightGenericDAO.getAll();
         List<Gate> gateList = gateGenericDAO.getAll();
         List<Passenger> passengerList = passengerGenericDAO.getAll();
-        List<Routes> routeList = routeGenericDAO.getAll();
+        List<Route> routeList = routeGenericDAO.getAll();
         List<Terminal> terminalList = terminalGenericDAO.getAll();
         List<Ticket> ticketList = ticketGenericDAO.getAll();
         System.out.println(passengerGenericDAO.getById(100));
@@ -55,8 +53,8 @@ public class Main {
         terminalList.forEach(System.out::println);
         ticketList.forEach(System.out::println);
 
-        Ticket ticketById = ticketGenericDAO.getById(11).orElseThrow();
-        System.out.println(ticketById);
+//        Ticket ticketById = ticketGenericDAO.getById(11).orElseThrow();
+//        System.out.println(ticketById);
 
 //        Passenger newPassanger = Passenger.builder()
 //                .birthdate(LocalDate.of(1990, 10, 10))
@@ -67,7 +65,7 @@ public class Main {
 ////        passengerGenericDAO.add(newPassanger);
 
         PassengerDAO passengerPassengerDAO = new PassengerDAOImpl();
-        passengerPassengerDAO.getByAirline(avialineGenericDAO.getById(1).orElseThrow()).forEach(System.out::println);
+        passengerPassengerDAO.getByAirline(airlineGenericDAO.getById(1).orElseThrow()).forEach(System.out::println);
 
 //        BuyTicket.buyTicket(passengerGenericDAO.getById(2).orElseThrow(),flightGenericDAO.getById(1).orElseThrow());
 
@@ -82,5 +80,7 @@ public class Main {
 
         PassportDAO passportDAO = new PassportDAOImpl();
         passportDAO.getAllActive().forEach(System.out::println);
+        TicketRepository ticketRepository = new TicketRepository();
+//        ticketRepository.generateAndWriteTicketsForFlight(flightGenericDAO.getById(2).orElseThrow());
     }
 }

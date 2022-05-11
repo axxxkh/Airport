@@ -6,7 +6,6 @@ import airport.DAO.PassengerDAO;
 import airport.DAO.PassportDAO;
 import airport.entity.Passenger;
 import airport.entity.Passport;
-import airport.entity.Ticket;
 
 import java.util.Optional;
 

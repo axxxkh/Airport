@@ -1,7 +1,6 @@
 package airport.DAO.Impl;
 
 import airport.DAO.PassportDAO;
-import airport.entity.Passenger;
 import airport.entity.Passport;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -83,12 +82,12 @@ public class PassportDAOImpl implements PassportDAO {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         Passport passportFromDB = session.load(Passport.class, passport.getId());
-        if (passportFromDB!=null) {
-        passport.setActive(false);
-        session.update(passportFromDB);
-        transaction.commit();
-        session.close();
-        return true;
+        if (passportFromDB != null) {
+            passport.setActive(false);
+            session.update(passportFromDB);
+            transaction.commit();
+            session.close();
+            return true;
         }
         transaction.commit();
         session.close();

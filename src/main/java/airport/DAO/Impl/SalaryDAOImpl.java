@@ -80,7 +80,8 @@ public class SalaryDAOImpl implements GenericDAO<Salary> {
         Transaction transaction = session.beginTransaction();
         Salary salaryFromDB = session.load(Salary.class, salary.getId());
         if (salaryFromDB != null) {
-            session.delete(salaryFromDB);
+            salaryFromDB.setActive(false);
+            session.update(salaryFromDB);
             transaction.commit();
             session.close();
             return true;

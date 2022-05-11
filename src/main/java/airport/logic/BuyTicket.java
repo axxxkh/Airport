@@ -1,36 +1,39 @@
 package airport.logic;
 
-import airport.DAO.FlightDAO;
-import airport.DAO.Impl.FlightDAOImpl;
-import airport.DAO.Impl.PassengerDAOImpl;
 import airport.DAO.Impl.TicketDAOImpl;
-import airport.DAO.PassengerDAO;
 import airport.DAO.TicketDAO;
 import airport.entity.Flight;
 import airport.entity.Passenger;
 import airport.entity.Ticket;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class BuyTicket {
-    public static Ticket buyTicket(Passenger passenger, Flight flight) {
+    public final int TICKET_STATUS_NOT_SOLD = 0;
+    public final int TICKET_STATUS_SOLD = 1;
+    public final int TICKET_STATUS_BOARDED = 2;
+    public final int TICKET_STATUS_FINISHED = 3;
+
+    public Ticket buyTicket(Passenger passenger, Flight flight) {
         TicketDAO ticketDAO = new TicketDAOImpl();
-        PassengerDAO passengerDAO = new PassengerDAOImpl();
-        FlightDAO flightDAO = new FlightDAOImpl();
+        Queue<Ticket> ticketQueue = new LinkedList<>(getAvailableTickets(flight));
+        Ticket ticket = ticketQueue.peek();
+        if (ticket != null) {
+            ticket.setPassenger(passenger);
+            ticketDAO.add(ticket);
+            return ticket;
+        }
+        return null;
+    }
 
-//       if  (!passengerDAO.getById(passenger.getId()).orElseThrow().getTickets().contains(passenger)) {
-//       }
-
-        Ticket ticket = Ticket.builder()
-                .flight(flight)
-                .passenger(passenger)
-                .number(11)
-                .seat(15)
-                .build();
-        List<Ticket> ticketList = new TicketDAOImpl().getTicketsByPassenger(passenger);
-        ticketDAO.add(ticket);
-        passenger.setTickets(ticketList);
-        passengerDAO.update(passenger);
-        return  ticket;
+    public List<Ticket> getAvailableTickets(Flight flight) {
+        TicketDAO ticketDAO = new TicketDAOImpl();
+        return ticketDAO.getTicketsByFlight(flight)
+                .stream()
+                .filter(t -> (t.isActive() && t.getTicketStatus() == TICKET_STATUS_NOT_SOLD))
+                .collect(Collectors.toList());
     }
 }

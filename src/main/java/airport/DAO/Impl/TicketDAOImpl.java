@@ -36,10 +36,10 @@ public class TicketDAOImpl implements TicketDAO {
     }
 
     @Override
-    public Optional <Ticket> getById(int id) {
+    public Optional<Ticket> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional <Ticket> ticket = Optional.ofNullable(session.get(Ticket.class, id));
+        Optional<Ticket> ticket = Optional.ofNullable(session.get(Ticket.class, id));
         transaction.commit();
         session.close();
         return ticket;
@@ -86,7 +86,8 @@ public class TicketDAOImpl implements TicketDAO {
         Transaction transaction = session.beginTransaction();
         Ticket ticketFromDB = session.load(Ticket.class, ticket.getId());
         if (ticketFromDB != null) {
-            session.delete(ticketFromDB);
+            ticketFromDB.setActive(false);
+            session.update(ticketFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -100,7 +101,7 @@ public class TicketDAOImpl implements TicketDAO {
     public List<Ticket> getTicketsByFlight(Flight flight) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Query <Ticket> query = session.createQuery("from Ticket t " +
+        Query<Ticket> query = session.createQuery("from Ticket t " +
                 "LEFT JOIN FETCH t.flight f " +
                 "where f.id=:id", Ticket.class);
         query.setParameter("id", flight.getId());
@@ -116,7 +117,7 @@ public class TicketDAOImpl implements TicketDAO {
     public List<Ticket> getTicketsByPassenger(Passenger passenger) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Query <Ticket> query = session.createQuery("from Ticket t " +
+        Query<Ticket> query = session.createQuery("from Ticket t " +
                 "LEFT JOIN FETCH t.passenger p " +
                 "where p.id=:id", Ticket.class);
         query.setParameter("id", passenger.getId());
@@ -126,5 +127,23 @@ public class TicketDAOImpl implements TicketDAO {
         transaction.commit();
         session.close();
         return ticketList;
+    }
+
+    @Override
+    public void addAll(List<Ticket> ticketList) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        ticketList.forEach(session::save);
+        transaction.commit();
+        session.close();
+    }
+
+    @Override
+    public void updateAll(List<Ticket> ticketList) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        ticketList.forEach(session::update);
+        transaction.commit();
+        session.close();
     }
 }

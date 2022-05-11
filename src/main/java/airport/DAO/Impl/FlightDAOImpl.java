@@ -62,7 +62,8 @@ public class FlightDAOImpl implements FlightDAO {
         Transaction transaction = session.beginTransaction();
         Flight flightFromDB = session.load(Flight.class, flight.getId());
         if (flightFromDB != null) {
-            session.delete(flight);
+            flightFromDB.setActive(false);
+            session.update(flight);
             transaction.commit();
             session.close();
             return true;

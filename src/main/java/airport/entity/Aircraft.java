@@ -17,9 +17,9 @@ public class Aircraft {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name = "type_id", referencedColumnName = "id")
-    private AircraftTypes typeId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "aircraft_type_id", referencedColumnName = "id")
+    private AircraftType typeId;
     @ManyToOne
     @JoinColumn(name = "airline_id")
     private Airline airline;

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -13,8 +14,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_Id","seat"})})
 public class Ticket {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int number;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,9 +25,9 @@ public class Ticket {
     private Flight flight;
     private int seat;
     @Column(name = "ticket_status")
-    private int ticketStatus;
+    private byte ticketStatus;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "passanger_id")
+    @JoinColumn(name = "passenger_id")
     private Passenger passenger;
     private boolean active;
 
@@ -36,5 +39,20 @@ public class Ticket {
                 ", seat=" + seat +
                 ", ticketStatus=" + ticketStatus +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ticket ticket = (Ticket) o;
+        return getNumber() == ticket.getNumber()
+                && getSeat() == ticket.getSeat()
+                && getFlight().equals(ticket.getFlight());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNumber(), getFlight(), getSeat());
     }
 }

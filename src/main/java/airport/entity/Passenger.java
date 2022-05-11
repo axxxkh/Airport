@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -24,7 +23,7 @@ public class Passenger {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "passenger")
     private List<Ticket> tickets;
-    @OneToMany(cascade =  CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "passenger")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "passenger")
     private List<Passport> passports;
     private boolean active;
 

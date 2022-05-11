@@ -21,18 +21,18 @@ public class Flight {
     private int flightNumber;
     private LocalDateTime time;
     @Column(name = "flight_status")
-    private int flightStatus;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "terminal_id", referencedColumnName = "id")
-    private Terminal terminalId;
+    private byte flightStatus;
     @ManyToOne
     @JoinColumn(name = "airline_id")
     private Airline airline;
     @Column(name = "craft_id")
     private int craftId;
-    @Column(name = "gate_id")
-    private int gateId;
+    @ManyToOne
+    @JoinColumn(name = "gate_id")
+    private Gate gateId;
     private boolean active;
-
+    @ManyToOne
+    @JoinColumn (name = "route_id")
+    private Route route;
 }
 

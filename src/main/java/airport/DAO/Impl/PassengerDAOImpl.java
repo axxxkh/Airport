@@ -77,7 +77,8 @@ public class PassengerDAOImpl implements PassengerDAO {
         Transaction transaction = session.beginTransaction();
         Passenger passengerFromDB = session.load(Passenger.class, passenger.getId());
         if (passengerFromDB != null) {
-            session.delete(passengerFromDB);
+            passengerFromDB.setActive(false);
+            session.update(passengerFromDB);
             transaction.commit();
             session.close();
             return true;

@@ -33,10 +33,10 @@ public class TerminalDAOImpl implements TerminalDAO {
     }
 
     @Override
-    public Optional <Terminal> getById(int id) {
+    public Optional<Terminal> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional <Terminal> terminal = Optional.ofNullable(session.get(Terminal.class, id));
+        Optional<Terminal> terminal = Optional.ofNullable(session.get(Terminal.class, id));
         transaction.commit();
         session.close();
         return terminal;
@@ -58,7 +58,8 @@ public class TerminalDAOImpl implements TerminalDAO {
         Transaction transaction = session.beginTransaction();
         Terminal terminalFromDB = session.load(Terminal.class, terminal.getId());
         if (terminalFromDB != null) {
-            session.delete(terminalFromDB);
+            terminalFromDB.setActive(false);
+            session.update(terminalFromDB);
             transaction.commit();
             session.close();
             return true;

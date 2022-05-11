@@ -58,7 +58,8 @@ public class AirlineDAOImpl implements AirlineDAO {
         Transaction transaction = session.beginTransaction();
         Airline airlineFromDB = session.load(Airline.class, airline.getId());
         if (airlineFromDB != null) {
-            session.delete(airlineFromDB);
+            airlineFromDB.setActive(false);
+            session.update(airlineFromDB);
             transaction.commit();
             session.close();
             return true;

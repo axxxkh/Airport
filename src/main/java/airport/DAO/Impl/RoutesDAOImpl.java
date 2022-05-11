@@ -1,7 +1,7 @@
 package airport.DAO.Impl;
 
 import airport.DAO.RoutesDAO;
-import airport.entity.Routes;
+import airport.entity.Route;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -23,7 +23,7 @@ public class RoutesDAOImpl implements RoutesDAO {
     }
 
     @Override
-    public Routes add(Routes route) {
+    public Route add(Route route) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.save(route);
@@ -33,17 +33,17 @@ public class RoutesDAOImpl implements RoutesDAO {
     }
 
     @Override
-    public Optional<Routes> getById(int id) {
+    public Optional<Route> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional<Routes> route = Optional.ofNullable(session.get(Routes.class, id));
+        Optional<Route> route = Optional.ofNullable(session.get(Route.class, id));
         transaction.commit();
         session.close();
         return route;
     }
 
     @Override
-    public Routes update(Routes route) {
+    public Route update(Route route) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.update(route);
@@ -53,12 +53,13 @@ public class RoutesDAOImpl implements RoutesDAO {
     }
 
     @Override
-    public boolean delete(Routes route) {
+    public boolean delete(Route route) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Routes routesFromDB = session.load(Routes.class, route.getId());
-        if (routesFromDB != null) {
-            session.delete(routesFromDB);
+        Route routeFromDB = session.load(Route.class, route.getId());
+        if (routeFromDB != null) {
+            routeFromDB.setActive(false);
+            session.update(routeFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -69,24 +70,24 @@ public class RoutesDAOImpl implements RoutesDAO {
     }
 
     @Override
-    public List<Routes> getAll() {
+    public List<Route> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<Routes> routeList = session.createQuery("Select a from "
-                + Routes.class.getSimpleName()
-                + " a", Routes.class).getResultList();
+        List<Route> routeList = session.createQuery("Select a from "
+                + Route.class.getSimpleName()
+                + " a", Route.class).getResultList();
         transaction.commit();
         session.close();
         return routeList;
     }
 
     @Override
-    public List<Routes> getAllActive() {
+    public List<Route> getAllActive() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<Routes> routeList = session.createQuery("From "
-                + Routes.class.getSimpleName()
-                + " r where r.active = true", Routes.class).getResultList();
+        List<Route> routeList = session.createQuery("From "
+                + Route.class.getSimpleName()
+                + " r where r.active = true", Route.class).getResultList();
         transaction.commit();
         session.close();
         return routeList;

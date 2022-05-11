@@ -1,6 +1,6 @@
 package airport.DAO;
 
-import airport.entity.Routes;
+import airport.entity.Route;
 
-public interface RoutesDAO extends GenericDAO<Routes>{
+public interface RoutesDAO extends GenericDAO<Route> {
 }
