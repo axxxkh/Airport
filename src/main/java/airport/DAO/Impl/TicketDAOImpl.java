@@ -58,6 +58,19 @@ public class TicketDAOImpl implements TicketDAO {
     }
 
     @Override
+    public List<Ticket> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Ticket> query = session.createQuery("From "
+                + Ticket.class.getSimpleName()
+                + " t.active = true", Ticket.class);
+        List<Ticket> ticketList = query.getResultList();
+        transaction.commit();
+        session.close();
+        return ticketList;
+    }
+
+    @Override
     public Ticket update(Ticket ticket) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

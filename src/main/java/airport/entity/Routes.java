@@ -18,4 +18,5 @@ public class Routes {
     @Id
     private int id;
     private String route;
+    private boolean active;
 }

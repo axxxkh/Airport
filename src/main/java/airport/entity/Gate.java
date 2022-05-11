@@ -17,4 +17,5 @@ import javax.persistence.Id;
 public class Gate {
     @Id
     private int id;
+    private boolean active;
 }

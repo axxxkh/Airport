@@ -35,10 +35,10 @@ public class GateDAOImpl implements GateDAO {
     }
 
     @Override
-    public Optional <Gate> getById(int id) {
+    public Optional<Gate> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional <Gate> gate = Optional.ofNullable(session.get(Gate.class, id));
+        Optional<Gate> gate = Optional.ofNullable(session.get(Gate.class, id));
         transaction.commit();
         session.close();
         return gate;
@@ -81,10 +81,20 @@ public class GateDAOImpl implements GateDAO {
     }
 
     @Override
+    public List<Gate> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Gate> gateList = session.createQuery("From " + Gate.class.getSimpleName()
+                + " + g where g.active=true", Gate.class).getResultList();
+        session.close();
+        return gateList;
+    }
+
+    @Override
     public List<Gate> getGatesByTerminal(Terminal terminal) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Query <Gate> query = session.createQuery("from Gate g " +
+        Query<Gate> query = session.createQuery("from Gate g " +
                 "LEFT JOIN FETCH g.terminal t" +
                 "where t.id =:id", Gate.class);
         query.setParameter("id", terminal.getId());

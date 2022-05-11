@@ -33,10 +33,10 @@ public class RoutesDAOImpl implements RoutesDAO {
     }
 
     @Override
-    public Optional <Routes> getById(int id) {
+    public Optional<Routes> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional <Routes> route = Optional.ofNullable(session.get(Routes.class, id));
+        Optional<Routes> route = Optional.ofNullable(session.get(Routes.class, id));
         transaction.commit();
         session.close();
         return route;
@@ -75,6 +75,18 @@ public class RoutesDAOImpl implements RoutesDAO {
         List<Routes> routeList = session.createQuery("Select a from "
                 + Routes.class.getSimpleName()
                 + " a", Routes.class).getResultList();
+        transaction.commit();
+        session.close();
+        return routeList;
+    }
+
+    @Override
+    public List<Routes> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Routes> routeList = session.createQuery("From "
+                + Routes.class.getSimpleName()
+                + " r where r.active = true", Routes.class).getResultList();
         transaction.commit();
         session.close();
         return routeList;

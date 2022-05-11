@@ -84,6 +84,17 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
+    public List<Flight> getAllActive() {
+        Session session = getSessionFactory().openSession();
+
+        List<Flight> flightList = session.createQuery("From Flight f " +
+                        "where f.active=true"
+                , Flight.class).getResultList();
+        session.close();
+        return flightList;
+    }
+
+    @Override
     public List<Flight> getFlightsByAirline(Airline airline) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

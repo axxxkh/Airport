@@ -22,6 +22,7 @@ public class Airline {
     private int rate;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "airline")
     private List<Aircraft> airCrafts;
+    private boolean active;
 
     @Override
     public String toString() {

@@ -53,6 +53,17 @@ public class PersonalInfoDAOImpl implements GenericDAO<PersonalInfo> {
     }
 
     @Override
+    public List<PersonalInfo> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<PersonalInfo> personalInfoList = session.createQuery("from PersonalInfo p " +
+                "where p.active=true", PersonalInfo.class).getResultList();
+        transaction.commit();
+        session.close();
+        return personalInfoList;
+    }
+
+    @Override
     public PersonalInfo update(PersonalInfo personalInfo) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

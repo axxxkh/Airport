@@ -6,9 +6,11 @@ import java.util.Optional;
 public interface GenericDAO<T> {
     T add(T t);
 
-    Optional <T> getById(int id);
+    Optional<T> getById(int id);
 
     List<T> getAll();
+
+    List<T> getAllActive();
 
     T update(T t);
 

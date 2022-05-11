@@ -32,6 +32,7 @@ public class Flight {
     private int craftId;
     @Column(name = "gate_id")
     private int gateId;
+    private boolean active;
 
 }
 

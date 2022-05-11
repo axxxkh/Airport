@@ -20,4 +20,6 @@ public class AircraftTypes {
     private String producer;
     private String type;
     private int capacity;
+    private boolean active;
+
 }

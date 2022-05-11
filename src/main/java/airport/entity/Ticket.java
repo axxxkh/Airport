@@ -26,6 +26,7 @@ public class Ticket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "passanger_id")
     private Passenger passenger;
+    private boolean active;
 
     @Override
     public String toString() {

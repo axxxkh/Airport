@@ -31,6 +31,7 @@ public class Passport {
     private Passenger passenger;
     @Column(name = "passport_type", nullable = false)
     private String passportType;
+    private boolean active;
 
     @Override
     public String toString() {

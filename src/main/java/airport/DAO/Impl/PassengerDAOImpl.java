@@ -91,9 +91,21 @@ public class PassengerDAOImpl implements PassengerDAO {
     public List<Passenger> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<Passenger> passengerList = session.createQuery("Select a from "
+        List<Passenger> passengerList = session.createQuery("Select p from "
                 + Passenger.class.getSimpleName()
-                + " a", Passenger.class).getResultList();
+                + " p", Passenger.class).getResultList();
+        transaction.commit();
+        session.close();
+        return passengerList;
+    }
+
+    @Override
+    public List<Passenger> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Passenger> passengerList = session.createQuery("From "
+                + Passenger.class.getSimpleName()
+                + " p where p.active=true", Passenger.class).getResultList();
         transaction.commit();
         session.close();
         return passengerList;

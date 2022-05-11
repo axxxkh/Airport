@@ -55,6 +55,18 @@ public class PersonalDAOImpl implements GenericDAO<Personal> {
     }
 
     @Override
+    public List<Personal> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Personal> personalList = session.createQuery("From "
+                + Personal.class.getSimpleName()
+                + " p where p.active = true", Personal.class).getResultList();
+        transaction.commit();
+        session.close();
+        return personalList;
+    }
+
+    @Override
     public Personal update(Personal personal) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

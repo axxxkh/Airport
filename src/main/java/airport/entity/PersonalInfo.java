@@ -23,4 +23,5 @@ public class PersonalInfo {
     private boolean married;
     private LocalDate birthday;
     private String city;
+    private boolean active;
 }

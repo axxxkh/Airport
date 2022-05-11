@@ -26,6 +26,7 @@ public class Passenger {
     private List<Ticket> tickets;
     @OneToMany(cascade =  CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "passenger")
     private List<Passport> passports;
+    private boolean active;
 
     @Override
     public String toString() {

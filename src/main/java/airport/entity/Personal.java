@@ -27,5 +27,6 @@ public class Personal {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id", referencedColumnName = "id_personal")
     private PersonalInfo personalInfo;
+    private boolean active;
 
 }

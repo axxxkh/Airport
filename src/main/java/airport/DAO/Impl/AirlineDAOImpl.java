@@ -33,10 +33,10 @@ public class AirlineDAOImpl implements AirlineDAO {
     }
 
     @Override
-    public Optional <Airline> getById(int id) {
+    public Optional<Airline> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional <Airline> avialine = Optional.ofNullable(session.get(Airline.class, id));
+        Optional<Airline> avialine = Optional.ofNullable(session.get(Airline.class, id));
         transaction.commit();
         session.close();
         return avialine;
@@ -74,6 +74,17 @@ public class AirlineDAOImpl implements AirlineDAO {
         Transaction transaction = session.beginTransaction();
         List<Airline> airlineList = session.createQuery("Select a from " + Airline.class.getSimpleName()
                 + " a", Airline.class).getResultList();
+        transaction.commit();
+        session.close();
+        return airlineList;
+    }
+
+    @Override
+    public List<Airline> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Airline> airlineList = session.createQuery("From Airline a " +
+                "where a.active=true", Airline.class).getResultList();
         transaction.commit();
         session.close();
         return airlineList;

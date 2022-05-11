@@ -79,4 +79,16 @@ public class TerminalDAOImpl implements TerminalDAO {
         session.close();
         return terminalList;
     }
+
+    @Override
+    public List<Terminal> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Terminal> terminalList = session.createQuery("From " +
+                Terminal.class.getSimpleName()
+                + " t where t.active = true", Terminal.class).getResultList();
+        transaction.commit();
+        session.close();
+        return terminalList;
+    }
 }

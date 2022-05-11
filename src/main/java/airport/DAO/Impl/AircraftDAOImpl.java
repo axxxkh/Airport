@@ -83,6 +83,18 @@ public class AircraftDAOImpl implements AircraftDAO {
     }
 
     @Override
+    public List<Aircraft> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+       Query<Aircraft> aircraftQuery = session.createQuery("from Aircraft a " +
+               "where a.active=true", Aircraft.class);
+       List<Aircraft> aircraftList = aircraftQuery.getResultList();
+        transaction.commit();
+        session.close();
+        return aircraftList;
+    }
+
+    @Override
     public List<Aircraft> getAircraftsByAirline(Airline airline) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

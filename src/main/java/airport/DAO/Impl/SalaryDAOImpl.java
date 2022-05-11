@@ -54,6 +54,17 @@ public class SalaryDAOImpl implements GenericDAO<Salary> {
     }
 
     @Override
+    public List<Salary> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Salary> salaryList = session.createQuery("From Salary s " +
+                "s.active = true", Salary.class).getResultList();
+        transaction.commit();
+        session.close();
+        return salaryList;
+    }
+
+    @Override
     public Salary update(Salary salary) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

@@ -25,6 +25,7 @@ public class Aircraft {
     private Airline airline;
     @Column(name = "serial_number")
     private int serialNumber;
+    private boolean active;
 
     @Override
     public String toString() {

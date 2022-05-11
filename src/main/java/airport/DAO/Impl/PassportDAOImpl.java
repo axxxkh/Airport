@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +57,18 @@ public class PassportDAOImpl implements PassportDAO {
     }
 
     @Override
+    public List<Passport> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Passport> query = session.createQuery("from Passport p " +
+                "where p.active=true", Passport.class);
+        List<Passport> passportList = query.getResultList();
+        transaction.commit();
+        session.close();
+        return passportList;
+    }
+
+    @Override
     public Passport update(Passport passport) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -69,12 +82,13 @@ public class PassportDAOImpl implements PassportDAO {
     public boolean delete(Passport passport) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Passenger passengerFromDB = session.load(Passenger.class, passport.getId());
-        if (passengerFromDB != null) {
-            session.delete(passengerFromDB);
-            transaction.commit();
-            session.close();
-            return true;
+        Passport passportFromDB = session.load(Passport.class, passport.getId());
+        if (passportFromDB!=null) {
+        passport.setActive(false);
+        session.update(passportFromDB);
+        transaction.commit();
+        session.close();
+        return true;
         }
         transaction.commit();
         session.close();

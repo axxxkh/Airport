@@ -3,6 +3,7 @@ package airport.logic;
 import airport.DAO.GenericDAO;
 import airport.DAO.Impl.*;
 import airport.DAO.PassengerDAO;
+import airport.DAO.PassportDAO;
 import airport.entity.*;
 
 import java.util.HashSet;
@@ -78,5 +79,8 @@ public class Main {
         Passenger passenger2 = passengerPassengerDAO.getByIdWithPassports(2);
         System.out.println(passenger2);
         passenger2.getPassports().forEach(System.out::println);
+
+        PassportDAO passportDAO = new PassportDAOImpl();
+        passportDAO.getAllActive().forEach(System.out::println);
     }
 }

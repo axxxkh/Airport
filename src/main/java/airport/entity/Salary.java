@@ -22,4 +22,5 @@ public class Salary {
     private int idPersonal;
     private String position;
     private int salary;
+    private boolean active;
 }

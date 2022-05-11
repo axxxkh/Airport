@@ -19,4 +19,5 @@ public class Terminal {
     private int id;
     private String name;
     private int capacity;
+    private boolean active;
 }
