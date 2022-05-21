@@ -6,6 +6,7 @@ import airport.DAO.PassengerDAO;
 import airport.DAO.PassportDAO;
 import airport.entity.*;
 
+import java.util.Collection;
 import java.util.List;
 
 public class Main {
@@ -81,6 +82,5 @@ public class Main {
         PassportDAO passportDAO = new PassportDAOImpl();
         passportDAO.getAllActive().forEach(System.out::println);
         TicketRepository ticketRepository = new TicketRepository();
-//        ticketRepository.generateAndWriteTicketsForFlight(flightGenericDAO.getById(2).orElseThrow());
     }
 }
