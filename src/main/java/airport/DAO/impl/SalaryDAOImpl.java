@@ -1,7 +1,7 @@
-package airport.DAO.Impl;
+package airport.DAO.impl;
 
 import airport.DAO.GenericDAO;
-import airport.entity.PersonalInfo;
+import airport.entity.Salary;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,7 +10,8 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 import java.util.Optional;
 
-public class PersonalInfoDAOImpl implements GenericDAO<PersonalInfo> {
+public class SalaryDAOImpl implements GenericDAO<Salary> {
+
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -23,64 +24,64 @@ public class PersonalInfoDAOImpl implements GenericDAO<PersonalInfo> {
     }
 
     @Override
-    public PersonalInfo add(PersonalInfo personalInfo) {
+    public Salary add(Salary salary) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(personalInfo);
+        session.save(salary);
         transaction.commit();
         session.close();
-        return personalInfo;
+        return salary;
     }
 
     @Override
-    public Optional<PersonalInfo> getById(int id) {
-        Session session = getSessionFactory().openSession();
+    public Optional<Salary> getById(int id) {
+        Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Optional<PersonalInfo> personalInfo = Optional.ofNullable(session.get(PersonalInfo.class, id));
+        Optional<Salary> salary = Optional.ofNullable(session.get(Salary.class, id));
         transaction.commit();
         session.close();
-        return personalInfo;
+        return Optional.empty();
     }
 
     @Override
-    public List<PersonalInfo> getAll() {
+    public List<Salary> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<PersonalInfo> personalInfoList = session.createQuery("from PersonalInfo p", PersonalInfo.class).getResultList();
+        List<Salary> salaryList = session.createQuery("from Salary s", Salary.class).getResultList();
         transaction.commit();
         session.close();
-        return personalInfoList;
+        return salaryList;
     }
 
     @Override
-    public List<PersonalInfo> getAllActive() {
+    public List<Salary> getAllActive() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<PersonalInfo> personalInfoList = session.createQuery("from PersonalInfo p " +
-                "where p.active=true", PersonalInfo.class).getResultList();
+        List<Salary> salaryList = session.createQuery("From Salary s " +
+                "s.active = true", Salary.class).getResultList();
         transaction.commit();
         session.close();
-        return personalInfoList;
+        return salaryList;
     }
 
     @Override
-    public PersonalInfo update(PersonalInfo personalInfo) {
+    public Salary update(Salary salary) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.update(personalInfo);
+        session.update(salary);
         transaction.commit();
         session.close();
-        return personalInfo;
+        return null;
     }
 
     @Override
-    public boolean delete(PersonalInfo personalInfo) {
+    public boolean delete(Salary salary) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        PersonalInfo personalInfoFromDB = session.get(PersonalInfo.class, personalInfo.getId());
-        if (personalInfoFromDB != null) {
-            personalInfoFromDB.setActive(false);
-            session.update(personalInfoFromDB);
+        Salary salaryFromDB = session.load(Salary.class, salary.getId());
+        if (salaryFromDB != null) {
+            salaryFromDB.setActive(false);
+            session.update(salaryFromDB);
             transaction.commit();
             session.close();
             return true;

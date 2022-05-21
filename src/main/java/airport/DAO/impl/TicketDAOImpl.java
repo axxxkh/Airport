@@ -1,4 +1,4 @@
-package airport.DAO.Impl;
+package airport.DAO.impl;
 
 import airport.DAO.TicketDAO;
 import airport.entity.Flight;

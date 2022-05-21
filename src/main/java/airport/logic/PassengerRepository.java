@@ -1,7 +1,7 @@
 package airport.logic;
 
-import airport.DAO.Impl.PassengerDAOImpl;
-import airport.DAO.Impl.PassportDAOImpl;
+import airport.DAO.impl.PassengerDAOImpl;
+import airport.DAO.impl.PassportDAOImpl;
 import airport.DAO.PassengerDAO;
 import airport.DAO.PassportDAO;
 import airport.entity.Passenger;

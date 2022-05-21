@@ -20,7 +20,7 @@ public class Airline {
     private int id;
     private String name;
     private int rate;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "airline")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "airline")
     private List<Aircraft> airCrafts;
     private boolean active;
 

@@ -1,7 +1,7 @@
-package airport.DAO.Impl;
+package airport.DAO.impl;
 
-import airport.DAO.AircraftTypesDAO;
-import airport.entity.AircraftType;
+import airport.DAO.TerminalDAO;
+import airport.entity.Terminal;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,8 +10,7 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 import java.util.Optional;
 
-
-public class AircraftTypesDAOImpl implements AircraftTypesDAO {
+public class TerminalDAOImpl implements TerminalDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -24,65 +23,43 @@ public class AircraftTypesDAOImpl implements AircraftTypesDAO {
     }
 
     @Override
-    public AircraftType add(AircraftType aircraftTypes) {
+    public Terminal add(Terminal terminal) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(aircraftTypes);
+        session.save(terminal);
         transaction.commit();
         session.close();
-        return aircraftTypes;
+        return terminal;
     }
 
     @Override
-    public Optional<AircraftType> getById(int id) {
+    public Optional<Terminal> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional<AircraftType> aircraftTypes = Optional.ofNullable(session.get(AircraftType.class, id));
+        Optional<Terminal> terminal = Optional.ofNullable(session.get(Terminal.class, id));
         transaction.commit();
         session.close();
-        return aircraftTypes;
+        return terminal;
     }
 
     @Override
-    public List<AircraftType> getAll() {
+    public Terminal update(Terminal terminal) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<AircraftType> aircraftTypesList = session.createQuery("Select a from "
-                + AircraftType.class.getSimpleName() + " a", AircraftType.class).getResultList();
+        session.update(terminal);
         transaction.commit();
         session.close();
-        return aircraftTypesList;
+        return terminal;
     }
 
     @Override
-    public List<AircraftType> getAllActive() {
+    public boolean delete(Terminal terminal) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<AircraftType> aircraftTypesList = session.createQuery("From AircraftTypes a " +
-                "where a.active=true", AircraftType.class).getResultList();
-        transaction.commit();
-        session.close();
-        return aircraftTypesList;
-    }
-
-    @Override
-    public AircraftType update(AircraftType aircraftTypes) {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(aircraftTypes);
-        transaction.commit();
-        session.close();
-        return aircraftTypes;
-    }
-
-    @Override
-    public boolean delete(AircraftType aircraftTypes) {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        AircraftType aircraftTypesFromDB = session.load(AircraftType.class, aircraftTypes.getId());
-        if (aircraftTypesFromDB != null) {
-            aircraftTypesFromDB.setActive(false);
-            session.update(aircraftTypesFromDB);
+        Terminal terminalFromDB = session.load(Terminal.class, terminal.getId());
+        if (terminalFromDB != null) {
+            terminalFromDB.setActive(false);
+            session.update(terminalFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -90,5 +67,29 @@ public class AircraftTypesDAOImpl implements AircraftTypesDAO {
         transaction.commit();
         session.close();
         return false;
+    }
+
+    @Override
+    public List<Terminal> getAll() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Terminal> terminalList = session.createQuery("Select a from " +
+                Terminal.class.getSimpleName()
+                + " a", Terminal.class).getResultList();
+        transaction.commit();
+        session.close();
+        return terminalList;
+    }
+
+    @Override
+    public List<Terminal> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Terminal> terminalList = session.createQuery("From " +
+                Terminal.class.getSimpleName()
+                + " t where t.active = true", Terminal.class).getResultList();
+        transaction.commit();
+        session.close();
+        return terminalList;
     }
 }

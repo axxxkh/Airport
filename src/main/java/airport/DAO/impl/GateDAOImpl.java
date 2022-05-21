@@ -1,16 +1,18 @@
-package airport.DAO.Impl;
+package airport.DAO.impl;
 
-import airport.DAO.TerminalDAO;
+import airport.DAO.GateDAO;
+import airport.entity.Gate;
 import airport.entity.Terminal;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.Optional;
 
-public class TerminalDAOImpl implements TerminalDAO {
+public class GateDAOImpl implements GateDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -23,43 +25,43 @@ public class TerminalDAOImpl implements TerminalDAO {
     }
 
     @Override
-    public Terminal add(Terminal terminal) {
+    public Gate add(Gate gate) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(terminal);
+        session.save(gate);
         transaction.commit();
         session.close();
-        return terminal;
+        return gate;
     }
 
     @Override
-    public Optional<Terminal> getById(int id) {
+    public Optional<Gate> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional<Terminal> terminal = Optional.ofNullable(session.get(Terminal.class, id));
+        Optional<Gate> gate = Optional.ofNullable(session.get(Gate.class, id));
         transaction.commit();
         session.close();
-        return terminal;
+        return gate;
     }
 
     @Override
-    public Terminal update(Terminal terminal) {
+    public Gate update(Gate gate) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.update(terminal);
+        session.update(gate);
         transaction.commit();
         session.close();
-        return terminal;
+        return gate;
     }
 
     @Override
-    public boolean delete(Terminal terminal) {
+    public boolean delete(Gate gate) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Terminal terminalFromDB = session.load(Terminal.class, terminal.getId());
-        if (terminalFromDB != null) {
-            terminalFromDB.setActive(false);
-            session.update(terminalFromDB);
+        Gate gateFromDB = session.load(Gate.class, gate.getId());
+        if (gateFromDB != null) {
+            gateFromDB.setActive(false);
+            session.update(gateFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -70,26 +72,36 @@ public class TerminalDAOImpl implements TerminalDAO {
     }
 
     @Override
-    public List<Terminal> getAll() {
+    public List<Gate> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<Terminal> terminalList = session.createQuery("Select a from " +
-                Terminal.class.getSimpleName()
-                + " a", Terminal.class).getResultList();
-        transaction.commit();
+        List<Gate> gateList = session.createQuery("Select a from " + Gate.class.getSimpleName()
+                + " a", Gate.class).getResultList();
         session.close();
-        return terminalList;
+        return gateList;
     }
 
     @Override
-    public List<Terminal> getAllActive() {
+    public List<Gate> getAllActive() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<Terminal> terminalList = session.createQuery("From " +
-                Terminal.class.getSimpleName()
-                + " t where t.active = true", Terminal.class).getResultList();
+        List<Gate> gateList = session.createQuery("From " + Gate.class.getSimpleName()
+                + " + g where g.active=true", Gate.class).getResultList();
+        session.close();
+        return gateList;
+    }
+
+    @Override
+    public List<Gate> getGatesByTerminal(Terminal terminal) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Gate> query = session.createQuery("from Gate g " +
+                "LEFT JOIN FETCH g.terminal t" +
+                "where t.id =:id", Gate.class);
+        query.setParameter("id", terminal.getId());
+        List<Gate> gateList = query.getResultList();
         transaction.commit();
         session.close();
-        return terminalList;
+        return gateList;
     }
 }

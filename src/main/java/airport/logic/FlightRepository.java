@@ -1,8 +1,8 @@
 package airport.logic;
 
 import airport.DAO.FlightDAO;
-import airport.DAO.Impl.FlightDAOImpl;
-import airport.DAO.Impl.TicketDAOImpl;
+import airport.DAO.impl.FlightDAOImpl;
+import airport.DAO.impl.TicketDAOImpl;
 import airport.DAO.TicketDAO;
 import airport.entity.Flight;
 import airport.entity.Ticket;

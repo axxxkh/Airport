@@ -1,6 +1,6 @@
 package airport.logic;
 
-import airport.DAO.Impl.TicketDAOImpl;
+import airport.DAO.impl.TicketDAOImpl;
 import airport.DAO.TicketDAO;
 import airport.entity.Flight;
 import airport.entity.Passenger;

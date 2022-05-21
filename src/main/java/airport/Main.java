@@ -1,18 +1,14 @@
-package airport.logic;
+package airport;
 
-import airport.DAO.GenericDAO;
-import airport.DAO.Impl.*;
-import airport.DAO.PassengerDAO;
-import airport.DAO.PassportDAO;
-import airport.entity.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.List;
-
+@SpringBootApplication
 public class Main {
 
     public static void main(String[] args) {
-
-        GenericDAO<Aircraft> aircraftGenericDAO = new AircraftDAOImpl();
+        SpringApplication.run(Main.class,args);
+    /*    GenericDAO<Aircraft> aircraftGenericDAO = new AircraftDAOImpl();
         GenericDAO<AircraftType> aircraftTypesGenericDAO = new AircraftTypesDAOImpl();
         GenericDAO<Airline> airlineGenericDAO = new AirlineDAOImpl();
         GenericDAO<Flight> flightGenericDAO = new FlightDAOImpl();
@@ -80,7 +76,6 @@ public class Main {
 
         PassportDAO passportDAO = new PassportDAOImpl();
         passportDAO.getAllActive().forEach(System.out::println);
-        TicketRepository ticketRepository = new TicketRepository();
-//        ticketRepository.generateAndWriteTicketsForFlight(flightGenericDAO.getById(2).orElseThrow());
+        TicketRepository ticketRepository = new TicketRepository();*/
     }
 }

@@ -34,5 +34,17 @@ public class Flight {
     @ManyToOne
     @JoinColumn (name = "route_id")
     private Route route;
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", flightNumber=" + flightNumber +
+                ", time=" + time +
+                ", flightStatus=" + flightStatus +
+                ", active=" + active +
+                ", route=" + route +
+                '}';
+    }
 }
 

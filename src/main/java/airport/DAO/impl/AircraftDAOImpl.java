@@ -1,8 +1,8 @@
-package airport.DAO.Impl;
+package airport.DAO.impl;
 
-import airport.DAO.GateDAO;
-import airport.entity.Gate;
-import airport.entity.Terminal;
+import airport.DAO.AircraftDAO;
+import airport.entity.Aircraft;
+import airport.entity.Airline;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,7 +12,7 @@ import org.hibernate.query.Query;
 import java.util.List;
 import java.util.Optional;
 
-public class GateDAOImpl implements GateDAO {
+public class AircraftDAOImpl implements AircraftDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -25,43 +25,43 @@ public class GateDAOImpl implements GateDAO {
     }
 
     @Override
-    public Gate add(Gate gate) {
+    public Aircraft add(Aircraft aircraft) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(gate);
+        session.save(aircraft);
         transaction.commit();
         session.close();
-        return gate;
+        return aircraft;
     }
 
     @Override
-    public Optional<Gate> getById(int id) {
+    public Optional<Aircraft> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional<Gate> gate = Optional.ofNullable(session.get(Gate.class, id));
+        Optional<Aircraft> aircraft = Optional.ofNullable(session.get(Aircraft.class, id));
         transaction.commit();
         session.close();
-        return gate;
+        return aircraft;
     }
 
     @Override
-    public Gate update(Gate gate) {
+    public Aircraft update(Aircraft aircraft) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.update(gate);
+        session.update(aircraft);
         transaction.commit();
         session.close();
-        return gate;
+        return aircraft;
     }
 
     @Override
-    public boolean delete(Gate gate) {
+    public boolean delete(Aircraft aircraft) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Gate gateFromDB = session.load(Gate.class, gate.getId());
-        if (gateFromDB != null) {
-            gateFromDB.setActive(false);
-            session.update(gateFromDB);
+        Aircraft aircraftFromDB = session.load(Aircraft.class, aircraft.getId());
+        if (aircraftFromDB != null) {
+            aircraftFromDB.setActive(false);
+            session.update(aircraftFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -72,36 +72,39 @@ public class GateDAOImpl implements GateDAO {
     }
 
     @Override
-    public List<Gate> getAll() {
+    public List<Aircraft> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<Gate> gateList = session.createQuery("Select a from " + Gate.class.getSimpleName()
-                + " a", Gate.class).getResultList();
-        session.close();
-        return gateList;
-    }
-
-    @Override
-    public List<Gate> getAllActive() {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        List<Gate> gateList = session.createQuery("From " + Gate.class.getSimpleName()
-                + " + g where g.active=true", Gate.class).getResultList();
-        session.close();
-        return gateList;
-    }
-
-    @Override
-    public List<Gate> getGatesByTerminal(Terminal terminal) {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        Query<Gate> query = session.createQuery("from Gate g " +
-                "LEFT JOIN FETCH g.terminal t" +
-                "where t.id =:id", Gate.class);
-        query.setParameter("id", terminal.getId());
-        List<Gate> gateList = query.getResultList();
+        List<Aircraft> aircraftList = session.createQuery("Select a from "
+                + Aircraft.class.getSimpleName()
+                + " a", Aircraft.class).getResultList();
         transaction.commit();
         session.close();
-        return gateList;
+        return aircraftList;
+    }
+
+    @Override
+    public List<Aircraft> getAllActive() {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Aircraft> aircraftQuery = session.createQuery("from Aircraft a " +
+                "where a.active=true", Aircraft.class);
+        List<Aircraft> aircraftList = aircraftQuery.getResultList();
+        transaction.commit();
+        session.close();
+        return aircraftList;
+    }
+
+    @Override
+    public List<Aircraft> getAircraftsByAirline(Airline airline) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Aircraft> query = session.createQuery("from Aircraft a " +
+                "where a.airline=:id", Aircraft.class);
+        query.setParameter("id", airline.getId());
+        List<Aircraft> aircraftList = query.getResultList();
+        transaction.commit();
+        session.close();
+        return aircraftList;
     }
 }

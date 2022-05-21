@@ -1,9 +1,12 @@
-package airport.DAO;
+package airport.repository;
+
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericDAO<T>{
+@Repository
+public interface GenericRepository<T> {
     T add(T t);
 
     Optional<T> getById(int id);

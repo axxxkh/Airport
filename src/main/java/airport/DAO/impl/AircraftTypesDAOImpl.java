@@ -1,17 +1,17 @@
-package airport.DAO.Impl;
+package airport.DAO.impl;
 
-import airport.DAO.PassportDAO;
-import airport.entity.Passport;
+import airport.DAO.AircraftTypesDAO;
+import airport.entity.AircraftType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.Optional;
 
-public class PassportDAOImpl implements PassportDAO {
+
+public class AircraftTypesDAOImpl implements AircraftTypesDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -24,67 +24,65 @@ public class PassportDAOImpl implements PassportDAO {
     }
 
     @Override
-    public Passport add(Passport passport) {
+    public AircraftType add(AircraftType aircraftTypes) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(passport);
+        session.save(aircraftTypes);
         transaction.commit();
         session.close();
-        return passport;
+        return aircraftTypes;
     }
 
     @Override
-    public Optional<Passport> getById(int id) {
+    public Optional<AircraftType> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional<Passport> passport = Optional.ofNullable(session.get(Passport.class, id));
+        Optional<AircraftType> aircraftTypes = Optional.ofNullable(session.get(AircraftType.class, id));
         transaction.commit();
         session.close();
-        return passport;
+        return aircraftTypes;
     }
 
     @Override
-    public List<Passport> getAll() {
+    public List<AircraftType> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<Passport> passportList = session.createQuery("Select a from "
-                + Passport.class.getSimpleName()
-                + " a", Passport.class).getResultList();
+        List<AircraftType> aircraftTypesList = session.createQuery("Select a from "
+                + AircraftType.class.getSimpleName() + " a", AircraftType.class).getResultList();
         transaction.commit();
         session.close();
-        return passportList;
+        return aircraftTypesList;
     }
 
     @Override
-    public List<Passport> getAllActive() {
+    public List<AircraftType> getAllActive() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Query<Passport> query = session.createQuery("from Passport p " +
-                "where p.active=true", Passport.class);
-        List<Passport> passportList = query.getResultList();
+        List<AircraftType> aircraftTypesList = session.createQuery("From AircraftTypes a " +
+                "where a.active=true", AircraftType.class).getResultList();
         transaction.commit();
         session.close();
-        return passportList;
+        return aircraftTypesList;
     }
 
     @Override
-    public Passport update(Passport passport) {
+    public AircraftType update(AircraftType aircraftTypes) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.update(passport);
+        session.update(aircraftTypes);
         transaction.commit();
         session.close();
-        return passport;
+        return aircraftTypes;
     }
 
     @Override
-    public boolean delete(Passport passport) {
+    public boolean delete(AircraftType aircraftTypes) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Passport passportFromDB = session.load(Passport.class, passport.getId());
-        if (passportFromDB != null) {
-            passport.setActive(false);
-            session.update(passportFromDB);
+        AircraftType aircraftTypesFromDB = session.load(AircraftType.class, aircraftTypes.getId());
+        if (aircraftTypesFromDB != null) {
+            aircraftTypesFromDB.setActive(false);
+            session.update(aircraftTypesFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -92,15 +90,5 @@ public class PassportDAOImpl implements PassportDAO {
         transaction.commit();
         session.close();
         return false;
-    }
-
-    @Override
-    public Passport getBySerialNumber(String serialNumber) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Passport passportDB = session.bySimpleNaturalId(Passport.class).load(serialNumber);
-        transaction.commit();
-        session.close();
-        return passportDB;
     }
 }

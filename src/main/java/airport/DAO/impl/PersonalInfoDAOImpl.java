@@ -1,7 +1,7 @@
-package airport.DAO.Impl;
+package airport.DAO.impl;
 
-import airport.DAO.RoutesDAO;
-import airport.entity.Route;
+import airport.DAO.GenericDAO;
+import airport.entity.PersonalInfo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,7 +10,7 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 import java.util.Optional;
 
-public class RoutesDAOImpl implements RoutesDAO {
+public class PersonalInfoDAOImpl implements GenericDAO<PersonalInfo> {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -23,43 +23,64 @@ public class RoutesDAOImpl implements RoutesDAO {
     }
 
     @Override
-    public Route add(Route route) {
+    public PersonalInfo add(PersonalInfo personalInfo) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(route);
+        session.save(personalInfo);
         transaction.commit();
         session.close();
-        return route;
+        return personalInfo;
     }
 
     @Override
-    public Optional<Route> getById(int id) {
+    public Optional<PersonalInfo> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional<Route> route = Optional.ofNullable(session.get(Route.class, id));
+        Optional<PersonalInfo> personalInfo = Optional.ofNullable(session.get(PersonalInfo.class, id));
         transaction.commit();
         session.close();
-        return route;
+        return personalInfo;
     }
 
     @Override
-    public Route update(Route route) {
+    public List<PersonalInfo> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.update(route);
+        List<PersonalInfo> personalInfoList = session.createQuery("from PersonalInfo p", PersonalInfo.class).getResultList();
         transaction.commit();
         session.close();
-        return route;
+        return personalInfoList;
     }
 
     @Override
-    public boolean delete(Route route) {
+    public List<PersonalInfo> getAllActive() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Route routeFromDB = session.load(Route.class, route.getId());
-        if (routeFromDB != null) {
-            routeFromDB.setActive(false);
-            session.update(routeFromDB);
+        List<PersonalInfo> personalInfoList = session.createQuery("from PersonalInfo p " +
+                "where p.active=true", PersonalInfo.class).getResultList();
+        transaction.commit();
+        session.close();
+        return personalInfoList;
+    }
+
+    @Override
+    public PersonalInfo update(PersonalInfo personalInfo) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(personalInfo);
+        transaction.commit();
+        session.close();
+        return personalInfo;
+    }
+
+    @Override
+    public boolean delete(PersonalInfo personalInfo) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        PersonalInfo personalInfoFromDB = session.get(PersonalInfo.class, personalInfo.getId());
+        if (personalInfoFromDB != null) {
+            personalInfoFromDB.setActive(false);
+            session.update(personalInfoFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -67,29 +88,5 @@ public class RoutesDAOImpl implements RoutesDAO {
         transaction.commit();
         session.close();
         return false;
-    }
-
-    @Override
-    public List<Route> getAll() {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        List<Route> routeList = session.createQuery("Select a from "
-                + Route.class.getSimpleName()
-                + " a", Route.class).getResultList();
-        transaction.commit();
-        session.close();
-        return routeList;
-    }
-
-    @Override
-    public List<Route> getAllActive() {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        List<Route> routeList = session.createQuery("From "
-                + Route.class.getSimpleName()
-                + " r where r.active = true", Route.class).getResultList();
-        transaction.commit();
-        session.close();
-        return routeList;
     }
 }

@@ -1,8 +1,7 @@
-package airport.DAO.Impl;
+package airport.DAO.impl;
 
-import airport.DAO.AircraftDAO;
-import airport.entity.Aircraft;
-import airport.entity.Airline;
+import airport.DAO.PassportDAO;
+import airport.entity.Passport;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,7 +11,7 @@ import org.hibernate.query.Query;
 import java.util.List;
 import java.util.Optional;
 
-public class AircraftDAOImpl implements AircraftDAO {
+public class PassportDAOImpl implements PassportDAO {
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
@@ -25,43 +24,67 @@ public class AircraftDAOImpl implements AircraftDAO {
     }
 
     @Override
-    public Aircraft add(Aircraft aircraft) {
+    public Passport add(Passport passport) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(aircraft);
+        session.save(passport);
         transaction.commit();
         session.close();
-        return aircraft;
+        return passport;
     }
 
     @Override
-    public Optional<Aircraft> getById(int id) {
+    public Optional<Passport> getById(int id) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Optional<Aircraft> aircraft = Optional.ofNullable(session.get(Aircraft.class, id));
+        Optional<Passport> passport = Optional.ofNullable(session.get(Passport.class, id));
         transaction.commit();
         session.close();
-        return aircraft;
+        return passport;
     }
 
     @Override
-    public Aircraft update(Aircraft aircraft) {
+    public List<Passport> getAll() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.update(aircraft);
+        List<Passport> passportList = session.createQuery("Select a from "
+                + Passport.class.getSimpleName()
+                + " a", Passport.class).getResultList();
         transaction.commit();
         session.close();
-        return aircraft;
+        return passportList;
     }
 
     @Override
-    public boolean delete(Aircraft aircraft) {
+    public List<Passport> getAllActive() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Aircraft aircraftFromDB = session.load(Aircraft.class, aircraft.getId());
-        if (aircraftFromDB != null) {
-            aircraftFromDB.setActive(false);
-            session.update(aircraftFromDB);
+        Query<Passport> query = session.createQuery("from Passport p " +
+                "where p.active=true", Passport.class);
+        List<Passport> passportList = query.getResultList();
+        transaction.commit();
+        session.close();
+        return passportList;
+    }
+
+    @Override
+    public Passport update(Passport passport) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(passport);
+        transaction.commit();
+        session.close();
+        return passport;
+    }
+
+    @Override
+    public boolean delete(Passport passport) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Passport passportFromDB = session.load(Passport.class, passport.getId());
+        if (passportFromDB != null) {
+            passport.setActive(false);
+            session.update(passportFromDB);
             transaction.commit();
             session.close();
             return true;
@@ -72,39 +95,12 @@ public class AircraftDAOImpl implements AircraftDAO {
     }
 
     @Override
-    public List<Aircraft> getAll() {
-        Session session = getSessionFactory().openSession();
+    public Passport getBySerialNumber(String serialNumber) {
+        Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        List<Aircraft> aircraftList = session.createQuery("Select a from "
-                + Aircraft.class.getSimpleName()
-                + " a", Aircraft.class).getResultList();
+        Passport passportDB = session.bySimpleNaturalId(Passport.class).load(serialNumber);
         transaction.commit();
         session.close();
-        return aircraftList;
-    }
-
-    @Override
-    public List<Aircraft> getAllActive() {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        Query<Aircraft> aircraftQuery = session.createQuery("from Aircraft a " +
-                "where a.active=true", Aircraft.class);
-        List<Aircraft> aircraftList = aircraftQuery.getResultList();
-        transaction.commit();
-        session.close();
-        return aircraftList;
-    }
-
-    @Override
-    public List<Aircraft> getAircraftsByAirline(Airline airline) {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        Query<Aircraft> query = session.createQuery("from Aircraft a " +
-                "where a.airline=:id", Aircraft.class);
-        query.setParameter("id", airline.getId());
-        List<Aircraft> aircraftList = query.getResultList();
-        transaction.commit();
-        session.close();
-        return aircraftList;
+        return passportDB;
     }
 }
