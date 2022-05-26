@@ -21,7 +21,7 @@ public class Passenger {
     private String name;
     private String surname;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "passenger")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "passenger")
     private List<Ticket> tickets;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "passenger")
     private List<Passport> passports;
@@ -31,8 +31,9 @@ public class Passenger {
     public String toString() {
         return "Passenger{" +
                 "id=" + id +
-//                ", tickets=" + tickets +
-//                ", passports=" + passports +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", active=" + active +
                 '}';
     }
 }

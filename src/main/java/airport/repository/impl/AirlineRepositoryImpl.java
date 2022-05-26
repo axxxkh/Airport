@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class AirlineRepositoryImpl implements AirlineRepository {
-    private AirlineDAO airlineDAO = new AirlineDAOImpl();
+    private final AirlineDAO airlineDAO = new AirlineDAOImpl();
 
     @Override
     public Airline add(Airline airline) {

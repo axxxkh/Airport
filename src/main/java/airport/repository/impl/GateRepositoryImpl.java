@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class GateRepositoryImpl implements GateRepository {
-    private GateDAO gateDAO = new GateDAOImpl();
+    private final GateDAO gateDAO = new GateDAOImpl();
 
     @Override
     public Gate add(Gate gate) {

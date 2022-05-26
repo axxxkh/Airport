@@ -25,14 +25,15 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name = "airline_id")
     private Airline airline;
-    @Column(name = "craft_id")
-    private int craftId;
+    @ManyToOne
+    @JoinColumn(name = "craft_id")
+    private Aircraft craftId;
     @ManyToOne
     @JoinColumn(name = "gate_id")
     private Gate gateId;
     private boolean active;
     @ManyToOne
-    @JoinColumn (name = "route_id")
+    @JoinColumn(name = "route_id")
     private Route route;
 
     @Override

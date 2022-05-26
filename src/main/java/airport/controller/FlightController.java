@@ -1,22 +1,50 @@
 package airport.controller;
 
+import airport.DTO.FlightDTO;
 import airport.entity.Flight;
 import airport.service.FlightService;
-import airport.service.impl.FlightServiceImpl;
+import airport.service.PassengerService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.modelmapper.ModelMapper;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/flight")
 @AllArgsConstructor
 public class FlightController {
 
-    private FlightService flightService = new FlightServiceImpl();
+    private FlightService flightService;
+    private PassengerService passengerService;
+    private ModelMapper modelMapper;
 
-    @GetMapping
-    public String hello() {
-         return flightService.getFlightById(1).toString();
+    //    http://localhost:8081/flight/getByPeriod/?startDate=2021-05-01&endDate=2022-05-05
+    @GetMapping("/getByPeriod/")
+    public List<FlightDTO> getByPeriod(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return flightService
+                .getFlightsByPeriod(startDate, endDate)
+                .stream()
+                .map(f -> modelMapper.map(f, FlightDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/addFlight/")
+    public String addFlight() {
+
+        Flight flight = Flight.builder()
+                .flightNumber(1)
+                .active(true)
+                .build();
+        return "Success";
+    }
+
+    @PostMapping("/flight/flight/")
+    public void saveFlight(@RequestBody FlightDTO flight) {
+
     }
 }

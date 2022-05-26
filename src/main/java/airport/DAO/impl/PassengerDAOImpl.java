@@ -10,10 +10,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class PassengerDAOImpl implements PassengerDAO {
     private static SessionFactory sessionFactory;
 
@@ -30,6 +32,8 @@ public class PassengerDAOImpl implements PassengerDAO {
     public Passenger add(Passenger passenger) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
+        passenger.getPassports().forEach(p -> p.setPassenger(passenger));
+        passenger.setActive(true);
         session.save(passenger);
         transaction.commit();
         session.close();
@@ -164,7 +168,12 @@ public class PassengerDAOImpl implements PassengerDAO {
     public Optional<Passenger> getByPassport(Passport passport) {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
+//        Query<Passenger> passengerQuery = session.createQuery("From Passenger p " +
+//                "LEFT JOIN FETCH p.passports pas " +
+//                "WHERE pas.id=:id", Passenger.class);
         PassengerDAO passengerDAO = new PassengerDAOImpl();
+        transaction.commit();
+        session.close();
         return passengerDAO.getById(passport.getPassenger().getId());
     }
 }

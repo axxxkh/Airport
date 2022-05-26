@@ -4,12 +4,14 @@ import airport.DAO.PassportDAO;
 import airport.DAO.impl.PassportDAOImpl;
 import airport.entity.Passport;
 import airport.repository.PassportRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class PassportRepositoryImpl implements PassportRepository {
-    private PassportDAO passportDAO = new PassportDAOImpl();
+    private final PassportDAO passportDAO = new PassportDAOImpl();
 
     @Override
     public Passport add(Passport passport) {
@@ -39,5 +41,10 @@ public class PassportRepositoryImpl implements PassportRepository {
     @Override
     public boolean delete(Passport passport) {
         return passportDAO.delete(passport);
+    }
+
+    @Override
+    public Passport getBySerialNumber(String serialNumber) {
+        return passportDAO.getBySerialNumber(serialNumber);
     }
 }

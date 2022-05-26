@@ -96,7 +96,7 @@ public class PassportDAOImpl implements PassportDAO {
 
     @Override
     public Passport getBySerialNumber(String serialNumber) {
-        Session session = sessionFactory.openSession();
+        Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         Passport passportDB = session.bySimpleNaturalId(Passport.class).load(serialNumber);
         transaction.commit();

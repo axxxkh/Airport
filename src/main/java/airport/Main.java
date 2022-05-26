@@ -6,8 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Main {
 
+
     public static void main(String[] args) {
-        SpringApplication.run(Main.class,args);
+
+        SpringApplication.run(Main.class, args);
     /*    GenericDAO<Aircraft> aircraftGenericDAO = new AircraftDAOImpl();
         GenericDAO<AircraftType> aircraftTypesGenericDAO = new AircraftTypesDAOImpl();
         GenericDAO<Airline> airlineGenericDAO = new AirlineDAOImpl();

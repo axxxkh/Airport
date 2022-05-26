@@ -4,12 +4,18 @@ import airport.DAO.AircraftDAO;
 import airport.DAO.impl.AircraftDAOImpl;
 import airport.entity.Aircraft;
 import airport.repository.AircraftRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
+@NoArgsConstructor
+@AllArgsConstructor
 public class AircraftRepositoryImpl implements AircraftRepository {
-    private AircraftDAO aircraftDAO=new AircraftDAOImpl();
+    private AircraftDAO aircraftDAO = new AircraftDAOImpl();
 
     @Override
     public Aircraft add(Aircraft aircraft) {

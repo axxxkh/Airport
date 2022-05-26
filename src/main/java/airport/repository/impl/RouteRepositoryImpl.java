@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class RouteRepositoryImpl implements RouteRepository {
-    private RoutesDAO routesDAO = new RoutesDAOImpl();
+    private final RoutesDAO routesDAO = new RoutesDAOImpl();
 
     @Override
     public Route add(Route route) {

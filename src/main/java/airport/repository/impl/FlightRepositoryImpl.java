@@ -2,14 +2,19 @@ package airport.repository.impl;
 
 import airport.DAO.FlightDAO;
 import airport.DAO.impl.FlightDAOImpl;
+import airport.entity.Airline;
 import airport.entity.Flight;
+import airport.entity.Gate;
+import airport.entity.Terminal;
 import airport.repository.FlightRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class FlightRepositoryImpl implements FlightRepository {
-    private FlightDAO flightDAO = new FlightDAOImpl();
+    private final FlightDAO flightDAO = new FlightDAOImpl();
 
     @Override
     public Flight add(Flight flight) {
@@ -39,5 +44,20 @@ public class FlightRepositoryImpl implements FlightRepository {
     @Override
     public boolean delete(Flight flight) {
         return flightDAO.delete(flight);
+    }
+
+    @Override
+    public List<Flight> getFlightsByAirline(Airline avialine) {
+        return flightDAO.getFlightsByAirline(avialine);
+    }
+
+    @Override
+    public List<Flight> getFlightsByGate(Gate gate) {
+        return flightDAO.getFlightsByGate(gate);
+    }
+
+    @Override
+    public List<Flight> getFlightByTerminal(Terminal terminal) {
+        return flightDAO.getFlightByTerminal(terminal);
     }
 }

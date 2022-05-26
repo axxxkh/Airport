@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TerminalRepositoryImpl implements TerminalRepository {
-    private TerminalDAO terminalDAO = new TerminalDAOImpl();
+    private final TerminalDAO terminalDAO = new TerminalDAOImpl();
 
     @Override
     public Terminal add(Terminal terminal) {

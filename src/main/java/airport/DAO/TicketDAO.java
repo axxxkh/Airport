@@ -12,5 +12,6 @@ public interface TicketDAO extends GenericDAO<Ticket> {
     List<Ticket> getTicketsByPassenger(Passenger passenger);
 
     void addAll(List<Ticket> ticketList);
+
     void updateAll(List<Ticket> ticketList);
 }

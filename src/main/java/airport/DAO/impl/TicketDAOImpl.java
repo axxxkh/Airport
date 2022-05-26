@@ -9,10 +9,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class TicketDAOImpl implements TicketDAO {
     private static SessionFactory sessionFactory;
 
@@ -61,9 +63,8 @@ public class TicketDAOImpl implements TicketDAO {
     public List<Ticket> getAllActive() {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Query<Ticket> query = session.createQuery("From "
-                + Ticket.class.getSimpleName()
-                + " t.active = true", Ticket.class);
+        Query<Ticket> query = session.createQuery("from Ticket t " +
+                "where t.active=true", Ticket.class);
         List<Ticket> ticketList = query.getResultList();
         transaction.commit();
         session.close();

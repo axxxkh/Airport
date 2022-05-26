@@ -14,13 +14,13 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_Id","seat"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_Id", "seat"})})
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int number;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "flight_id")
     private Flight flight;
     private int seat;
