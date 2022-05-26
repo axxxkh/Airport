@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class AircraftTypeRepositoryImpl implements AircraftTypeRepository {
-    private final AircraftTypesDAO aircraftTypesDAO = new AircraftTypesDAOImpl();
+    private  AircraftTypesDAO aircraftTypesDAO = new AircraftTypesDAOImpl();
 
     @Override
     public AircraftType add(AircraftType aircraftType) {

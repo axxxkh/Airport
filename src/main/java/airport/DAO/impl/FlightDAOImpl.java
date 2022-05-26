@@ -105,7 +105,6 @@ public class FlightDAOImpl implements FlightDAO {
         query.setParameter("id", airline.getId());
 
         List<Flight> flightList = query.getResultList();
-        flightList.forEach(System.out::println);
         transaction.commit();
         session.close();
         return flightList;
@@ -120,7 +119,6 @@ public class FlightDAOImpl implements FlightDAO {
                 "where f.id=:id", Flight.class);
         query.setParameter("id", gate.getId());
         List<Flight> flightList = query.getResultList();
-        flightList.forEach(System.out::println);
         transaction.commit();
         session.close();
         return flightList;
@@ -137,5 +135,16 @@ public class FlightDAOImpl implements FlightDAO {
         transaction.commit();
         session.close();
         return flightList;
+    }
+
+    @Override
+    public Flight getFlightByNumber(int flightNumber) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Flight flight = session.createQuery("from Flight f " +
+                "where f.flightNumber=:id", Flight.class).setParameter("id",flightNumber).getSingleResult();
+        transaction.commit();
+        session.close();
+        return flight;
     }
 }

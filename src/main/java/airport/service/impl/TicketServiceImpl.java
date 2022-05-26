@@ -1,18 +1,20 @@
 package airport.service.impl;
 
-import airport.DAO.AircraftDAO;
 import airport.DAO.TicketDAO;
-import airport.DAO.impl.AircraftDAOImpl;
 import airport.DAO.impl.TicketDAOImpl;
 import airport.entity.*;
-import airport.repository.AircraftRepository;
-import airport.repository.TicketRepository;
+import airport.repository.*;
+import airport.repository.impl.FlightRepositoryImpl;
+import airport.repository.impl.PassengerRepositoryImpl;
+import airport.repository.impl.PassportRepositoryImpl;
+import airport.repository.impl.TicketRepositoryImpl;
 import airport.service.TicketService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -24,26 +26,27 @@ import java.util.stream.IntStream;
 @NoArgsConstructor
 public class TicketServiceImpl implements TicketService {
     @Autowired
-    private TicketRepository ticketRepository;
+    private TicketRepository ticketRepository = new TicketRepositoryImpl(new TicketDAOImpl());
     private AircraftRepository aircraftRepository;
+    private PassengerRepository passengerRepository = new PassengerRepositoryImpl();
+    private PassportRepository passportRepository = new PassportRepositoryImpl();
+    private FlightRepository flightRepository = new FlightRepositoryImpl();
+
 
     @Override
     public List<Ticket> generateAndWriteTicketsForFlight(Flight flight) {
-        List<Ticket> ticketList;
-        AircraftDAO aircraftDAO = new AircraftDAOImpl();
         Aircraft aircraft = flight.getCraftId();
         AircraftType aircraftTypes = aircraft.getTypeId();
-        TicketDAO ticketDAO = new TicketDAOImpl();
-        ticketList = IntStream.rangeClosed(1, aircraftTypes.getCapacity())
+        List<Ticket> ticketList = IntStream.rangeClosed(1, aircraftTypes.getCapacity())
                 .mapToObj(seat -> Ticket
                         .builder()
                         .seat(seat)
                         .flight(flight)
                         .ticketStatus(TICKET_STATUS_NOT_SOLD)
+                        .active(true)
                         .build())
                 .collect(Collectors.toList());
-        ticketList.forEach(System.out::println);
-        ticketDAO.addAll(ticketList);
+        ticketRepository.addAll(ticketList);
         return ticketList;
     }
 
@@ -56,12 +59,19 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket buyTicket(Passenger passenger, Flight flight) {
+    public Ticket buyTicket(Passenger passenger, int flightNumber) {
+
+        Queue<Passport> passportList = new LinkedList<>(passenger.getPassports());
+        Passport passport = passportList.peek();
+        Passport passportDB = passportRepository.getBySerialNumber(passport.getSerialNumber());
+        Passenger passengerDB = passengerRepository.getByPassport(passportDB).orElseThrow();
+        Flight flight = flightRepository.getFlightByNumber(flightNumber);
         Queue<Ticket> ticketQueue = new LinkedList<>(getAvailableTickets(flight));
         Ticket ticket = ticketQueue.peek();
         if (ticket != null) {
-            ticket.setPassenger(passenger);
-            ticketRepository.add(ticket);
+            ticket.setPassenger(passengerDB);
+            ticket.setBuyDate(LocalDate.now());
+            ticketRepository.update(ticket);
             return ticket;
         }
         return null;
@@ -81,6 +91,18 @@ public class TicketServiceImpl implements TicketService {
         return ticketRepository.getAllActive()
                 .stream()
                 .filter(t -> (t.isActive() && t.getTicketStatus() == TICKET_STATUS_NOT_SOLD))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Ticket> getAllBuyedTicketsByPeriod(LocalDate startDate, LocalDate endDate) {
+
+        return ticketRepository
+                .getAll()
+                .stream()
+                .filter(t -> (t.getBuyDate().isAfter(startDate)
+                        && t.getBuyDate().isBefore(endDate)))
+                .filter(t -> t.getTicketStatus() == TICKET_STATUS_SOLD)
                 .collect(Collectors.toList());
     }
 }

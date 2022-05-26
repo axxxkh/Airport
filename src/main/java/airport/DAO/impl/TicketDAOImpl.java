@@ -108,7 +108,6 @@ public class TicketDAOImpl implements TicketDAO {
         query.setParameter("id", flight.getId());
 
         List<Ticket> ticketList = query.getResultList();
-        ticketList.forEach(System.out::println);
         transaction.commit();
         session.close();
         return ticketList;
@@ -124,7 +123,6 @@ public class TicketDAOImpl implements TicketDAO {
         query.setParameter("id", passenger.getId());
 
         List<Ticket> ticketList = query.getResultList();
-        ticketList.forEach(System.out::println);
         transaction.commit();
         session.close();
         return ticketList;

@@ -37,7 +37,7 @@ public class FlightController {
     public String addFlight() {
 
         Flight flight = Flight.builder()
-                .flightNumber(1)
+                .flightNumber(100)
                 .active(true)
                 .build();
         return "Success";

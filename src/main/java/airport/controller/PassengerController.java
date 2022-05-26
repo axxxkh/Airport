@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/passenger")
+
 @AllArgsConstructor
 public class PassengerController {
 
@@ -16,12 +18,12 @@ public class PassengerController {
     private PassengerService passengerService;
     private PassportService passportService;
 
-    @GetMapping("/passenger/get/")
+    @GetMapping("/get/")
     public Passenger getPassenger() {
         return Passenger.builder().build();
     }
 
-    @GetMapping("/passenger/getByPassport/")
+    @GetMapping("/getByPassport/")
     public PassengerDTO getPassengerByPassport(@RequestParam String passportSerialNumber) {
         Passenger passenger = passengerService.getPassengerByPassportNumber(passportSerialNumber);
         return modelMapper.map(passenger, PassengerDTO.class);
@@ -41,11 +43,10 @@ public class PassengerController {
                     "passportType": "UAinternational"
             }
                     ]
-        }*/
-    @PostMapping("/passenger/add/")
+        }
+        */
+    @PostMapping("/add/")
     public String add(@RequestBody PassengerDTO passengerDTO) {
-
         return passengerService.addPassenger(modelMapper.map(passengerDTO, Passenger.class));
     }
-
 }

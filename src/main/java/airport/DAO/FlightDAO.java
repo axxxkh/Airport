@@ -13,4 +13,6 @@ public interface FlightDAO extends GenericDAO<Flight> {
     List<Flight> getFlightsByGate(Gate gate);
 
     List<Flight> getFlightByTerminal(Terminal terminal);
+
+    Flight getFlightByNumber(int flightNumber);
 }

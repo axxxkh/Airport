@@ -60,4 +60,9 @@ public class FlightRepositoryImpl implements FlightRepository {
     public List<Flight> getFlightByTerminal(Terminal terminal) {
         return flightDAO.getFlightByTerminal(terminal);
     }
+
+    @Override
+    public Flight getFlightByNumber(int flightNumber) {
+        return flightDAO.getFlightByNumber(flightNumber);
+    }
 }

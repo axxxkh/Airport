@@ -1,5 +1,11 @@
 package airport;
 
+import airport.DAO.FlightDAO;
+import airport.DAO.GenericDAO;
+import airport.DAO.impl.*;
+import airport.entity.*;
+import airport.service.TicketService;
+import airport.service.impl.TicketServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,17 +16,19 @@ public class Main {
     public static void main(String[] args) {
 
         SpringApplication.run(Main.class, args);
-    /*    GenericDAO<Aircraft> aircraftGenericDAO = new AircraftDAOImpl();
-        GenericDAO<AircraftType> aircraftTypesGenericDAO = new AircraftTypesDAOImpl();
-        GenericDAO<Airline> airlineGenericDAO = new AirlineDAOImpl();
-        GenericDAO<Flight> flightGenericDAO = new FlightDAOImpl();
-        GenericDAO<Gate> gateGenericDAO = new GateDAOImpl();
-        GenericDAO<Passenger> passengerGenericDAO = new PassengerDAOImpl();
-        GenericDAO<Route> routeGenericDAO = new RoutesDAOImpl();
-        GenericDAO<Terminal> terminalGenericDAO = new TerminalDAOImpl();
-        GenericDAO<Ticket> ticketGenericDAO = new TicketDAOImpl();
 
-//        Ticket myTicket = Ticket.builder()
+        //        GenericDAO<AircraftType> aircraftTypesGenericDAO = new AircraftTypesDAOImpl();
+//        GenericDAO<Airline> airlineGenericDAO = new AirlineDAOImpl();
+//        FlightDAO flightGenericDAO = new FlightDAOImpl();
+//        GenericDAO<Gate> gateGenericDAO = new GateDAOImpl();
+//        GenericDAO<Passenger> passengerGenericDAO = new PassengerDAOImpl();
+//        GenericDAO<Route> routeGenericDAO = new RoutesDAOImpl();
+//        GenericDAO<Terminal> terminalGenericDAO = new TerminalDAOImpl();
+//        GenericDAO<Ticket> ticketGenericDAO = new TicketDAOImpl();
+//
+//       GenericDAO<Aircraft> aircraftGenericDAO = new AircraftDAOImpl();
+/*
+       //        Ticket myTicket = Ticket.builder()
 //                .number(112111189)
 //                .build();
 //        ticketGenericDAO.add(myTicket);
@@ -79,5 +87,18 @@ public class Main {
         PassportDAO passportDAO = new PassportDAOImpl();
         passportDAO.getAllActive().forEach(System.out::println);
         TicketRepository ticketRepository = new TicketRepository();*/
+//        Airline airline = airlineGenericDAO.getById(1).orElseThrow();
+//        Flight flight = Flight.builder()
+//                .flightStatus(Byte.parseByte("0"))
+//                .flightNumber(1234)
+//                .airline(airline)
+//                .craftId(airline.getAirCrafts().get(1))
+//                .gateId(gateGenericDAO.getById(1).orElseThrow())
+//                .route(routeGenericDAO.getById(1).orElseThrow())
+//                .build();
+//        flightGenericDAO.add(flight);
+//        flight=flightGenericDAO.getFlightByNumber(flight.getFlightNumber());
+//        TicketService ticketService = new TicketServiceImpl();
+//        ticketService.generateAndWriteTicketsForFlight(flight);
     }
 }

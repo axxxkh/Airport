@@ -15,4 +15,6 @@ public interface FlightRepository extends GenericRepository<Flight> {
     List<Flight> getFlightsByGate(Gate gate);
 
     List<Flight> getFlightByTerminal(Terminal terminal);
+
+    Flight getFlightByNumber(int flightNumber);
 }
