@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -16,6 +15,11 @@ import javax.persistence.Id;
 
 public class Gate {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private int capacity;
+    @ManyToOne
+    @JoinColumn(name = "terminal_id")
+    private Terminal terminal;
     private boolean active;
 }

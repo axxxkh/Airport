@@ -1,45 +1,57 @@
 package airport.service.impl;
 
+import airport.Repository.PassengerRepository;
+import airport.Repository.PassportRepository;
 import airport.entity.Passenger;
 import airport.entity.Passport;
-import airport.repository.PassengerRepository;
-import airport.repository.PassportRepository;
-import airport.repository.impl.PassportRepositoryImpl;
-import airport.service.PassengerService;
+import airport.service.PassengerSpringService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
-public class PassengerServiceImpl implements PassengerService {
+@AllArgsConstructor
+public class PassengerServiceImpl implements PassengerSpringService {
 
     @Autowired
     private PassengerRepository passengerRepository;
-    //    @Autowired
-    private final PassportRepository passportRepository = new PassportRepositoryImpl();
+    private PassportRepository passportRepository;
+
 
     @Override
-    public String addPassenger(Passenger passenger) {
-        passengerRepository.add(passenger);
-        return "Success";
+    public Passenger add(Passenger passenger) {
+        return passengerRepository.saveAndFlush(passenger);
+    }
+
+    @Override
+    public void delete(Passenger passenger) {
+        passenger.setActive(false);
+        passengerRepository.saveAndFlush(passenger);
     }
 
     @Override
     public Passenger identify(Passport passport) {
-        Passport passportDB = passportRepository.getBySerialNumber(passport.getSerialNumber());
-        Optional<Passenger> passenger;
-        passenger = passengerRepository.getByPassport(passport);
-
-        if (passport.equals(passportDB) && passenger.isPresent()) {
-            return passenger.orElseThrow();
-        }
         return null;
     }
 
     @Override
     public Passenger getPassengerByPassportNumber(String passportNumber) {
-        Passport passport = passportRepository.getBySerialNumber(passportNumber);
+        Passport passport = passportRepository.findBySerialNumber(passportNumber);
         return passport.getPassenger();
+//return null;
+    }
+
+    @Override
+    public Passenger getPassengerByPassport(Passport passport) {
+//        passengerRepository.findBy(passport,p->p.s)
+
+        return null;
+    }
+
+    @Override
+    public List<Passenger> getAll() {
+        return null;
     }
 }

@@ -2,8 +2,8 @@ package airport.controller;
 
 import airport.DTO.FlightDTO;
 import airport.entity.Flight;
-import airport.service.FlightService;
-import airport.service.PassengerService;
+import airport.service.FlightEntityService;
+import airport.service.PassengerEntityService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class FlightController {
 
-    private FlightService flightService;
-    private PassengerService passengerService;
+    private FlightEntityService flightService;
+    private PassengerEntityService passengerService;
     private ModelMapper modelMapper;
 
     //    http://localhost:8081/flight/getByPeriod/?startDate=2021-05-01&endDate=2022-05-05

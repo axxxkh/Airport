@@ -3,20 +3,15 @@ package airport.controller;
 import airport.DTO.PassengerDTO;
 import airport.DTO.TicketDTO;
 import airport.entity.Passenger;
-import airport.entity.Passport;
-import airport.repository.PassengerRepository;
-import airport.repository.impl.PassengerRepositoryImpl;
-import airport.service.FlightService;
-import airport.service.TicketService;
+import airport.service.FlightEntityService;
+import airport.service.TicketEntityService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,8 +20,8 @@ import java.util.stream.Collectors;
 public class TicketController {
 
     private ModelMapper modelMapper;
-    private TicketService ticketService;
-    private FlightService flightService;
+    private TicketEntityService ticketService;
+    private FlightEntityService flightService;
 
     /* RequestBody
      {

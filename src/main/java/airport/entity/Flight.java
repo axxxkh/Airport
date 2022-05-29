@@ -30,7 +30,7 @@ public class Flight {
     private Aircraft craftId;
     @ManyToOne
     @JoinColumn(name = "gate_id")
-    private Gate gateId;
+    private Gate gate;
     private boolean active;
     @ManyToOne
     @JoinColumn(name = "route_id")
