@@ -2,9 +2,8 @@ package airport.controller;
 
 import airport.DTO.PassengerDTO;
 import airport.entity.Passenger;
-import airport.service.PassengerSpringService;
+import airport.service.PassengerService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,16 +12,14 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class PassengerController {
 
-    private ModelMapper mapper;
-    private PassengerSpringService passengerSpringService;
-
+    private PassengerService passengerSpringService;
 
     @GetMapping("/get/")
     public Passenger getPassenger() {
         return Passenger.builder().build();
     }
 
-    @GetMapping("/getByPassport/")
+    @GetMapping("/get/passport/")
     public String getPassengerByPassport(@RequestParam String passportSerialNumber) {
         return passengerSpringService.getPassengerByPassportNumber(passportSerialNumber).toString();
     }
@@ -45,6 +42,6 @@ public class PassengerController {
         */
     @PostMapping("/add/")
     public String add(@RequestBody PassengerDTO passengerDTO) {
-        return passengerSpringService.add(mapper.map(passengerDTO, Passenger.class)).toString();
+        return passengerSpringService.add(passengerDTO);
     }
 }

@@ -2,16 +2,16 @@ package airport.service.impl;
 
 import airport.DAO.TicketDAO;
 import airport.DAO.impl.TicketDAOImpl;
+import airport.DTO.FlightDTO;
+import airport.DTO.PassengerDTO;
+import airport.DTO.PassportDTO;
+import airport.DTO.TicketDTO;
+import airport.Repository.*;
 import airport.entity.*;
-import airport.repositoryDAO.*;
-import airport.repositoryDAO.impl.FlightRepositoryImplDAO;
-import airport.repositoryDAO.impl.PassengerRepositoryImplDAO;
-import airport.repositoryDAO.impl.PassportRepositoryImplDAO;
-import airport.repositoryDAO.impl.TicketRepositoryImplDAO;
-import airport.service.TicketEntityService;
+import airport.service.TicketService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,13 +24,14 @@ import java.util.stream.IntStream;
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
-public class TicketDAOServiceImpl implements TicketEntityService {
-    @Autowired
-    private TicketRepositoryDAO ticketRepository = new TicketRepositoryImplDAO(new TicketDAOImpl());
-    private AircraftRepositoryDAO aircraftRepository;
-    private PassengerRepositoryDAO passengerRepository = new PassengerRepositoryImplDAO();
-    private PassportRepositoryDAO passportRepository = new PassportRepositoryImplDAO();
-    private FlightRepositoryDAO flightRepository = new FlightRepositoryImplDAO();
+public class TicketDAOServiceImpl implements TicketService {
+
+    private TicketRepository ticketRepository;
+    private AircraftRepository aircraftRepository;
+    private PassengerRepository passengerRepository;
+    private PassportRepository passportRepository;
+    private FlightRepository flightRepository;
+    private ModelMapper mapper;
 
 
     @Override
@@ -46,7 +47,7 @@ public class TicketDAOServiceImpl implements TicketEntityService {
                         .active(true)
                         .build())
                 .collect(Collectors.toList());
-        ticketRepository.addAll(ticketList);
+        ticketRepository.saveAllAndFlush(ticketList);
         return ticketList;
     }
 
@@ -59,51 +60,58 @@ public class TicketDAOServiceImpl implements TicketEntityService {
     }
 
     @Override
-    public Ticket buyTicket(Passenger passenger, int flightNumber) {
+    public TicketDTO buyTicket(PassengerDTO passengerDTO, int flightNumber) {
 
-        Queue<Passport> passportList = new LinkedList<>(passenger.getPassports());
-        Passport passport = passportList.peek();
-        Passport passportDB = passportRepository.getBySerialNumber(passport.getSerialNumber());
-        Passenger passengerDB = passengerRepository.getByPassport(passportDB).orElseThrow();
-        Flight flight = flightRepository.getFlightByNumber(flightNumber);
-        Queue<Ticket> ticketQueue = new LinkedList<>(getAvailableTickets(flight));
+        Queue<PassportDTO> passportList = new LinkedList<>(passengerDTO.getPassports());
+        assert passportList.peek() != null;
+        Passport passport = passportRepository.findBySerialNumber(passportList.peek().getSerialNumber());
+        assert passport != null;
+        Passport passportDB = passportRepository.findBySerialNumber(passport.getSerialNumber());
+        Passenger passengerDB = passportDB.getPassenger();
+        Flight flight = flightRepository.findFlightByFlightNumber(flightNumber);
+        ticketRepository.findTicketsByFlightId(flight.getId());
+        Queue<Ticket> ticketQueue = new LinkedList<>(ticketRepository.findTicketsByFlightId(flight.getId()));
         Ticket ticket = ticketQueue.peek();
         if (ticket != null) {
             ticket.setPassenger(passengerDB);
             ticket.setBuyDate(LocalDate.now());
             ticket.setTicketStatus(TICKET_STATUS_SOLD);
-            ticketRepository.update(ticket);
-            return ticket;
+            ticketRepository.saveAndFlush(ticket);
+            return mapper.map(ticket, TicketDTO.class);
         }
         return null;
     }
 
     @Override
-    public List<Ticket> getAvailableTickets(Flight flight) {
+    public List<TicketDTO> getAvailableTickets(FlightDTO flightDTO) {
+        Flight flight = flightRepository.findFlightByFlightNumber(flightDTO.getFlightNumber());
 
-        return ticketRepository.getTicketsByFlight(flight)
+        return ticketRepository.findTicketsByFlightId(flight.getId())
                 .stream()
                 .filter(t -> (t.isActive() && t.getTicketStatus() == TICKET_STATUS_NOT_SOLD))
+                .map(t -> mapper.map(t, TicketDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Ticket> getAllAvailableTickets() {
-        return ticketRepository.getAllActive()
+    public List<TicketDTO> getAllAvailableTickets() {
+        return ticketRepository.findByActiveTrue()
                 .stream()
                 .filter(t -> (t.isActive() && t.getTicketStatus() == TICKET_STATUS_NOT_SOLD))
+                .map(t -> mapper.map(t, TicketDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Ticket> getAllBuyedTicketsByPeriod(LocalDate startDate, LocalDate endDate) {
+    public List<TicketDTO> getAllBuyedTicketsByPeriod(LocalDate startDate, LocalDate endDate) {
 
         return ticketRepository
-                .getAll()
+                .findAll()
                 .stream()
                 .filter(t -> (t.getBuyDate().isAfter(startDate)
                         && t.getBuyDate().isBefore(endDate)))
                 .filter(t -> t.getTicketStatus() == TICKET_STATUS_SOLD)
+                .map(t -> mapper.map(t, TicketDTO.class))
                 .collect(Collectors.toList());
     }
 }

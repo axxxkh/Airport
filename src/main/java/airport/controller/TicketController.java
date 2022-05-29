@@ -2,26 +2,22 @@ package airport.controller;
 
 import airport.DTO.PassengerDTO;
 import airport.DTO.TicketDTO;
-import airport.entity.Passenger;
-import airport.service.FlightEntityService;
-import airport.service.TicketEntityService;
+import airport.service.FlightService;
+import airport.service.TicketService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/ticket")
 @AllArgsConstructor
 public class TicketController {
 
-    private ModelMapper modelMapper;
-    private TicketEntityService ticketService;
-    private FlightEntityService flightService;
+    private TicketService ticketService;
+    private FlightService flightService;
 
     /* RequestBody
      {
@@ -39,22 +35,21 @@ public class TicketController {
 
         Requestparam - int flightNumber
 */
-    @PostMapping("/buyTicket/")
+    @PostMapping("/buy/ticket/")
     public String buyTicket(@RequestBody PassengerDTO passengerDTO, @RequestParam int flightNumber) {
-        Passenger passenger = modelMapper.map(passengerDTO, Passenger.class);
-        ticketService.buyTicket(passenger, flightNumber);
-        return null;
+        ticketService.buyTicket(passengerDTO, flightNumber);
+        return "String";
     }
 
-    @GetMapping("/getAllAvailableTickets/")
+    @GetMapping("/get/availableTickets/")
     public List<TicketDTO> getAllTickets() {
-        return ticketService.getAllAvailableTickets().stream().map(ticket -> modelMapper.map(ticket, TicketDTO.class)).collect(Collectors.toList());
+        return ticketService.getAllAvailableTickets();
     }
 
     //    http://localhost:8081/ticket/getAllBuyedTicketsByPeriod/?startDate=2019-05-01&endDate=2022-05-05
-    @GetMapping("/getAllBuyedTicketsByPeriod/")
+    @GetMapping("/get/tickets/buyed/period")
     public List<TicketDTO> getAllBuyedTicketsByPeriod(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        return ticketService.getAllBuyedTicketsByPeriod(startDate, endDate).stream().map(t -> modelMapper.map(t, TicketDTO.class)).collect(Collectors.toList());
+        return ticketService.getAllBuyedTicketsByPeriod(startDate, endDate);
 
     }
 }

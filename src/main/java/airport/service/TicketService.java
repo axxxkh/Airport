@@ -1,13 +1,15 @@
 package airport.service;
 
+import airport.DTO.FlightDTO;
+import airport.DTO.PassengerDTO;
+import airport.DTO.TicketDTO;
 import airport.entity.Flight;
-import airport.entity.Passenger;
 import airport.entity.Ticket;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface TicketEntityService {
+public interface TicketService {
     byte TICKET_STATUS_NOT_SOLD = 0;
     byte TICKET_STATUS_SOLD = 1;
     byte TICKET_STATUS_BOARDED = 2;
@@ -17,12 +19,12 @@ public interface TicketEntityService {
 
     void updateTicketsFlightFinished(Flight flight);
 
-    Ticket buyTicket(Passenger passenger, int flightNumber);
+    TicketDTO buyTicket(PassengerDTO passengerDTO, int flightNumber);
 
-    List<Ticket> getAvailableTickets(Flight flight);
+    List<TicketDTO> getAvailableTickets(FlightDTO flight);
 
-    List<Ticket> getAllAvailableTickets();
+    List<TicketDTO> getAllAvailableTickets();
 
-    List<Ticket> getAllBuyedTicketsByPeriod(LocalDate startDate, LocalDate endDate);
+    List<TicketDTO> getAllBuyedTicketsByPeriod(LocalDate startDate, LocalDate endDate);
 
 }

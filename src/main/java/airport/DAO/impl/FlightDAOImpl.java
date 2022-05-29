@@ -142,7 +142,7 @@ public class FlightDAOImpl implements FlightDAO {
         Session session = getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         Flight flight = session.createQuery("from Flight f " +
-                "where f.flightNumber=:id", Flight.class).setParameter("id",flightNumber).getSingleResult();
+                "where f.flightNumber=:id", Flight.class).setParameter("id", flightNumber).getSingleResult();
         transaction.commit();
         session.close();
         return flight;

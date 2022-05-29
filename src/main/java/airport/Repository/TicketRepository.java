@@ -9,8 +9,12 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     @Query("from Ticket t LEFT JOIN FETCH t.flight f where f.id= ?1")
-    List<Ticket> getTicketsByFlightId(Integer flightId);
+    List<Ticket> findTicketsByFlightId(Integer flightId);
 
     @Query("from Ticket t LEFT JOIN FETCH t.passenger p where p.id= ?1")
-    List<Ticket> getTicketsByPassengerId(Integer passengerId);
+    List<Ticket> findTicketsByPassengerId(Integer passengerId);
+
+    List<Ticket> findByActiveTrue();
+
+
 }
