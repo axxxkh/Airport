@@ -1,22 +1,21 @@
 package airport.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Route {
+public class Route extends BasicEntity{
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String route;
-    private boolean active;
+    @Column(unique = true)
+    private String name;
+    private boolean active = Boolean.TRUE;
 }

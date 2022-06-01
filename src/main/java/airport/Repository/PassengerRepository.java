@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface PassengerRepository extends JpaRepository<Passenger, Integer> {
+public interface PassengerRepository extends GenericJPARepository<Passenger> {
 
     @Query("from Passenger p LEFT JOIN p.tickets t LEFT JOIN t.flight f where f.flightNumber= ?1")
     List<Passenger> getPassengerByFlightNumber(Integer flightNumber);

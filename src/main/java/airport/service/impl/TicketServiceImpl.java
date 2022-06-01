@@ -1,7 +1,5 @@
 package airport.service.impl;
 
-import airport.DAO.TicketDAO;
-import airport.DAO.impl.TicketDAOImpl;
 import airport.DTO.FlightDTO;
 import airport.DTO.PassengerDTO;
 import airport.DTO.PassportDTO;
@@ -24,7 +22,7 @@ import java.util.stream.IntStream;
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
-public class TicketDAOServiceImpl implements TicketService {
+public class TicketServiceImpl implements TicketService {
 
     private TicketRepository ticketRepository;
     private AircraftRepository aircraftRepository;
@@ -53,10 +51,9 @@ public class TicketDAOServiceImpl implements TicketService {
 
     @Override
     public void updateTicketsFlightFinished(Flight flight) {
-        TicketDAO ticketDAO = new TicketDAOImpl();
-        List<Ticket> ticketList = ticketDAO.getTicketsByFlight(flight);
+        List<Ticket> ticketList = ticketRepository.findTicketsByFlightId(flight.getId());
         ticketList.forEach(t -> t.setTicketStatus(TICKET_STATUS_FINISHED));
-        ticketDAO.updateAll(ticketList);
+        ticketRepository.saveAllAndFlush(ticketList);
     }
 
     @Override

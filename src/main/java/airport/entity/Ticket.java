@@ -1,9 +1,6 @@
 package airport.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,7 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_Id", "seat"})})
-public class Ticket {
+public class Ticket extends BasicEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -27,22 +24,13 @@ public class Ticket {
     private int seat;
     @Column(name = "ticket_status")
     private byte ticketStatus;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @ManyToOne
     @JoinColumn(name = "passenger_id")
     private Passenger passenger;
     @Column(name = "buy_date")
     private LocalDate buyDate;
-    private boolean active;
-
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "id=" + id +
-                ", number=" + number +
-                ", seat=" + seat +
-                ", ticketStatus=" + ticketStatus +
-                '}';
-    }
+    private boolean active = Boolean.TRUE;
 
     @Override
     public boolean equals(Object o) {

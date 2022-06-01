@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface AircraftRepository extends JpaRepository<Aircraft, Integer> {
+public interface AircraftRepository extends GenericJPARepository<Aircraft> {
 
-    List<Aircraft> getAircraftsByAirline(@Param("id") Airline airline);
+    List<Aircraft> getAircraftsByAirline(Airline airline);
 }

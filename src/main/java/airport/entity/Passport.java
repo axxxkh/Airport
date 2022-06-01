@@ -16,34 +16,22 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"serial_number", "passport_type"})})
-public class Passport {
+public class Passport extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "serial_number", nullable = false)
-    @NaturalId
+//    @NaturalId
     private String serialNumber;
     private LocalDate birthdate;
     @Column(name = "issue_date", nullable = false)
     private LocalDate issueDate;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "passenger_id", nullable = false)
     private Passenger passenger;
     @Column(name = "passport_type", nullable = false)
     private String passportType;
-    private boolean active;
-
-    @Override
-    public String toString() {
-        return "Passport{" +
-                "id=" + id +
-                ", serialNumber='" + serialNumber + '\'' +
-                ", birthdate=" + birthdate +
-                ", issueDate=" + issueDate +
-                ", passenger=" + passenger +
-                ", passportType='" + passportType + '\'' +
-                '}';
-    }
+    private boolean active = Boolean.TRUE;
 
     @Override
     public boolean equals(Object o) {
@@ -58,5 +46,18 @@ public class Passport {
     @Override
     public int hashCode() {
         return Objects.hash(getSerialNumber(), getIssueDate(), getPassportType());
+    }
+
+    @Override
+    public String toString() {
+        return "Passport{" +
+                "id=" + id +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", birthdate=" + birthdate +
+                ", issueDate=" + issueDate +
+//                ", passenger=" + passenger +
+//                ", passportType='" + passportType + '\'' +
+                ", active=" + active +
+                '}';
     }
 }

@@ -7,7 +7,9 @@ import airport.entity.Flight;
 import airport.entity.Ticket;
 import airport.service.FlightService;
 import airport.service.TicketService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class FlightServiceImpl implements FlightService {
 
     private FlightRepository flightRepository;
@@ -23,7 +26,8 @@ public class FlightServiceImpl implements FlightService {
     private ModelMapper mapper;
 
     @Override
-    public void flightFinished(Flight flight) {
+    public void flightFinished(FlightDTO flightDTO) {
+        Flight flight = flightRepository.findFlightByFlightNumber(flightDTO.getFlightNumber());
         List<Ticket> ticketList = ticketRepository.findTicketsByFlightId(flight.getId());
         flight.setFlightStatus(FLIGHT_STATUS_FINISHED);
         flightRepository.saveAndFlush(flight);
@@ -51,7 +55,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<FlightDTO> getFlightsByDate(LocalDate date) {
-        return flightRepository.findFlightsByDate(date)
+        return flightRepository.findFlightsByTime(date)
                 .stream()
                 .map(f -> mapper.map(f, FlightDTO.class))
                 .collect(Collectors.toList());

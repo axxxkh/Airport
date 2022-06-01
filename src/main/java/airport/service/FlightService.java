@@ -21,7 +21,7 @@ public interface FlightService {
 
     List<FlightDTO> getFlightsByPeriod(LocalDate startDate, LocalDate endDate);
 
-    void flightFinished(Flight flight);
+    void flightFinished(FlightDTO flightDTO);
 
 //     List<Flight> getFlightsByRoutes(Route route);
 

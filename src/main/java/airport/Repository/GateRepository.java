@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface GateRepository extends JpaRepository<Gate, Integer> {
+public interface GateRepository extends GenericJPARepository<Gate> {
     List<Gate> getGatesByTerminal(Terminal terminal);
 }

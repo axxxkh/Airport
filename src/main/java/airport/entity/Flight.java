@@ -1,21 +1,21 @@
 package airport.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 
-public class Flight {
+public class Flight extends BasicEntity{
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "flight_number")
     private int flightNumber;
@@ -31,21 +31,9 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name = "gate_id")
     private Gate gate;
-    private boolean active;
+    private boolean active = Boolean.TRUE;
     @ManyToOne
     @JoinColumn(name = "route_id")
     private Route route;
-
-    @Override
-    public String toString() {
-        return "Flight{" +
-                "id=" + id +
-                ", flightNumber=" + flightNumber +
-                ", time=" + time +
-                ", flightStatus=" + flightStatus +
-                ", active=" + active +
-                ", route=" + route +
-                '}';
-    }
 }
 

@@ -4,6 +4,8 @@ import airport.DTO.PassengerDTO;
 import airport.entity.Passenger;
 import airport.service.PassengerService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,16 +14,16 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class PassengerController {
 
-    private PassengerService passengerSpringService;
+    private PassengerService passengerService;
 
-    @GetMapping("/get/")
-    public Passenger getPassenger() {
-        return Passenger.builder().build();
-    }
+//    @GetMapping("/get/")
+//    public Passenger getPassenger() {
+//        return Passenger.builder().build();
+//    }
 
     @GetMapping("/get/passport/")
-    public String getPassengerByPassport(@RequestParam String passportSerialNumber) {
-        return passengerSpringService.getPassengerByPassportNumber(passportSerialNumber).toString();
+    public PassengerDTO getPassengerByPassport(@RequestParam String passportSerialNumber) {
+        return passengerService.getPassengerByPassportNumber(passportSerialNumber);
     }
 
     /*
@@ -42,6 +44,13 @@ public class PassengerController {
         */
     @PostMapping("/add/")
     public String add(@RequestBody PassengerDTO passengerDTO) {
-        return passengerSpringService.add(passengerDTO);
+        return passengerService.add(passengerDTO);
     }
+
+    @PostMapping("/delete/")
+    public ResponseEntity<String> deletePassenger (@RequestBody PassengerDTO passengerDTO) {
+        passengerService.delete(passengerDTO);
+        return new ResponseEntity<String>("ds", HttpStatus.ACCEPTED);
+    }
+
 }

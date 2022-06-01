@@ -24,7 +24,6 @@ public class PassengerServiceImpl implements PassengerService {
     private PassportRepository passportRepository;
     private ModelMapper mapper;
 
-
     @Override
     public String add(PassengerDTO passengerDTO) {
         passengerRepository.saveAndFlush(mapper.map(passengerDTO, Passenger.class));
@@ -34,8 +33,7 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public void delete(PassengerDTO passengerDTO) {
         Passenger passenger = identify(passengerDTO);
-        passenger.setActive(false);
-        passengerRepository.saveAndFlush(passenger);
+        passengerRepository.delete(passenger);
     }
 
     @Override
@@ -44,6 +42,7 @@ public class PassengerServiceImpl implements PassengerService {
         PassportDTO passportDTO = passportList.peek();
         assert passportDTO != null;
         Passport passport = passportRepository.findBySerialNumber(passportDTO.getSerialNumber());
+        System.out.println(passport);
         return passport.getPassenger();
     }
 

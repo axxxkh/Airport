@@ -1,19 +1,17 @@
 package airport.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Builder
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Salary {
+public class Salary extends BasicEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -22,5 +20,5 @@ public class Salary {
     private int idPersonal;
     private String position;
     private int salary;
-    private boolean active;
+    private boolean active = Boolean.TRUE;
 }

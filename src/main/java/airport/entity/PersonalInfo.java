@@ -1,9 +1,6 @@
 package airport.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,10 +8,11 @@ import java.time.LocalDate;
 @Entity
 @Builder
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class PersonalInfo {
+public class PersonalInfo extends BasicEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -23,5 +21,5 @@ public class PersonalInfo {
     private boolean married;
     private LocalDate birthday;
     private String city;
-    private boolean active;
+    private boolean active = Boolean.TRUE;
 }

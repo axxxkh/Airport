@@ -41,7 +41,7 @@ values
 (4, 2,70);
 
 insert into route
-(id, route)
+(id, name)
 values
 (1,"Vinnytsya-Jashkiv"),
 (2,"Kiev-Rahnu"),

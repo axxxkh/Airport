@@ -1,7 +1,8 @@
 package airport.Repository;
 
 import airport.entity.Airline;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AirlineRepository extends JpaRepository<Airline, Integer> {
+public interface AirlineRepository extends GenericJPARepository<Airline> {
+
+    Airline findByName(String name);
 }

@@ -19,6 +19,6 @@ public class FlightDTO {
     private byte flightStatus;
     private AirlineDTO airline;
     private AircraftDTO craftId;
-    private Gate gateId;
+    private GateDTO gate;
 //    private String route;
 }
