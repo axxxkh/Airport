@@ -1,6 +1,6 @@
 package airport.service;
 
-import airport.DTO.FlightDTO;
+import airport.dto.FlightDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package airport.DTO;
+package airport.dto;
 
 public class AircraftTypeDTO {
     private String producer;

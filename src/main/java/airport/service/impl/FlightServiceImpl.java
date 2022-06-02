@@ -1,8 +1,8 @@
 package airport.service.impl;
 
-import airport.DTO.FlightDTO;
-import airport.Repository.FlightRepository;
-import airport.Repository.TicketRepository;
+import airport.dto.FlightDTO;
+import airport.repository.FlightRepository;
+import airport.repository.TicketRepository;
 import airport.entity.Flight;
 import airport.entity.Ticket;
 import airport.service.FlightService;

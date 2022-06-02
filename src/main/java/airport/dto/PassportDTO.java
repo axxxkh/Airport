@@ -1,4 +1,4 @@
-package airport.DTO;
+package airport.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

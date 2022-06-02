@@ -1,10 +1,10 @@
 package airport.service.impl;
 
-import airport.DTO.FlightDTO;
-import airport.DTO.PassengerDTO;
-import airport.DTO.PassportDTO;
-import airport.DTO.TicketDTO;
-import airport.Repository.*;
+import airport.dto.FlightDTO;
+import airport.dto.PassengerDTO;
+import airport.dto.PassportDTO;
+import airport.dto.TicketDTO;
+import airport.repository.*;
 import airport.entity.*;
 import airport.service.TicketService;
 import lombok.AllArgsConstructor;

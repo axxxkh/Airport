@@ -1,12 +1,14 @@
-package airport.DTO;
+package airport.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TerminalDTO {
-    private String name;
+@Builder
+public class RouteDTO {
+    String name;
 }

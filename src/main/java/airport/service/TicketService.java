@@ -1,8 +1,8 @@
 package airport.service;
 
-import airport.DTO.FlightDTO;
-import airport.DTO.PassengerDTO;
-import airport.DTO.TicketDTO;
+import airport.dto.FlightDTO;
+import airport.dto.PassengerDTO;
+import airport.dto.TicketDTO;
 import airport.entity.Flight;
 import airport.entity.Ticket;
 

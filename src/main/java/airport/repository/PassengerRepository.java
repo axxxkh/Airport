@@ -1,4 +1,4 @@
-package airport.Repository;
+package airport.repository;
 
 import airport.entity.Passenger;
 import org.springframework.data.jpa.repository.Query;

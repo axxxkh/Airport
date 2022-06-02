@@ -1,4 +1,4 @@
-package airport.Repository;
+package airport.repository;
 
 import airport.entity.Terminal;
 import org.springframework.stereotype.Repository;

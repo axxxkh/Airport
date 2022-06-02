@@ -1,6 +1,6 @@
 package airport.controller;
 
-import airport.DTO.PassengerDTO;
+import airport.dto.PassengerDTO;
 import airport.service.PassengerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

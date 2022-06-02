@@ -1,6 +1,6 @@
 package airport.controller;
 
-import airport.DTO.FlightDTO;
+import airport.dto.FlightDTO;
 import airport.entity.Flight;
 import airport.service.FlightService;
 import airport.service.PassengerService;
@@ -27,7 +27,6 @@ public class FlightController {
     public ResponseEntity<List<FlightDTO>> getByPeriod(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                                        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         return new ResponseEntity<List<FlightDTO>>(flightService.getFlightsByPeriod(startDate, endDate), HttpStatus.ACCEPTED);
-//        return ResponseEntity<List<FlightDTO>>(flightService.getFlightsByPeriod(startDate,endDate),HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/get/date/")

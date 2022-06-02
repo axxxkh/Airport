@@ -1,6 +1,6 @@
 package airport.service;
 
-import airport.DTO.RouteDTO;
+import airport.dto.RouteDTO;
 
 public interface RouteService {
 

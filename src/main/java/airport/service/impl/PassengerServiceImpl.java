@@ -1,10 +1,10 @@
 package airport.service.impl;
 
-import airport.DTO.PassengerDTO;
-import airport.DTO.PassportDTO;
-import airport.Repository.PassengerRepository;
-import airport.Repository.PassportRepository;
-import airport.Repository.TicketRepository;
+import airport.dto.PassengerDTO;
+import airport.dto.PassportDTO;
+import airport.repository.PassengerRepository;
+import airport.repository.PassportRepository;
+import airport.repository.TicketRepository;
 import airport.entity.Passenger;
 import airport.entity.Passport;
 import airport.entity.Ticket;

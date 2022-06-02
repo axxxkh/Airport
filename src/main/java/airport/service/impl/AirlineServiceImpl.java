@@ -1,7 +1,7 @@
 package airport.service.impl;
 
-import airport.DTO.AirlineDTO;
-import airport.Repository.AirlineRepository;
+import airport.dto.AirlineDTO;
+import airport.repository.AirlineRepository;
 import airport.entity.Airline;
 import airport.service.AirlineService;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package airport.DTO;
+package airport.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TicketDTO {
-
-    private int flightNumber;
-    private int number;
-    private int seat;
-//    private PassengerDTO passengerDTO;
+public class AircraftDTO {
+    private String typeId;
+    private String producer;
+    private int serialNumber;
 }

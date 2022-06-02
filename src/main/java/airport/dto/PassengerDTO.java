@@ -1,15 +1,19 @@
-package airport.DTO;
+package airport.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AirlineDTO {
+
+public class PassengerDTO {
     private String name;
-    private int rate;
+    private String surname;
+    private List<PassportDTO> passports;
 }

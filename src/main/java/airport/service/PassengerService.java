@@ -1,6 +1,6 @@
 package airport.service;
 
-import airport.DTO.PassengerDTO;
+import airport.dto.PassengerDTO;
 import airport.entity.Passenger;
 import org.springframework.stereotype.Service;
 

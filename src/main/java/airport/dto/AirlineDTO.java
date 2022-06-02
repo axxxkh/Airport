@@ -1,4 +1,4 @@
-package airport.DTO;
+package airport.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RouteDTO {
-    String name;
+public class AirlineDTO {
+    private String name;
+    private int rate;
 }

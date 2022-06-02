@@ -1,4 +1,4 @@
-package airport.Repository;
+package airport.repository;
 
 import airport.entity.PersonalInfo;
 import org.springframework.stereotype.Repository;

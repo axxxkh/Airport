@@ -1,4 +1,4 @@
-package airport.Repository;
+package airport.repository;
 
 import airport.entity.BasicEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
