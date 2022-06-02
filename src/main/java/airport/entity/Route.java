@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Route extends BasicEntity{
+public class Route extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

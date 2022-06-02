@@ -13,7 +13,7 @@ public class RouteController {
 
 
     @GetMapping("/delete/")
-    public String deleteRoute (RouteDTO routeDTO) {
+    public String deleteRoute(RouteDTO routeDTO) {
 
         return "";
     }

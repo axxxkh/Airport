@@ -9,10 +9,10 @@ import airport.service.FlightService;
 import airport.service.TicketService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,12 +26,13 @@ public class FlightServiceImpl implements FlightService {
     private ModelMapper mapper;
 
     @Override
-    public void flightFinished(FlightDTO flightDTO) {
+    public FlightDTO flightFinished(FlightDTO flightDTO) {
         Flight flight = flightRepository.findFlightByFlightNumber(flightDTO.getFlightNumber());
         List<Ticket> ticketList = ticketRepository.findTicketsByFlightId(flight.getId());
         flight.setFlightStatus(FLIGHT_STATUS_FINISHED);
         flightRepository.saveAndFlush(flight);
         ticketService.updateTicketsFlightFinished(flight);
+        return mapper.map(flight, FlightDTO.class);
     }
 
     @Override
@@ -59,5 +60,18 @@ public class FlightServiceImpl implements FlightService {
                 .stream()
                 .map(f -> mapper.map(f, FlightDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public FlightDTO getByNumber(int flightNumber) {
+        return mapper.map(flightRepository.findFlightByFlightNumber(flightNumber), FlightDTO.class);
+    }
+
+    @Override
+    public FlightDTO updateDate(FlightDTO flightDTO, LocalDateTime newDate) {
+        Flight flight = flightRepository.findFlightByFlightNumber(flightDTO.getFlightNumber());
+        flight.setTime(newDate);
+        flightRepository.saveAndFlush(flight);
+        return mapper.map(flight, FlightDTO.class);
     }
 }

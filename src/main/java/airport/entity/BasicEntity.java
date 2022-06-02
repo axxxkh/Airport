@@ -1,6 +1,6 @@
 package airport.entity;
 
-import javax.persistence.*;
+import javax.persistence.MappedSuperclass;
 
 //@Entity
 @MappedSuperclass

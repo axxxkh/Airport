@@ -4,8 +4,10 @@ import airport.DTO.PassengerDTO;
 import airport.DTO.PassportDTO;
 import airport.Repository.PassengerRepository;
 import airport.Repository.PassportRepository;
+import airport.Repository.TicketRepository;
 import airport.entity.Passenger;
 import airport.entity.Passport;
+import airport.entity.Ticket;
 import airport.service.PassengerService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,6 +24,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     private PassengerRepository passengerRepository;
     private PassportRepository passportRepository;
+    private TicketRepository ticketRepository;
     private ModelMapper mapper;
 
     @Override
@@ -33,6 +36,9 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public void delete(PassengerDTO passengerDTO) {
         Passenger passenger = identify(passengerDTO);
+        List<Ticket> ticketList = ticketRepository.findTicketsByPassengerId(passenger.getId());
+        ticketRepository.deleteAll(ticketList);
+        passportRepository.deleteAll(passenger.getPassports());
         passengerRepository.delete(passenger);
     }
 
@@ -42,7 +48,6 @@ public class PassengerServiceImpl implements PassengerService {
         PassportDTO passportDTO = passportList.peek();
         assert passportDTO != null;
         Passport passport = passportRepository.findBySerialNumber(passportDTO.getSerialNumber());
-        System.out.println(passport);
         return passport.getPassenger();
     }
 
@@ -51,7 +56,6 @@ public class PassengerServiceImpl implements PassengerService {
         Passport passport = passportRepository.findBySerialNumber(passportNumber);
         return mapper.map(passport.getPassenger(), PassengerDTO.class);
     }
-
 
     @Override
     public List<PassengerDTO> getAll() {

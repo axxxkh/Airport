@@ -1,7 +1,6 @@
 package airport.controller;
 
 import airport.DTO.PassengerDTO;
-import airport.entity.Passenger;
 import airport.service.PassengerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -48,7 +47,7 @@ public class PassengerController {
     }
 
     @PostMapping("/delete/")
-    public ResponseEntity<String> deletePassenger (@RequestBody PassengerDTO passengerDTO) {
+    public ResponseEntity<String> deletePassenger(@RequestBody PassengerDTO passengerDTO) {
         passengerService.delete(passengerDTO);
         return new ResponseEntity<String>("ds", HttpStatus.ACCEPTED);
     }

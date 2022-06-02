@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 
-public class Flight extends BasicEntity{
+public class Flight extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

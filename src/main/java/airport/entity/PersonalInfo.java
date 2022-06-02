@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class PersonalInfo extends BasicEntity{
+public class PersonalInfo extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

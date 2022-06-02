@@ -1,7 +1,6 @@
 package airport.entity;
 
 import lombok.*;
-import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Passenger extends BasicEntity{
+public class Passenger extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

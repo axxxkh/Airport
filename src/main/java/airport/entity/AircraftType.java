@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 
 @Table(name = "Aircraft_type")
-public class AircraftType extends BasicEntity{
+public class AircraftType extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

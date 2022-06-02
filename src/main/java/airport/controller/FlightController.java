@@ -5,13 +5,13 @@ import airport.entity.Flight;
 import airport.service.FlightService;
 import airport.service.PassengerService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -24,15 +24,20 @@ public class FlightController {
 
     //    http://localhost:8081/flight/get/Period/?startDate=2021-05-01&endDate=2022-05-05
     @GetMapping("/get/period/")
-    public ResponseEntity<List<FlightDTO> >getByPeriod(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        return new ResponseEntity<List<FlightDTO>>(flightService.getFlightsByPeriod(startDate, endDate),HttpStatus.ACCEPTED);
+    public ResponseEntity<List<FlightDTO>> getByPeriod(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return new ResponseEntity<List<FlightDTO>>(flightService.getFlightsByPeriod(startDate, endDate), HttpStatus.ACCEPTED);
 //        return ResponseEntity<List<FlightDTO>>(flightService.getFlightsByPeriod(startDate,endDate),HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/get/date/")
     public List<FlightDTO> getByPeriod(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return flightService.getFlightsByDate(date);
+    }
+
+    @GetMapping("/get/number/")
+    public FlightDTO getByPeriod(@RequestParam int flightNumber) {
+        return flightService.getByNumber(flightNumber);
     }
 
     @GetMapping("/add/flight/")
@@ -46,9 +51,14 @@ public class FlightController {
     }
 
     @PostMapping("/finished/")
-    public String flightFinished (FlightDTO flightDTO) {
-        flightService.flightFinished(flightDTO);
-        return "";
+    public ResponseEntity<FlightDTO> flightFinished(FlightDTO flightDTO) {
+        return new ResponseEntity<FlightDTO>(flightService.flightFinished(flightDTO), HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/edit/date/")
+    public ResponseEntity<FlightDTO> editDate(@RequestBody FlightDTO flightDTO,
+                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime newDate) {
+        return new ResponseEntity<FlightDTO>(flightService.updateDate(flightDTO, newDate), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/flight/flight/")

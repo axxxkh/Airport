@@ -16,13 +16,9 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public void delete(RouteDTO routeDTO) {
-
         Route route = routeRepository.findByName(routeDTO.getName());
         List<Flight> flightList = flightRepository.findByRoute(route);
-//        flightRepository.delete;
-//        routeRepository.d
-
-
-
+        flightRepository.deleteAll(flightList);
+        routeRepository.delete(route);
     }
 }

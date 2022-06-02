@@ -4,7 +4,6 @@ import airport.entity.Airline;
 import airport.entity.Flight;
 import airport.entity.Gate;
 import airport.entity.Route;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;

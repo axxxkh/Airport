@@ -13,7 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_Id", "seat"})})
-public class Ticket extends BasicEntity{
+public class Ticket extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

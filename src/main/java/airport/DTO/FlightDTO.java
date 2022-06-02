@@ -1,6 +1,5 @@
 package airport.DTO;
 
-import airport.entity.Gate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
