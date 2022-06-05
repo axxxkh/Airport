@@ -6,9 +6,11 @@ import airport.repository.RouteRepository;
 import airport.entity.Flight;
 import airport.entity.Route;
 import airport.service.RouteService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RouteServiceImpl implements RouteService {
 
     private RouteRepository routeRepository;
