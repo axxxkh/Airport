@@ -3,7 +3,6 @@ package airport.controller;
 import airport.dto.FlightDTO;
 import airport.entity.Flight;
 import airport.service.FlightService;
-import airport.service.PassengerService;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,6 @@ import java.util.List;
 public class FlightController {
 
     private FlightService flightService;
-    private PassengerService passengerService;
 
     //    http://localhost:8081/flight/get/Period/?startDate=2021-05-01&endDate=2022-05-05
     @GetMapping("/get/period/")
@@ -51,13 +49,13 @@ public class FlightController {
 
     @PostMapping("/finished/")
     public ResponseEntity<FlightDTO> flightFinished(FlightDTO flightDTO) {
-        return new ResponseEntity<FlightDTO>(flightService.flightFinished(flightDTO), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(flightService.flightFinished(flightDTO), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/edit/date/")
     public ResponseEntity<FlightDTO> editDate(@RequestBody FlightDTO flightDTO,
                                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime newDate) {
-        return new ResponseEntity<FlightDTO>(flightService.updateDate(flightDTO, newDate), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(flightService.updateDate(flightDTO, newDate), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/flight/flight/")

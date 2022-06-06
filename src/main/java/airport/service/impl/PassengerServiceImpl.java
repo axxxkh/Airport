@@ -2,12 +2,12 @@ package airport.service.impl;
 
 import airport.dto.PassengerDTO;
 import airport.dto.PassportDTO;
-import airport.repository.PassengerRepository;
-import airport.repository.PassportRepository;
-import airport.repository.TicketRepository;
 import airport.entity.Passenger;
 import airport.entity.Passport;
 import airport.entity.Ticket;
+import airport.repository.PassengerRepository;
+import airport.repository.PassportRepository;
+import airport.repository.TicketRepository;
 import airport.service.PassengerService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;

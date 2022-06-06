@@ -1,6 +1,7 @@
 package airport.service;
 
 import airport.dto.FlightDTO;
+import airport.dto.RouteDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ public interface FlightService {
     byte FLIGHT_STATUS_FINISHED = 3;
     byte FLIGHT_STATUS_CANCELLED = 4;
 
-    List<FlightDTO> getAllActiveFlights();
+    List<FlightDTO> getAllFlights();
 
     List<FlightDTO> getFlightsByDate(LocalDate date);
 
@@ -23,10 +24,11 @@ public interface FlightService {
 
     FlightDTO flightFinished(FlightDTO flightDTO);
 
-    FlightDTO updateDate(FlightDTO flightDTO, LocalDateTime newDate);
+    FlightDTO updateDate(FlightDTO flightDTO, LocalDateTime newDateTime);
 
     FlightDTO getByNumber(int flightNumber);
 
-//     List<Flight> getFlightsByRoutes(Route route);
+    List<FlightDTO> getFlightsByRoutes(RouteDTO routeDTO);
 
+    void deleteFlight (FlightDTO flightDTO);
 }

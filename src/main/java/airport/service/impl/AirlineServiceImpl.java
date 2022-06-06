@@ -1,8 +1,8 @@
 package airport.service.impl;
 
 import airport.dto.AirlineDTO;
-import airport.repository.AirlineRepository;
 import airport.entity.Airline;
+import airport.repository.AirlineRepository;
 import airport.service.AirlineService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

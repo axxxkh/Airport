@@ -4,8 +4,8 @@ import airport.dto.FlightDTO;
 import airport.dto.PassengerDTO;
 import airport.dto.PassportDTO;
 import airport.dto.TicketDTO;
-import airport.repository.*;
 import airport.entity.*;
+import airport.repository.*;
 import airport.service.TicketService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -57,6 +57,11 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public void updateTicketsFlightCancelled(Iterable<Ticket> tickets) {
+        tickets.forEach(ticket -> ticket.setTicketStatus(TICKET_CANCELLED));
+    }
+
+    @Override
     public TicketDTO buyTicket(PassengerDTO passengerDTO, int flightNumber) {
 
         Queue<PassportDTO> passportList = new LinkedList<>(passengerDTO.getPassports());
@@ -65,7 +70,7 @@ public class TicketServiceImpl implements TicketService {
         assert passport != null;
         Passport passportDB = passportRepository.findBySerialNumber(passport.getSerialNumber());
         Passenger passengerDB = passportDB.getPassenger();
-        Flight flight = flightRepository.findFlightByFlightNumber(flightNumber);
+        Flight flight = flightRepository.findByFlightNumber(flightNumber);
         ticketRepository.findTicketsByFlightId(flight.getId());
         Queue<Ticket> ticketQueue = new LinkedList<>(ticketRepository.findTicketsByFlightId(flight.getId()));
         Ticket ticket = ticketQueue.peek();
@@ -81,7 +86,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<TicketDTO> getAvailableTickets(FlightDTO flightDTO) {
-        Flight flight = flightRepository.findFlightByFlightNumber(flightDTO.getFlightNumber());
+        Flight flight = flightRepository.findByFlightNumber(flightDTO.getFlightNumber());
 
         return ticketRepository.findTicketsByFlightId(flight.getId())
                 .stream()

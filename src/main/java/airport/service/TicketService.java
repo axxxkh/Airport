@@ -14,6 +14,7 @@ public interface TicketService {
     byte TICKET_STATUS_SOLD = 1;
     byte TICKET_STATUS_BOARDED = 2;
     byte TICKET_STATUS_FINISHED = 3;
+    byte TICKET_CANCELLED = 4;
 
     List<Ticket> generateAndWriteTicketsForFlight(Flight flight);
 
@@ -26,5 +27,7 @@ public interface TicketService {
     List<TicketDTO> getAllAvailableTickets();
 
     List<TicketDTO> getAllBuyedTicketsByPeriod(LocalDate startDate, LocalDate endDate);
+
+    void updateTicketsFlightCancelled(Iterable<Ticket> tickets);
 
 }
