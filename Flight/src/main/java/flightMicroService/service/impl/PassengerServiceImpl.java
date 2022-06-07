@@ -1,0 +1,68 @@
+package flightMicroService.service.impl;
+
+import flightMicroService.dto.PassengerDTO;
+import flightMicroService.dto.PassportDTO;
+import flightMicroService.entity.Passenger;
+import flightMicroService.entity.Passport;
+import flightMicroService.entity.Ticket;
+import flightMicroService.repository.PassengerRepository;
+import flightMicroService.repository.PassportRepository;
+import flightMicroService.repository.TicketRepository;
+import flightMicroService.service.PassengerService;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.stream.Collectors;
+
+@Service
+@AllArgsConstructor
+public class PassengerServiceImpl implements PassengerService {
+
+    private PassengerRepository passengerRepository;
+    private PassportRepository passportRepository;
+    private TicketRepository ticketRepository;
+    private ModelMapper mapper;
+
+    @Override
+    public String add(PassengerDTO passengerDTO) {
+        passengerRepository.saveAndFlush(mapper.map(passengerDTO, Passenger.class));
+        return "Success";
+    }
+
+    @Override
+    public void delete(PassengerDTO passengerDTO) {
+        Passenger passenger = identify(passengerDTO);
+        List<Ticket> ticketList = ticketRepository.findTicketsByPassengerId(passenger.getId());
+        ticketRepository.deleteAll(ticketList);
+        passportRepository.deleteAll(passenger.getPassports());
+        passengerRepository.delete(passenger);
+    }
+
+    @Override
+    public Passenger identify(PassengerDTO passengerDTO) {
+        Queue<PassportDTO> passportList = new LinkedList<>(passengerDTO.getPassports());
+        PassportDTO passportDTO = passportList.peek();
+        assert passportDTO != null;
+        Passport passport = passportRepository.findBySerialNumber(passportDTO.getSerialNumber());
+        return passport.getPassenger();
+    }
+
+    @Override
+    public PassengerDTO getPassengerByPassportNumber(String passportNumber) {
+        Passport passport = passportRepository.findBySerialNumber(passportNumber);
+        System.out.println(passport);
+        return mapper.map(passport.getPassenger(), PassengerDTO.class);
+    }
+
+    @Override
+    public List<PassengerDTO> getAll() {
+        return passengerRepository.findAll()
+                .stream()
+                .map(p -> mapper.map(p, PassengerDTO.class))
+                .collect(Collectors.toList());
+    }
+}
