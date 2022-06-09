@@ -1,19 +1,17 @@
 package airport.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Gate {
+public class Gate extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -21,5 +19,5 @@ public class Gate {
     @ManyToOne
     @JoinColumn(name = "terminal_id")
     private Terminal terminal;
-    private boolean active;
+    private boolean active = Boolean.TRUE;
 }

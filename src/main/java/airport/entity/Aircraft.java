@@ -1,19 +1,17 @@
 package airport.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Aircraft {
+public class Aircraft extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -25,13 +23,5 @@ public class Aircraft {
     private Airline airline;
     @Column(name = "serial_number")
     private int serialNumber;
-    private boolean active;
-
-    @Override
-    public String toString() {
-        return "Aircraft{" +
-                "id=" + id +
-                ", airline=" + airline +
-                '}';
-    }
+    private boolean active = Boolean.TRUE;
 }

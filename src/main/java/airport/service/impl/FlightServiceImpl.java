@@ -1,8 +1,8 @@
 package airport.service.impl;
 
-import airport.DTO.FlightDTO;
-import airport.Repository.FlightRepository;
-import airport.Repository.TicketRepository;
+import airport.dto.FlightDTO;
+import airport.repository.FlightRepository;
+import airport.repository.TicketRepository;
 import airport.entity.Flight;
 import airport.entity.Ticket;
 import airport.service.FlightService;
@@ -10,7 +10,9 @@ import airport.service.TicketService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.LocalDate;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,11 +25,13 @@ public class FlightServiceImpl implements FlightService {
     private ModelMapper mapper;
 
     @Override
-    public void flightFinished(Flight flight) {
+    public FlightDTO flightFinished(FlightDTO flightDTO) {
+        Flight flight = flightRepository.findFlightByFlightNumber(flightDTO.getFlightNumber());
         List<Ticket> ticketList = ticketRepository.findTicketsByFlightId(flight.getId());
         flight.setFlightStatus(FLIGHT_STATUS_FINISHED);
         flightRepository.saveAndFlush(flight);
         ticketService.updateTicketsFlightFinished(flight);
+        return mapper.map(flight,FlightDTO.class);
     }
 
     @Override
@@ -51,9 +55,16 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<FlightDTO> getFlightsByDate(LocalDate date) {
-        return flightRepository.findFlightsByDate(date)
-                .stream()
-                .map(f -> mapper.map(f, FlightDTO.class))
-                .collect(Collectors.toList());
+        return null;
+    }
+
+    @Override
+    public FlightDTO updateDate(FlightDTO flightDTO, LocalDateTime newDate) {
+        return null;
+    }
+
+    @Override
+    public FlightDTO getByNumber(int flightNumber) {
+        return null;
     }
 }

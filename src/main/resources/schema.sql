@@ -42,7 +42,7 @@ foreign key (terminal_id) references Terminal(id)
 
 create table Route
 (id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-route VARCHAR(30),
+name VARCHAR(30),
 active boolean default true
 );
 

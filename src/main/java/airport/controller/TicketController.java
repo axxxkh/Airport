@@ -1,7 +1,7 @@
 package airport.controller;
 
-import airport.DTO.PassengerDTO;
-import airport.DTO.TicketDTO;
+import airport.dto.PassengerDTO;
+import airport.dto.TicketDTO;
 import airport.service.FlightService;
 import airport.service.TicketService;
 import lombok.AllArgsConstructor;
