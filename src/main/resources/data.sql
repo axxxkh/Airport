@@ -2,7 +2,7 @@ insert into Passenger
 (id, name, surname, active, email, pwd)
 values
 (1, "Bohdan", "Shchehliuk",true, "bohdan@gmail.com", "123"),
-(2, "Liosha", "Khomyshen", true, "alxxxkh@gmail.com", "123"),
+(2, "Liosha", "Khomyshen", true, "alxxxkh@gmail.com", "$2a$10$KG7sM3zgF4FzNN7ElSsh4eSPod8TrNMZfaoEF9YRLXIfEFUirMgpO"), -- 123
 (3, "Ira", "Drezden", true, "ira@gmail.com", "234"),
 (4, "Vasia", "Prystai", true, "vasia@gmail.com", "345"),
 (5, "Olia", "Halahan", true, "olia@gmail.com", "456"),
