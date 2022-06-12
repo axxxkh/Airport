@@ -16,7 +16,7 @@ public class Salary extends BasicEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "id_personal")
-    @JoinColumn(name = "id_personal", referencedColumnName = "id")
+    @JoinColumn(name = "id_personal", referencedColumnName = "id", nullable = false)
     private int idPersonal;
     private String position;
     private int salary;

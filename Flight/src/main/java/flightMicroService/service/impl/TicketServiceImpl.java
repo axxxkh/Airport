@@ -70,7 +70,7 @@ public class TicketServiceImpl implements TicketService {
         assert passport != null;
         Passport passportDB = passportRepository.findBySerialNumber(passport.getSerialNumber());
         Passenger passengerDB = passportDB.getPassenger();
-        Flight flight = flightRepository.findByFlightNumber(flightNumber);
+        Flight flight = flightRepository.findByFlightNumber(flightNumber).orElseThrow();
         ticketRepository.findTicketsByFlightId(flight.getId());
         Queue<Ticket> ticketQueue = new LinkedList<>(ticketRepository.findTicketsByFlightId(flight.getId()));
         Ticket ticket = ticketQueue.peek();
@@ -86,7 +86,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<TicketDTO> getAvailableTickets(FlightDTO flightDTO) {
-        Flight flight = flightRepository.findByFlightNumber(flightDTO.getFlightNumber());
+        Flight flight = flightRepository.findByFlightNumber(flightDTO.getFlightNumber()).orElseThrow();
 
         return ticketRepository.findTicketsByFlightId(flight.getId())
                 .stream()

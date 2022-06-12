@@ -19,10 +19,11 @@ public class Ticket extends BasicEntity {
     private int id;
     private int number;
     @ManyToOne
-    @JoinColumn(name = "flight_id")
+    @JoinColumn(name = "flight_id", nullable = false)
     private Flight flight;
+    @NonNull
     private int seat;
-    @Column(name = "ticket_status")
+    @Column(name = "ticket_status", nullable = false)
     private byte ticketStatus;
     @ToString.Exclude
     @ManyToOne

@@ -18,8 +18,6 @@ public interface FlightService {
 
     List<FlightDTO> getAllFlights();
 
-//    List<FlightDTO> getFlightsByDate(LocalDate date);
-
     List<FlightDTO> getFlightsByPeriod(LocalDate startDate, LocalDate endDate);
 
     FlightDTO flightFinished(FlightDTO flightDTO);
@@ -31,4 +29,10 @@ public interface FlightService {
     List<FlightDTO> getFlightsByRoutes(RouteDTO routeDTO);
 
     void deleteFlight(FlightDTO flightDTO);
+
+    void deleteFlight(int flightNumber);
+
+    List<FlightDTO> getByDate(LocalDate date);
+
+    void addFlight(FlightDTO flightDTO);
 }

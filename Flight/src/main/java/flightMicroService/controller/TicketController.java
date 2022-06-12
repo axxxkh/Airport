@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,7 +20,6 @@ import java.util.List;
 public class TicketController {
 
     private TicketService ticketService;
-    private FlightService flightService;
 
     /* RequestBody
      {
@@ -38,7 +38,7 @@ public class TicketController {
         Requestparam - int flightNumber
 */
     @PostMapping("/buy/ticket/")
-    public ResponseEntity<TicketDTO> buyTicket(@RequestBody PassengerDTO passengerDTO, @RequestParam int flightNumber) {
+    public ResponseEntity<TicketDTO> buyTicket(@RequestBody @Valid PassengerDTO passengerDTO, @RequestParam int flightNumber) {
         return new ResponseEntity<>(ticketService.buyTicket(passengerDTO, flightNumber), HttpStatus.CREATED);
     }
 

@@ -9,5 +9,13 @@ import java.util.List;
 public interface PersonalService {
     List<PersonalDTO> getAll();
 
+    PersonalDTO getByName(String name);
+
     String fromAnotherModule();
+
+    void delete(String name);
+
+    PersonalDTO add(PersonalDTO personalDTO);
+
+    void update(PersonalDTO personalDTO);
 }

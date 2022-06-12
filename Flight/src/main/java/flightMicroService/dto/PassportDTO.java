@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Data
@@ -13,10 +14,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class PassportDTO {
-    @NonNull
+    @NotBlank(message = "Passport serial number is mandatory")
     private String serialNumber;
+    @NotBlank(message = "Passenger birthday is mandatory")
     private LocalDate birthdate;
     private LocalDate issueDate;
-    private int passengerID;
     private String passportType;
 }

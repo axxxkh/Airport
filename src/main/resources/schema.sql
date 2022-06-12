@@ -1,17 +1,28 @@
-create DATABASE AIRPORT;
-use AIRPORT;
+CREATE DATABASE AIRPORT;
+USE AIRPORT;
 
-create table Passenger
+CREATE TABLE Passenger
 (id INT AUTO_INCREMENT NOT NULL,
+email varchar (50) NOT NULL,
+pwd varchar (50) NOT NULL,
 name varchar (20) NOT NULL,
 surname varchar (50) NOT NULL,
 active boolean NOT NULL default true,
 primary key (id)
 );
 
-select * from PASSENGER;
+CREATE TABLE roles (
+id int not null,
+role varchar(20) NOT NULL,
+primary key (id));
 
-create table passport (
+CREATE TABLE user_roles
+( user_id int,
+role_id int,
+foreign key (user_id) references Passenger(id),
+foreign key (role_id) references roles(id));
+
+CREATE TABLE passport (
 id int AUTO_INCREMENT NOT NULL,
 serial_number varchar(30) UNIQUE,
 birthdate DATE NOT NULL,
@@ -23,7 +34,7 @@ primary key (id),
 foreign key (passenger_id) references Passenger(id)
 );
 
-create table Terminal
+CREATE TABLE Terminal
 (id INT AUTO_INCREMENT NOT NULL,
 name varchar(20) NOT NULL,
 capacity int NOT NULL,
@@ -31,7 +42,7 @@ active boolean default true,
 primary key (id)
 );
 
-create table Gate
+CREATE TABLE Gate
 (id INT AUTO_INCREMENT NOT NULL,
 terminal_id int NOT NULL,
 capacity int NOT NULL,
@@ -40,13 +51,13 @@ primary key (id),
 foreign key (terminal_id) references Terminal(id)
 );
 
-create table Route
+CREATE TABLE Route
 (id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
 name VARCHAR(30),
 active boolean default true
 );
 
-create table  Aircraft_Type
+CREATE TABLE  Aircraft_Type
 (id INT AUTO_INCREMENT NOT NULL,
 producer varchar(20) NOT NULL,
 type varchar(20) NOT NULL,
@@ -55,7 +66,7 @@ active boolean default true,
 primary key (id)
 );
 
-create table Airline
+CREATE TABLE Airline
 (id INT AUTO_INCREMENT NOT NULL,
 name varchar(20),
 rate int, -- від 1 до 10
@@ -63,7 +74,7 @@ active boolean NOT NULL default true,
 primary key (id)
 );
 
-create table Aircraft
+CREATE TABLE Aircraft
 (id INT AUTO_INCREMENT NOT NULL,
 serial_number int NOT NULL UNIQUE,
 airline_id int NOT NULL,
@@ -74,7 +85,7 @@ foreign key (airline_id) references Airline(id),
 foreign key (aircraft_type_id) references Aircraft_type(id)
 );
 
-create TABLE Flight
+CREATE TABLE Flight
 (id INT AUTO_INCREMENT NOT NULL,
 flight_number int NOT NULL,
 time date,
@@ -91,7 +102,7 @@ foreign key (gate_id) references Gate(id),
 foreign key (route_id) references Route(id)
 );
 
-create table Ticket
+CREATE TABLE Ticket
 (id INT AUTO_INCREMENT NOT NULL,
 number int,
 flight_id int NOT NULL,
@@ -106,7 +117,7 @@ foreign key (flight_id) references Flight(id),
 foreign key (passenger_id) references Passenger(id)
 );
 
-create table Personal (
+CREATE TABLE Personal (
 id INT AUTO_INCREMENT NOT NULL,
 name varchar(20) NOT NULL,
 phone int NOT NULL,
@@ -116,7 +127,7 @@ primary key (id),
 foreign key (gate_id) references Gate(id)
 );
 
-create table Salary (
+CREATE TABLE Salary (
 id INT AUTO_INCREMENT NOT NULL,
 id_personal int,
 position varchar (20),
@@ -126,7 +137,7 @@ foreign key (id_personal) references Personal(id),
 primary key (id)
 );
 
-create table personalInfo (
+CREATE TABLE personal_info (
 id INT AUTO_INCREMENT NOT NULL,
 id_personal int,
 married  BOOLEAN,
@@ -140,7 +151,7 @@ primary key (id)
 -- TRIGGERS and PROCEDURES
 
 DELIMITER //
-create trigger deletePersonal
+CREATE TRIGGER deletePersonal
 before delete on PERSONAL
 for each row
 begin

@@ -4,13 +4,19 @@ import flightMicroService.dto.PassengerDTO;
 import flightMicroService.dto.PassportDTO;
 import flightMicroService.entity.Passenger;
 import flightMicroService.entity.Passport;
+import flightMicroService.entity.Role;
 import flightMicroService.entity.Ticket;
 import flightMicroService.repository.PassengerRepository;
 import flightMicroService.repository.PassportRepository;
+import flightMicroService.repository.RoleRepository;
 import flightMicroService.repository.TicketRepository;
 import flightMicroService.service.PassengerService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -25,12 +31,32 @@ public class PassengerServiceImpl implements PassengerService {
     private PassengerRepository passengerRepository;
     private PassportRepository passportRepository;
     private TicketRepository ticketRepository;
+    private RoleRepository roleRepository;
+
+    public PasswordEncoder passwordEncoder;
+
     private ModelMapper mapper;
 
     @Override
-    public String add(PassengerDTO passengerDTO) {
-        passengerRepository.saveAndFlush(mapper.map(passengerDTO, Passenger.class));
-        return "Success";
+    public Passenger getByLogin(String login) {
+        System.out.println(passengerRepository.findByUsername(login));
+        return passengerRepository.findByUsername(login);
+    }
+
+    @Override
+    public PassengerDTO add(PassengerDTO passengerDTO) {
+        List<Passport> passports = passengerDTO.getPassports().stream()
+                .map(passport -> mapper.map(passport, Passport.class))
+                .collect(Collectors.toList());
+        Passenger passenger = mapper.map(passengerDTO, Passenger.class);
+        List<Role> roles = passengerDTO.getRoles().stream().map(roleDTO -> roleRepository.findByRole(roleDTO.getRole())).collect(Collectors.toList());
+        passenger.setPassports(passports);
+        passports.forEach(passport -> passport.setPassenger(passenger));
+        passenger.setRoles(roles);
+        passenger.setPassword(passwordEncoder.encode(passengerDTO.getPassword()));
+        passengerRepository.save(passenger);
+        passportRepository.saveAll(passports);
+        return mapper.map(passenger, PassengerDTO.class);
     }
 
     @Override
@@ -54,7 +80,6 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public PassengerDTO getPassengerByPassportNumber(String passportNumber) {
         Passport passport = passportRepository.findBySerialNumber(passportNumber);
-        System.out.println(passport);
         return mapper.map(passport.getPassenger(), PassengerDTO.class);
     }
 

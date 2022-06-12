@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.List;
+
 @RestController
 @RequestMapping("/passenger")
 
@@ -20,34 +23,51 @@ public class PassengerController {
 //        return Passenger.builder().build();
 //    }
 
-    @GetMapping("/get/passport/")
-    public PassengerDTO getPassengerByPassport(@RequestParam String passportSerialNumber) {
-        return passengerService.getPassengerByPassportNumber(passportSerialNumber);
+    @GetMapping("/")
+    public ResponseEntity<List<PassengerDTO>> getAll() {
+        return new ResponseEntity<>(passengerService.getAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{serialNumber}")
+    public ResponseEntity<PassengerDTO> findBySerialNumber (@PathVariable String serialNumber) {
+       return new ResponseEntity<>(passengerService.getPassengerByPassportNumber(serialNumber),HttpStatus.OK);
     }
 
     /*
     localhost:8081/passenger/add
     RequestBody
     {
-            "name": "name",
-                "surname": "surname",
-                "passports": [
-            {
-                "serialNumber": "11sffsd3",
-                    "birthdate": "1987-12-28",
-                    "issueDate": "2000-10-23",
-                    "passportType": "UAinternational"
-            }
-                    ]
+    "name": "Bohdan",
+    "surname": "Shchehliuk",
+    "passports": [
+        {
+            "serialNumber": "AAXXXXF222",
+            "birthdate": "1987-12-28",
+            "issueDate": "2000-10-23",
+            "passportType": "UAinternational"
         }
+    ],
+    "login": "bohdan@gmail.com",
+    "pwd": "123",
+    "roles": [
+        {
+            "role": "PASSENGER"
+        }
+    ]
+}
         */
-    @PostMapping("/add/")
-    public String add(@RequestBody PassengerDTO passengerDTO) {
-        return passengerService.add(passengerDTO);
+    @PostMapping("/")
+    public ResponseEntity<PassengerDTO> add(@RequestBody @Valid PassengerDTO passengerDTO) {
+        return new ResponseEntity<PassengerDTO>(passengerService.add(passengerDTO), HttpStatus.CREATED);
     }
 
-    @PostMapping("/delete/")
-    public ResponseEntity<String> deletePassenger(@RequestBody PassengerDTO passengerDTO) {
+    @PutMapping("/")
+    public ResponseEntity<PassengerDTO> update(@RequestBody @Valid PassengerDTO passengerDTO) {
+        return new ResponseEntity<PassengerDTO>(passengerService.add(passengerDTO), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/")
+    public ResponseEntity<String> deletePassenger(@RequestBody @Valid PassengerDTO passengerDTO) {
         passengerService.delete(passengerDTO);
         return new ResponseEntity<>("ds", HttpStatus.ACCEPTED);
     }

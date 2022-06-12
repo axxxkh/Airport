@@ -8,11 +8,13 @@ import java.util.List;
 
 @Service
 public interface PassengerService {
-    String add(PassengerDTO passengerDTO);
+    PassengerDTO add(PassengerDTO passengerDTO);
 
     void delete(PassengerDTO passengerDTO);
 
     Passenger identify(PassengerDTO passengerDTO);
+
+    Passenger getByLogin(String login);
 
     PassengerDTO getPassengerByPassportNumber(String passportNumber);
 

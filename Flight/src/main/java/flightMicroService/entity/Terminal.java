@@ -18,7 +18,9 @@ public class Terminal extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NonNull
     private String name;
+    @NonNull
     private int capacity;
     private boolean active = Boolean.TRUE;
 }

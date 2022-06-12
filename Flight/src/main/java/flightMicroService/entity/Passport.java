@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,13 +21,13 @@ public class Passport extends BasicEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "serial_number", nullable = false)
-//    @NaturalId
     private String serialNumber;
+    @NonNull
     private LocalDate birthdate;
     @Column(name = "issue_date", nullable = false)
     private LocalDate issueDate;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "passenger_id", nullable = false)
+    @JoinColumn(name = "passenger_id")
     private Passenger passenger;
     @Column(name = "passport_type", nullable = false)
     private String passportType;

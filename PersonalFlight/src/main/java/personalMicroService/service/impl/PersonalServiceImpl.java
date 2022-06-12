@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import personalMicroService.dto.FlightDTO;
 import personalMicroService.dto.PersonalDTO;
+import personalMicroService.entity.Personal;
 import personalMicroService.repository.PersonalRepository;
 import personalMicroService.service.PersonalService;
 
@@ -36,4 +37,28 @@ public class PersonalServiceImpl implements PersonalService {
         response = template.getForEntity("http://localhost:8082/flight/get/number/?flightNumber=11", FlightDTO.class);
         return response.toString();
     }
+
+    @Override
+    public PersonalDTO getByName(String name) {
+       return mapper.map( personalRepository.findByName(name), PersonalDTO.class);
+    }
+
+    @Override
+    public void delete(String name) {
+        Personal personal = personalRepository.findByName(name);
+        personalRepository.delete(personal);
+    }
+
+    @Override
+    public PersonalDTO add(PersonalDTO personalDTO) {
+        personalRepository.save(mapper.map(personalDTO,Personal.class));
+        return null;
+    }
+
+    @Override
+    public void update(PersonalDTO personalDTO) {
+//        Personal personal = personalRepository.findByName(personalDTO.getName());
+//        personal = mapper.map()
+    }
 }
+
