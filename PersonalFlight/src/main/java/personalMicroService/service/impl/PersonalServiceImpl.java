@@ -40,7 +40,7 @@ public class PersonalServiceImpl implements PersonalService {
 
     @Override
     public PersonalDTO getByName(String name) {
-       return mapper.map( personalRepository.findByName(name), PersonalDTO.class);
+        return mapper.map(personalRepository.findByName(name), PersonalDTO.class);
     }
 
     @Override
@@ -51,14 +51,14 @@ public class PersonalServiceImpl implements PersonalService {
 
     @Override
     public PersonalDTO add(PersonalDTO personalDTO) {
-        personalRepository.save(mapper.map(personalDTO,Personal.class));
-        return null;
+
+        return mapper.map(personalRepository.save(mapper.map(personalDTO, Personal.class)), PersonalDTO.class);
     }
 
     @Override
-    public void update(PersonalDTO personalDTO) {
-//        Personal personal = personalRepository.findByName(personalDTO.getName());
-//        personal = mapper.map()
+    public PersonalDTO update(PersonalDTO personalDTO) {
+        return null;
     }
+
 }
 

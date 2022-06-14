@@ -10,6 +10,8 @@ import java.util.List;
 public interface PassengerService {
     PassengerDTO add(PassengerDTO passengerDTO);
 
+    PassengerDTO update(PassengerDTO passengerDTO);
+
     void delete(PassengerDTO passengerDTO);
 
     Passenger identify(PassengerDTO passengerDTO);

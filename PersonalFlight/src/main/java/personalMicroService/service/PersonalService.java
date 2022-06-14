@@ -17,5 +17,6 @@ public interface PersonalService {
 
     PersonalDTO add(PersonalDTO personalDTO);
 
-    void update(PersonalDTO personalDTO);
+    PersonalDTO update(PersonalDTO personalDTO);
+
 }

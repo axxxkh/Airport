@@ -13,9 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Builder
@@ -23,19 +25,17 @@ import java.util.List;
 @Data
 public class FlightUserDetailsService implements UserDetailsService {
 
-
     private PassengerService passengerService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
         Passenger passenger = passengerService.getByLogin(username);
         System.out.println(passenger);
         List<GrantedAuthority> authorities = getUserAuthority(passenger.getRoles());
         return buildUserForAuthentication(passenger,authorities);
     }
 
-    private List<GrantedAuthority> getUserAuthority(Iterable<Role> userRoles) {
+    private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
         List<GrantedAuthority> roles = new ArrayList<>();
         for (Role role : userRoles) {
             roles.add(new SimpleGrantedAuthority(role.getRole()));
