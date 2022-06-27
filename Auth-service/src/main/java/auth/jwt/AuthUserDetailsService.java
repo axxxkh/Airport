@@ -1,12 +1,12 @@
-package flightMicroService.service;
+package auth.jwt;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import flightMicroService.entity.Passenger;
-import flightMicroService.entity.Role;
+import auth.Repository.PassengerRepository;
+import auth.entity.Passenger;
+import auth.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +23,14 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @Data
-public class FlightUserDetailsService implements UserDetailsService {
+public class AuthUserDetailsService implements UserDetailsService {
 
-    private PassengerService passengerService;
+    @Autowired
+    private PassengerRepository passengerRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Passenger passenger = passengerService.getByLogin(username);
+        Passenger passenger = passengerRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("vgvg"));
         if (passenger== null) {
             throw new UsernameNotFoundException("User not found");
         }
@@ -40,13 +41,13 @@ public class FlightUserDetailsService implements UserDetailsService {
     private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
         List<GrantedAuthority> roles = new ArrayList<>();
         for (Role role : userRoles) {
-            roles.add(new SimpleGrantedAuthority(role.getRole()));
+            roles.add(new SimpleGrantedAuthority(role.getRole().name()));
         }
         return new ArrayList<>(roles);
     }
 
     public UserDetails buildUserForAuthentication(Passenger passenger, List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(passenger.getName(), passenger.getPassword(),
+        return new User(passenger.getUsername(), passenger.getPassword(),
                 true, true, true, true, authorities);
     }
 }

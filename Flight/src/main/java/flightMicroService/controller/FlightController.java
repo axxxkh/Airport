@@ -22,15 +22,12 @@ public class FlightController {
 
     private FlightService flightService;
 
-    @GetMapping("/1/")
-    public void some(Double transaction) {
-//        if (transaction.isNaN())
-    }
+
 
     @GetMapping("/")
     public ResponseEntity<List<FlightDTO>> getAll() {
-        log.info("test");
-        log.error("error");
+        log.info("Get all flights");
+//        log.error("error");
 
         return new ResponseEntity<>(flightService.getAllFlights(), HttpStatus.ACCEPTED);
     }
@@ -43,7 +40,6 @@ public class FlightController {
     @DeleteMapping("/{number}")
     public void deleteByNumber(@PathVariable int number) {
         flightService.deleteFlight(number);
-//        return new ResponseEntity<>(flightService.deleteFlight(number), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/")

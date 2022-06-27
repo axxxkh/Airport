@@ -2,6 +2,7 @@ package flightMicroService.service.impl;
 
 import flightMicroService.dto.AirlineDTO;
 import flightMicroService.entity.Airline;
+import flightMicroService.exceptions.EntityNotFoundException;
 import flightMicroService.repository.AirlineRepository;
 import flightMicroService.service.AirlineService;
 import lombok.AllArgsConstructor;
@@ -15,8 +16,8 @@ public class AirlineServiceImpl implements AirlineService {
 
     @Override
     public void delete(AirlineDTO airlineDTO) {
-        Airline airline = airlineRepository.findByName(airlineDTO.getName());
-        airline.setActive(false);
-//airlineRepository.f
+        Airline airline = airlineRepository.findByName(airlineDTO.getName())
+                .orElseThrow(()-> new EntityNotFoundException("Airline "+ airlineDTO.getName()+ "doesn`t exist"));
+       airlineRepository.delete(airline);
     }
 }

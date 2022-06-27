@@ -1,6 +1,5 @@
-package flightMicroService.dto;
+package auth.dto;
 
-import flightMicroService.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,9 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -22,9 +18,7 @@ public class PassengerDTO {
     private String name;
     @NotBlank(message = "Surname can`t be blank")
     private String surname;
-    private List<PassportDTO> passports;
     @Email
     private String username;
     private String password;
-    private Set<RoleDTO> roles;
 }

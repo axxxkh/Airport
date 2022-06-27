@@ -16,6 +16,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <spring.boot.version>2.7.0</spring.boot.version>
+        <spring.cloud.version>2021.0.2</spring.cloud.version>
     </properties>
 
     <groupId>groupId</groupId>
@@ -25,6 +26,8 @@
     <modules>
         <module>PersonalFlight</module>
         <module>Flight</module>
+        <module>Eureka-server</module>
+        <module>Auth-service</module>
     </modules>
 
     <dependencyManagement>
@@ -36,6 +39,15 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -46,12 +58,14 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.6.5.Final</version>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>RELEASE</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>

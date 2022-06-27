@@ -18,11 +18,6 @@ public class PassengerController {
 
     private PassengerService passengerService;
 
-//    @GetMapping("/get/")
-//    public Passenger getPassenger() {
-//        return Passenger.builder().build();
-//    }
-
     @GetMapping("/")
     public ResponseEntity<List<PassengerDTO>> getAll() {
         return new ResponseEntity<>(passengerService.getAll(), HttpStatus.OK);
@@ -63,7 +58,7 @@ public class PassengerController {
 
     @PutMapping("/")
     public ResponseEntity<PassengerDTO> update(@RequestBody @Valid PassengerDTO passengerDTO) {
-        return new ResponseEntity<PassengerDTO>(passengerService.add(passengerDTO), HttpStatus.CREATED);
+        return new ResponseEntity<PassengerDTO>(passengerService.update(passengerDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/")

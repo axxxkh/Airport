@@ -5,6 +5,7 @@ import flightMicroService.dto.PassengerDTO;
 import flightMicroService.dto.PassportDTO;
 import flightMicroService.dto.TicketDTO;
 import flightMicroService.entity.*;
+import flightMicroService.exceptions.EntityNotFoundException;
 import flightMicroService.repository.*;
 import flightMicroService.service.TicketService;
 import lombok.AllArgsConstructor;
@@ -66,9 +67,11 @@ public class TicketServiceImpl implements TicketService {
 
         Queue<PassportDTO> passportList = new LinkedList<>(passengerDTO.getPassports());
         assert passportList.peek() != null;
-        Passport passport = passportRepository.findBySerialNumber(passportList.peek().getSerialNumber());
+        Passport passport = passportRepository
+                .findBySerialNumber(passportList.peek().getSerialNumber())
+                .orElseThrow(EntityNotFoundException::new);
         assert passport != null;
-        Passport passportDB = passportRepository.findBySerialNumber(passport.getSerialNumber());
+        Passport passportDB = passportRepository.findBySerialNumber(passport.getSerialNumber()).orElseThrow(EntityNotFoundException::new);
         Passenger passengerDB = passportDB.getPassenger();
         Flight flight = flightRepository.findByFlightNumber(flightNumber).orElseThrow();
         ticketRepository.findTicketsByFlightId(flight.getId());

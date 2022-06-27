@@ -13,11 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 @ControllerAdvice
 public class ExceptionControllerAdvise {
 
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    @ExceptionHandler(value = {EntityNotFoundException.class})
-//    protected ResponseEntity<String> handleNotFoundEx(EntityNotFoundException ex) {
-//        return new ResponseEntity<String>(ex.getMessage(),HttpStatus.NOT_FOUND);
-//    }
 
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)

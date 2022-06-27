@@ -4,6 +4,7 @@ import flightMicroService.dto.RouteDTO;
 import flightMicroService.entity.Flight;
 import flightMicroService.entity.Route;
 import flightMicroService.entity.Ticket;
+import flightMicroService.exceptions.EntityNotFoundException;
 import flightMicroService.repository.FlightRepository;
 import flightMicroService.repository.RouteRepository;
 import flightMicroService.repository.TicketRepository;
@@ -27,7 +28,8 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public void delete(RouteDTO routeDTO) {
-        Route route = routeRepository.findByName(routeDTO.getName());
+        Route route = routeRepository.findByName(routeDTO.getName())
+                .orElseThrow(() -> new EntityNotFoundException("Route "+ routeDTO.getName()+ "doesn't found"));
         List<Flight> flightList = flightRepository.findByRoute(route);
 
         List<Ticket> ticketList = flightList.stream()
