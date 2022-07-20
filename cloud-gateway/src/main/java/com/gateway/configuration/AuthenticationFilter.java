@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono;
 public class AuthenticationFilter implements GatewayFilter {
 
     @Autowired
-    private RouterValidator routerValidator;//custom route validator
+    private RouterValidator routerValidator;
     private JwtUtil jwtUtil;
 
     @Override

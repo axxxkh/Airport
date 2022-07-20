@@ -28,8 +28,8 @@
         <module>Flight</module>
         <module>Eureka-server</module>
         <module>Auth-service</module>
-        <module>zuul-server</module>
         <module>cloud-gateway</module>
+        <module>user-service</module>
     </modules>
 
     <dependencyManagement>

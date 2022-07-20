@@ -30,28 +30,6 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-//    @Bean
-//    public AuthenticationProvider authenticationProvider1() {
-//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setUserDetailsService(userDetailsService);
-//        provider.setPasswordEncoder(passwordEncoder);
-//        return provider;
-//    }
-
-//    @Bean
-//    public UserDetails configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        List<GrantedAuthority> authorities = new ArrayList<>();
-//        authorities.add(new SimpleGrantedAuthority("ADMIN"));
-//        UserDetails user = userDetailsService.buildUserForAuthentication(Passenger.builder()
-//                .surname("ddd")
-//                .name("bbb")
-//                .password(passwordEncoder.encode("123")).build(), authorities);
-//
-//        UserDetailsManager userDetailsManager = new MyJdbcManager();
-//        userDetailsManager.createUser(user);
-//        return user;
-//    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

@@ -1,4 +1,4 @@
-package auth.entity;
+package user.entity;
 
 import lombok.*;
 
