@@ -1,4 +1,4 @@
-package auth.jwt.attemptThree;
+package auth.jwt;
 
 import auth.entity.User;
 import io.jsonwebtoken.*;
@@ -17,7 +17,7 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secretKey;
 
-//    @Value("${jwt.expirationTIme}")
+    //    @Value("${jwt.expirationTIme}")
     private String expirationTime="189000000000";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtil.class);
@@ -39,15 +39,15 @@ public class JwtUtil {
     public String generate(User passenger) {
         Map<String, Object> claims = new HashMap<>();
 //        claims.put("id", passengerDTO.getId());
-        claims.put("id", passenger.getName());
-        claims.put("role", passenger.getSurname());
+        claims.put("id", passenger.getEmail());
+        claims.put("role", passenger.getRole().getRole());
         return doGenerateToken(claims, passenger.getEmail());
     }
 
-    private String doGenerateToken(Map<String, Object> claims, String username) {
+    private String doGenerateToken(Map<String, Object> claims, String email) {
         long expirationTimeLong;
 //        if ("ACCESS".equals(type)) {
-            expirationTimeLong = Long.parseLong(expirationTime) * 1000;
+        expirationTimeLong = Long.parseLong(expirationTime) * 1000;
 //        } else {
 //            expirationTimeLong = Long.parseLong(expirationTime) * 1000 * 5;
 //        }
@@ -56,7 +56,7 @@ public class JwtUtil {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username)
+                .setSubject(email)
                 .setIssuedAt(createdDate)
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512,secretKey)

@@ -9,48 +9,51 @@ import org.springframework.lang.NonNull;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Passenger")
+@Table(name = "User")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NonNull
-    private String name;
-    @NonNull
-    private String surname;
     @Email
-    @Column(name = "email")
+    @Column(name = "email", nullable = false ,unique = true)
     private String email;
     @NonNull
     private String password;
-    @Column(name = "active")
+    @Column(name = "secret_question")
+    private String secretQuestion;
+    @Column(name = "secret_answer")
+    private String secretAnswer;
+    @Column(name = "active", columnDefinition = "boolean default true")
     private boolean isActive = Boolean.TRUE;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles;
+//    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(name = "user_roles",
+//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "role_id", referencedColumnName = "id"))
+//    private Set<Role> roles;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User passenger = (User) o;
-        return isActive() == passenger.isActive() && getName().equals(passenger.getName()) && getSurname().equals(passenger.getSurname()) && Objects.equals(getEmail(), passenger.getEmail()) && getPassword().equals(passenger.getPassword());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getSurname(), getEmail(), getPassword(), isActive());
-    }
-
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        User user = (User) o;
+//        return getEmail().equals(user.getEmail()) && getPassword().equals(user.getPassword());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getEmail(), getPassword());
+//    }
 }

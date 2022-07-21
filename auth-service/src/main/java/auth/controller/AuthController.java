@@ -3,7 +3,8 @@ package auth.controller;
 import auth.dto.LoginRequest;
 import auth.dto.RegisterRequest;
 import auth.entity.PersonalDTO;
-import auth.feign.AuthClient;
+import auth.exceptions.UserAuthException;
+import auth.feign.UserClient;
 import auth.repository.UserRepository;
 import auth.service.AuthService;
 import lombok.AllArgsConstructor;
@@ -19,22 +20,20 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class AuthController {
-//    private AuthenticationManager authenticationManager;
-//    private JwtTokenUtil jwtUtil;
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private AuthService authService;
-    private AuthClient authClient;
+    private UserClient authClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
     @GetMapping("/auth/some")
-    public LoginRequest some () {
+    public LoginRequest some() {
         return LoginRequest.builder().email("alxxxkh@gmail.com").password("123").build();
     }
 
     @PutMapping("/auth/update")
-    public LoginRequest some (@RequestBody @Valid LoginRequest request) {
+    public LoginRequest some(@RequestBody @Valid LoginRequest request) {
 
         auth.entity.User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -43,7 +42,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) throws UserAuthException {
 
         return ResponseEntity.ok().body(authService.login(request));
 
@@ -66,13 +65,13 @@ public class AuthController {
     }
 
     @PostMapping("auth/register")
-    public ResponseEntity<?> register (@RequestBody @Valid RegisterRequest request) {
+    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) {
 
         return null;
     }
+
     @GetMapping("/auth/m")
-    public void getAll(){
-      List <PersonalDTO> personalDTOS= authClient.getAll();
-        System.out.println(personalDTOS.get(1).getName());
+    public void getAll() {
+        List<PersonalDTO> personalDTOS = authClient.getAll();
     }
 }

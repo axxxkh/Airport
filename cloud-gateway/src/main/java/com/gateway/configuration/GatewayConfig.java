@@ -25,12 +25,9 @@ public class GatewayConfig {
                         .filters(f->f.filter(authenticationFilter))
                         .uri("http://localhost:8084/"))
 
-                .route(r -> r.path("/consumer/**")
-                        //Pre and Post Filters provided by Spring Cloud Gateway
-                        .filters(f -> f.addRequestHeader("second-request", "second-request-header")
-                                .addResponseHeader("second-response", "second-response-header"))
-                        .uri("http://localhost:8082/"))
-//                        .id("consumerModule"))
+                .route(r -> r.path("/user/**")
+                        .filters(f->f.filter(authenticationFilter))
+                        .uri("http://localhost:8087/"))
                 .build();
     }
 }

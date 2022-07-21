@@ -1,6 +1,7 @@
 package com.gateway.configuration;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,12 +18,12 @@ import reactor.core.publisher.Mono;
 //@RefreshScope
 @Component
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class AuthenticationFilter implements GatewayFilter {
 
-    @Autowired
+//    @Autowired
     private RouterValidator routerValidator;
+//    @Autowired
     private JwtUtil jwtUtil;
 
     @Override
@@ -32,8 +33,8 @@ public class AuthenticationFilter implements GatewayFilter {
         if (routerValidator.isSecured.test(request)) {
             if (this.isAuthMissing(request))
                 return this.onError(exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
-
-            final String token = this.getAuthHeader(request);
+// Hardcoded. But it works before without it
+             String token = this.getAuthHeader(request).replace("Bearer ","");
 
             if (jwtUtil.isInvalid(token))
                 return this.onError(exchange, "Authorization header is invalid", HttpStatus.UNAUTHORIZED);
