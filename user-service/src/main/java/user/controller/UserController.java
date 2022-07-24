@@ -5,16 +5,12 @@ import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import user.entity.User;
 import user.service.UserService;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -25,13 +21,17 @@ public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/user/")
-    public ResponseEntity<List<User>> getAll() {
+    public List<User> getAll() {
+        return userService.getAll();
+    }
 
-        return ResponseEntity.ok().body(userService.getAll());
+    @PostMapping("/user/register/")
+    public User registerUser(@RequestBody User user) {
+        return userService.saveUser(user);
     }
 
     @GetMapping("/user/em/")
-    public ResponseEntity<?> getByEmail (@RequestParam String email) {
-        return ResponseEntity.ok().body(userService.getByEmail(email));
+    public Optional<User> getByEmail(@RequestParam String email) {
+        return userService.getByEmail(email);
     }
 }

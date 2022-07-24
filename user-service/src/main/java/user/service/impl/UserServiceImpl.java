@@ -2,8 +2,6 @@ package user.service.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import user.entity.User;
 import user.repository.UserRepository;
@@ -26,5 +24,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 }

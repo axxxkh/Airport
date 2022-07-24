@@ -1,15 +1,13 @@
 package auth.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Data

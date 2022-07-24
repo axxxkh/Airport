@@ -1,10 +1,11 @@
 package auth.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -16,6 +17,7 @@ public class Role{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(columnDefinition = "varchar(20) NOT NULL default \"PASSENGER\"")
     private String role;
 //    @ManyToMany (fetch = FetchType.LAZY, mappedBy = "roles", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    @ToString.Exclude
