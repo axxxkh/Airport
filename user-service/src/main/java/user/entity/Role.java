@@ -16,7 +16,10 @@ public class Role{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(columnDefinition = "varchar(20) NOT NULL default \"PASSENGER\"")
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
     private String role;
+
 //    @ManyToMany (fetch = FetchType.LAZY, mappedBy = "roles", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    @ToString.Exclude
 //    private Set<User> passengers;

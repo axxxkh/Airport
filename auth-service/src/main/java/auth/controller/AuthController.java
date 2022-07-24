@@ -1,17 +1,17 @@
 package auth.controller;
 
+import auth.dto.AuthResponse;
 import auth.dto.LoginRequest;
 import auth.dto.RegisterRequest;
 import auth.entity.PersonalDTO;
 import auth.exceptions.UserAuthException;
+import auth.exceptions.UserRegisterException;
 import auth.feign.UserClient;
-import auth.repository.UserRepository;
-import auth.service.AuthService;
+import auth.service.impl.AuthServiceImpl;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,9 +20,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class AuthController {
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private AuthService authService;
+    private AuthServiceImpl authService;
     private UserClient authClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
@@ -30,15 +28,6 @@ public class AuthController {
     @GetMapping("/auth/some")
     public LoginRequest some() {
         return LoginRequest.builder().email("alxxxkh@gmail.com").password("123").build();
-    }
-
-    @PutMapping("/auth/update")
-    public LoginRequest some(@RequestBody @Valid LoginRequest request) {
-
-        auth.entity.User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        userRepository.saveAndFlush(user);
-        return null;
     }
 
     @PostMapping("/auth/login")
@@ -65,9 +54,8 @@ public class AuthController {
     }
 
     @PostMapping("auth/register")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) {
-
-        return null;
+    public AuthResponse register(@RequestBody @Valid RegisterRequest request) throws UserRegisterException {
+        return authService.registerUser(request);
     }
 
     @GetMapping("/auth/m")
