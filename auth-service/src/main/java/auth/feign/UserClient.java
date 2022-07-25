@@ -13,13 +13,13 @@ import java.util.Optional;
 
 @FeignClient(value="user-service", url = "localhost:8087/user")
 public interface UserClient {
+//    @RequestMapping(method = RequestMethod.GET,value = "/")
+//    public List<PersonalDTO> getAll();
+
+//    @RequestMapping(method = RequestMethod.POST, value = "/")
+//    public Optional<User> getUser ();
+
     @RequestMapping(method = RequestMethod.GET,value = "/")
-    public List<PersonalDTO> getAll();
-
-    @RequestMapping(method = RequestMethod.POST, value = "/")
-    public Optional<User> getUser ();
-
-    @RequestMapping(method = RequestMethod.GET,value = "/em/")
     public Optional<User> getByEmail(@RequestParam(value = "email") String email);
 
     @RequestMapping(method = RequestMethod.POST, value = "/register/")

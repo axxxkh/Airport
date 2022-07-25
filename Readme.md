@@ -7,7 +7,7 @@ Airport.
 
 Database model divided in four layers: Passenger (include tables Passenger, Passport and Ticket), Flight (tables Flight
 and Route), Facility (tables terminal and gate), Airline (tables airline, aircraft, aircraft_types).
-![](../../resources/EER%20Diagram.png)
+![](src/main/resources/EER Diagram.png)
 
 ## Entities
 

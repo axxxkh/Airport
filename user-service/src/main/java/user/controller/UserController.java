@@ -20,17 +20,12 @@ public class UserController {
     private UserService userService;
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping("/user/")
-    public List<User> getAll() {
-        return userService.getAll();
-    }
-
     @PostMapping("/user/register/")
     public User registerUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
 
-    @GetMapping("/user/em/")
+    @GetMapping("/user/")
     public Optional<User> getByEmail(@RequestParam String email) {
         return userService.getByEmail(email);
     }
