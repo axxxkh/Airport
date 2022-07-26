@@ -20,11 +20,6 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
-    }
-
-    @Override
     public Optional<User> getByEmail(String email) {
         return userRepository.findByEmail(email);
     }

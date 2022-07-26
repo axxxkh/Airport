@@ -30,6 +30,7 @@
         <module>Auth-service</module>
         <module>cloud-gateway</module>
         <module>user-service</module>
+        <module>flight-service</module>
     </modules>
 
     <dependencyManagement>
