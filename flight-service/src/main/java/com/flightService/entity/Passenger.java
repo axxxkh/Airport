@@ -4,7 +4,6 @@ import lombok.*;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -22,37 +21,31 @@ public class Passenger extends BasicEntity {
     private String name;
     @NonNull
     private String surname;
-    @Email
-    @Column(name = "email")
-    private String username;
-    @NonNull
-    private String password;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "passenger", orphanRemoval = true)
     @ToString.Exclude
     private List<Ticket> tickets;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "passenger", orphanRemoval = true)
     @ToString.Exclude
-    private List<Passport> passports;
+    private Passport passport;
     private boolean active = Boolean.TRUE;
+//
+//    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(name = "user_roles",
+//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "role_id", referencedColumnName = "id"))
+//    private Set<Role> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Passenger passenger = (Passenger) o;
-        return isActive() == passenger.isActive() && getName().equals(passenger.getName()) && getSurname().equals(passenger.getSurname()) && Objects.equals(getUsername(), passenger.getUsername()) && getPassword().equals(passenger.getPassword());
+        return getName().equals(passenger.getName()) && getSurname().equals(passenger.getSurname()) && Objects.equals(getPassport(), passenger.getPassport());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getSurname(), getUsername(), getPassword(), isActive());
+        return Objects.hash(getName(), getSurname(), getPassport());
     }
 }
