@@ -10,6 +10,9 @@ public interface TicketRepository extends GenericJPARepository<Ticket> {
     @Query("from Ticket t LEFT JOIN FETCH t.flight f where f.id= ?1")
     List<Ticket> findTicketsByFlightId(Long flightId);
 
+    @Query("from Ticket t LEFT JOIN FETCH t.flight f where f.flightNumber= ?1")
+    List<Ticket> findTicketsByFlightNumber(int flightNumber);
+
     @Query("from Ticket t LEFT JOIN FETCH t.passenger p where p.id= ?1")
     List<Ticket> findTicketsByPassengerId(Long passengerId);
 

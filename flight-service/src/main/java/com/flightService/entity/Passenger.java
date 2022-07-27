@@ -26,6 +26,7 @@ public class Passenger extends BasicEntity {
     private List<Ticket> tickets;
     @OneToOne
     @ToString.Exclude
+    @JoinColumn(name = "passport_id")
     private Passport passport;
     private boolean active = Boolean.TRUE;
     @ManyToOne

@@ -27,9 +27,6 @@ public class Passport extends BasicEntity {
     private LocalDate birthdate;
     @Column(name = "issue_date", nullable = false)
     private LocalDate issueDate;
-    @OneToOne
-    @JoinColumn(name = "passenger_id")
-    private Passenger passenger;
     private boolean active = Boolean.TRUE;
 
     @Override
