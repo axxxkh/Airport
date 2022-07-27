@@ -11,7 +11,7 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
-@RequestMapping("/flight")
+@RequestMapping("/ticket")
 @AllArgsConstructor
 public class TicketController {
     private FlightService flightService;

@@ -22,6 +22,11 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
+    public String userLogin (String jwt) {
+        Claims claims = getAllClaimsFromToken(jwt.replace("Bearer ", ""));
+        return getAllClaimsFromToken(jwt.replace("Bearer ", "")).getId();
+    }
+
     private boolean isTokenExpired(String token) {
         return this.getAllClaimsFromToken(token).getExpiration().before(new Date());
     }
