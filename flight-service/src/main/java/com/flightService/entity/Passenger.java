@@ -24,6 +24,7 @@ public class Passenger extends BasicEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "passenger", orphanRemoval = true)
     @ToString.Exclude
     private List<Ticket> tickets;
+    @OneToOne
     @ToString.Exclude
     private Passport passport;
     private boolean active = Boolean.TRUE;

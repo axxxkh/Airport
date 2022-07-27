@@ -17,6 +17,7 @@ import java.util.Objects;
 @Builder
 //@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"serial_number", "passport_type"})})
 public class Passport extends BasicEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -29,8 +30,6 @@ public class Passport extends BasicEntity {
     @OneToOne
     @JoinColumn(name = "passenger_id")
     private Passenger passenger;
-    @Column(name = "passport_type", nullable = false)
-    private String passportType;
     private boolean active = Boolean.TRUE;
 
     @Override
@@ -39,13 +38,12 @@ public class Passport extends BasicEntity {
         if (o == null || getClass() != o.getClass()) return false;
         Passport passport = (Passport) o;
         return Objects.equals(getSerialNumber(), passport.getSerialNumber())
-                && Objects.equals(getIssueDate(), passport.getIssueDate())
-                && Objects.equals(getPassportType(), passport.getPassportType());
+                && Objects.equals(getIssueDate(), passport.getIssueDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getSerialNumber(), getIssueDate(), getPassportType());
+        return Objects.hash(getSerialNumber(), getIssueDate());
     }
 
     @Override

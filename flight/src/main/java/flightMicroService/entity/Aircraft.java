@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Aircraft extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "aircraft_type_id", referencedColumnName = "id", nullable = false)
     private AircraftType typeId;

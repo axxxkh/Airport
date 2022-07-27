@@ -1,6 +1,5 @@
 package com.flightService.repository;
 
-import com.flightService.entity.PersonalInfo;
 import org.springframework.stereotype.Repository;
 
 @Repository
