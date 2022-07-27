@@ -21,7 +21,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public List<PassengerDTO> getAll(String jwt) {
-        return passengerRepository.getByUserLogin(jwt)
+        return passengerRepository.getByUser(jwtUtil.userLogin(jwt))
                 .stream()
                 .map(passenger -> mapper.map(passenger, PassengerDTO.class))
                 .collect(Collectors.toList());

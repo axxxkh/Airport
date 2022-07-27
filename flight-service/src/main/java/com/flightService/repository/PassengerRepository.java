@@ -4,7 +4,6 @@ import com.flightService.entity.Passenger;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PassengerRepository extends GenericJPARepository<Passenger> {
 
@@ -17,6 +16,6 @@ public interface PassengerRepository extends GenericJPARepository<Passenger> {
     @Query("from Passenger p LEFT JOIN p.tickets t LEFT JOIN t.flight f LEFT JOIN  f.airline a where a.id= ?1")
     List<Passenger> getByAirline(Long airlineId);
 
-    @Query("from Passenger p LEFT JOIN p.user u where u.id= ?1")
-    List<Passenger> getByUserLogin(String login);
+    @Query("from Passenger p LEFT JOIN p.user u where u.email= ?1")
+    List<Passenger> getByUser(String login);
 }

@@ -1,6 +1,7 @@
 package com.flightService.controller;
 
 import com.flightService.dto.PassengerDTO;
+import com.flightService.dto.TicketDTO;
 import com.flightService.service.PassengerService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,10 @@ public class ClientController {
     public List<PassengerDTO> getPassengers(@RequestHeader("Authorization") String jwt) {
         return passengerService.getAll(jwt);
     }
+//
+//    @GetMapping("/{passengerId}/")
+//    public List<TicketDTO> getAllTicketsByPassenger (@RequestHeader("Autorization") String jwt) {
+//        passengerService.
+//    }
 
-    ;
 }

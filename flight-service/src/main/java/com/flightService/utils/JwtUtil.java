@@ -18,13 +18,11 @@ public class JwtUtil {
     private String secret;
 
     public Claims getAllClaimsFromToken(String token) {
-
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
     public String userLogin (String jwt) {
-        Claims claims = getAllClaimsFromToken(jwt.replace("Bearer ", ""));
-        return getAllClaimsFromToken(jwt.replace("Bearer ", "")).getId();
+        return getAllClaimsFromToken(jwt.replace("Bearer ", "")).getSubject();
     }
 
     private boolean isTokenExpired(String token) {
