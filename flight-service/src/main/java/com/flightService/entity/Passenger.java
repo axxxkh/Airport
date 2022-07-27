@@ -28,7 +28,10 @@ public class Passenger extends BasicEntity {
     @ToString.Exclude
     private Passport passport;
     private boolean active = Boolean.TRUE;
-//
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
+
 //    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    @JoinTable(name = "user_roles",
 //            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

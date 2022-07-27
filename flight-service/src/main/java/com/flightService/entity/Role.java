@@ -17,9 +17,9 @@ public class Role extends BasicEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String role;
-    @ManyToMany (fetch = FetchType.LAZY, mappedBy = "roles", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany (fetch = FetchType.LAZY, mappedBy = "role", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @ToString.Exclude
-    private Set<Passenger> passengers;
+    private Set<User> users;
     private boolean active = Boolean.TRUE;
 
     @Override

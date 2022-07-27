@@ -35,8 +35,8 @@ public class User {
     /*
      * it designed that one user can store different passengers (family, children etc)
      * */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     @ToString.Exclude
-    List<Passenger> passengerList;
+    List<Passenger> passengers;
 
 }

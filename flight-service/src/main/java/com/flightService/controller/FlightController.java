@@ -1,6 +1,8 @@
 package com.flightService.controller;
 
 import com.flightService.entity.Flight;
+import com.flightService.sarvice.FlightService;
+import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +15,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/flight")
 public class FlightController {
 
+    private FlightService flightService;
+
     @GetMapping("/")
     public List<Flight> getAllFlights(){
-        return null;
+        return flightService.getAll();
     }
 
 //    @GetMapping("/period/")

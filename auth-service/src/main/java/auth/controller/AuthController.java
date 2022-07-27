@@ -21,9 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AuthController {
     private AuthServiceImpl authService;
-    private UserClient authClient;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+    private UserClient userClient;
 
     @GetMapping("/auth/some")
     public LoginRequest some() {
@@ -32,7 +30,6 @@ public class AuthController {
 
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) throws UserAuthException {
-
         return ResponseEntity.ok().body(authService.login(request));
 
 //
@@ -56,10 +53,5 @@ public class AuthController {
     @PostMapping("auth/register")
     public AuthResponse register(@RequestBody @Valid RegisterRequest request) throws UserRegisterException {
         return authService.registerUser(request);
-    }
-
-    @GetMapping("/auth/m")
-    public void getAll() {
-        List<PersonalDTO> personalDTOS = authClient.getAll();
     }
 }

@@ -28,6 +28,9 @@ public class GatewayConfig {
                 .route(r -> r.path("/user/**")
                         .filters(f->f.filter(authenticationFilter))
                         .uri("http://localhost:8087/"))
+                .route(r -> r.path("/flight/**")
+                        .filters(f->f.filter(authenticationFilter))
+                        .uri("http://localhost:8081/"))
                 .build();
     }
 }
