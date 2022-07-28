@@ -22,18 +22,24 @@ public class GatewayConfig {
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(r -> r.path("/auth/**")
-                        .filters(f->f.filter(authenticationFilter))
-                        .uri("http://localhost:8084/"))
+                        .filters(f -> f.filter(authenticationFilter))
+//                        .uri("http://localhost:8084/"))
+                        .uri("lb://auth-service"))
 
                 .route(r -> r.path("/user/**")
-                        .filters(f->f.filter(authenticationFilter))
-                        .uri("http://localhost:8087/"))
+                        .filters(f -> f.filter(authenticationFilter))
+//                        .uri("http://localhost:8087/"))
+                        .uri("lb://user-service"))
+
                 .route(r -> r.path("/flight/**")
-                        .filters(f->f.filter(authenticationFilter))
-                        .uri("http://localhost:8081/"))
+                        .filters(f -> f.filter(authenticationFilter))
+//                        .uri("http://localhost:8081/"))
+                        .uri("lb://flight-service"))
+
                 .route(r -> r.path("/passenger/**")
-                        .filters(f->f.filter(authenticationFilter))
-                        .uri("http://localhost:8081/"))
+                        .filters(f -> f.filter(authenticationFilter))
+//                        .uri("http://localhost:8081/"))
+                        .uri("lb://flight-service"))
                 .build();
     }
 }

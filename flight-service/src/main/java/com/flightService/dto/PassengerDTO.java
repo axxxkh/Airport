@@ -1,5 +1,6 @@
 package com.flightService.dto;
 
+import com.flightService.entity.Ticket;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +23,5 @@ public class PassengerDTO {
     @NotBlank(message = "Surname can`t be blank")
     private String surname;
     private PassportDTO passport;
+    private List<TicketDTO> tickets;
 }

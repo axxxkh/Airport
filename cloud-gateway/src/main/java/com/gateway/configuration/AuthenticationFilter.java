@@ -21,10 +21,13 @@ import reactor.core.publisher.Mono;
 @Data
 public class AuthenticationFilter implements GatewayFilter {
 
-//    @Autowired
     private RouterValidator routerValidator;
-//    @Autowired
     private JwtUtil jwtUtil;
+    private String Role;
+
+//    public boolean hasRoleAdmin(String role){
+//        return role.equals("ADMIN");
+//    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
