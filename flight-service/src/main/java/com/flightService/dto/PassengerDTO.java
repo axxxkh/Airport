@@ -16,13 +16,10 @@ import java.util.Set;
 @Builder
 
 public class PassengerDTO {
+    private long id;
     @NotBlank(message = "First name can`t be blank")
     private String name;
     @NotBlank(message = "Surname can`t be blank")
     private String surname;
-    private List<PassportDTO> passports;
-    @Email
-    private String username;
-    private String password;
-    private Set<RoleDTO> roles;
+    private PassportDTO passport;
 }

@@ -18,5 +18,4 @@ public class PassportDTO {
     @NotBlank(message = "Passenger birthday is mandatory")
     private LocalDate birthdate;
     private LocalDate issueDate;
-    private String passportType;
 }

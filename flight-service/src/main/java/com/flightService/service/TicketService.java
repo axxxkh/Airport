@@ -1,5 +1,6 @@
 package com.flightService.service;
 
+import com.flightService.dto.PassengerDTO;
 import com.flightService.dto.TicketDTO;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +16,5 @@ public interface TicketService {
 
     public List<TicketDTO> getAvailableTicketsByFlightNumber(int flightNumber);
     public TicketDTO buyTicket(String jwt, TicketDTO ticket);
+    public List<TicketDTO> getTicketsByPassenger(PassengerDTO passenger);
 }

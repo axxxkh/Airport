@@ -1,5 +1,6 @@
 package com.flightService.service.impl;
 
+import com.flightService.dto.PassengerDTO;
 import com.flightService.dto.TicketDTO;
 import com.flightService.repository.TicketRepository;
 import com.flightService.service.TicketService;
@@ -34,5 +35,13 @@ public class TicketServiceImpl implements TicketService {
 //        claims.
         System.out.println(claims);
         return null;
+    }
+
+    @Override
+    public List<TicketDTO> getTicketsByPassenger(PassengerDTO passenger) {
+        return ticketRepository.findTicketsByPassengerId(passenger.getId())
+                .stream()
+                .map(ticket -> mapper.map(ticket, TicketDTO.class))
+                .collect(Collectors.toList());
     }
 }
