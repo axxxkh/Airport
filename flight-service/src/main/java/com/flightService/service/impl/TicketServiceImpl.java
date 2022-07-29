@@ -30,10 +30,9 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public TicketDTO buyTicket(String jwt, TicketDTO ticket) {
-        Claims claims = jwtUtil.getAllClaimsFromToken(jwt.replace("Bearer ", ""));
-//        claims.
-        System.out.println(claims);
+    public TicketDTO buyTicket(String passengerUd, TicketDTO ticket) {
+
+
         return null;
     }
 

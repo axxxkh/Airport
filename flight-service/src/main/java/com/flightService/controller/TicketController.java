@@ -23,8 +23,8 @@ public class TicketController {
     }
 
     @PostMapping("/{FlightId}/")
-    public TicketDTO buyTicket(@RequestHeader("Authorization") String jwt, @RequestBody TicketDTO ticket) {
-        ticketService.buyTicket(jwt,ticket);
+    public TicketDTO buyTicket(@RequestHeader("Id") String id, @RequestBody TicketDTO ticket) {
+        ticketService.buyTicket(id,ticket);
         return null;
     }
 }

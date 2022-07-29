@@ -24,20 +24,18 @@ public class PassengerController {
 
     // Return List of PassengerDTOs that attached to user account
     @GetMapping("/")
-    public List<PassengerDTO> getPassengers(@RequestHeader("id") String id, @RequestHeader("Role") String role, @RequestHeader("Authorization") String jwt) {
-        System.out.println(id);
-        System.out.println(role);
-        return passengerService.getAll(jwt);
+    public List<PassengerDTO> getPassengers(@RequestHeader("id") String id) {
+        return passengerService.getAll(id);
     }
 
-//    @GetMapping("/tickets")
-//    public List<TicketDTO> getTickets(@RequestHeader("Authorization") String jwt) {
-//        return getPassengers(jwt)
-//                .stream()
-//                .map(passengerDTO -> ticketService.getTicketsByPassenger(passengerDTO))
-//                .flatMap(Collection::stream)
-//                .collect(Collectors.toList());
-//    }
+    @GetMapping("/tickets")
+    public List<TicketDTO> getTickets(@RequestHeader("Authorization") String jwt) {
+        return getPassengers(jwt)
+                .stream()
+                .map(passengerDTO -> ticketService.getTicketsByPassenger(passengerDTO))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
 
 
 //

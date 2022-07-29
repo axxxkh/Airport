@@ -12,22 +12,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 //@RefreshScope
 @Component
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class AuthenticationFilter implements GatewayFilter {
-
+    @Autowired
     private RouterValidator routerValidator;
+    @Autowired
     private JwtUtil jwtUtil;
-    private String Role;
 
-//    public boolean hasRoleAdmin(String role){
-//        return role.equals("ADMIN");
-//    }
+
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

@@ -20,7 +20,7 @@ public class FlightController {
     private FlightServiceImpl flightService;
 
     @GetMapping("/")
-    public List<FlightDTO> getAllFlights(@RequestHeader("Authorization")String token){
+    public List<FlightDTO> getAllFlights(@RequestHeader("Id")String id){
         return null;
     }
 

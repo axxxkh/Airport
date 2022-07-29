@@ -3,7 +3,6 @@ package com.flightService.service.impl;
 import com.flightService.dto.PassengerDTO;
 import com.flightService.repository.PassengerRepository;
 import com.flightService.service.PassengerService;
-import com.flightService.utils.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -17,11 +16,10 @@ public class PassengerServiceImpl implements PassengerService {
 
     private PassengerRepository passengerRepository;
     private ModelMapper mapper;
-    private JwtUtil jwtUtil;
 
     @Override
-    public List<PassengerDTO> getAll(String jwt) {
-        return passengerRepository.getByUser(jwtUtil.userLogin(jwt))
+    public List<PassengerDTO> getAll(String id) {
+        return passengerRepository.getByUser(id)
                 .stream()
                 .map(passenger -> mapper.map(passenger, PassengerDTO.class))
                 .collect(Collectors.toList());
