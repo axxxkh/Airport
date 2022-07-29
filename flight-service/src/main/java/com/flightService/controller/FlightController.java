@@ -21,6 +21,7 @@ public class FlightController {
 
     @GetMapping("/")
     public List<FlightDTO> getAllFlights(@RequestHeader("Id")String id){
+        System.out.println("fff");
         return null;
     }
 

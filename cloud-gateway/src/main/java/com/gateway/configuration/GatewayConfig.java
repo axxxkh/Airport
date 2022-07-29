@@ -8,7 +8,6 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 @Configuration
 @AllArgsConstructor
@@ -18,6 +17,8 @@ public class GatewayConfig {
 
     @Autowired
     private AuthenticationFilter authenticationFilter;
+        @Autowired
+    private AdminAuthenticationFilter adminAuthenticationFilter;
 
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
@@ -33,7 +34,7 @@ public class GatewayConfig {
                         .uri("lb://user-service"))
 
                 .route(r -> r.path("/flight/**")
-                        .filters(f -> f.filter(authenticationFilter))
+                        .filters(f -> f.filter(authenticationFilter).filter(adminAuthenticationFilter))
 //                        .uri("http://localhost:8081/"))
                         .uri("lb://flight-service"))
 
