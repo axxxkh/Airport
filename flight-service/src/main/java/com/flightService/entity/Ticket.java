@@ -38,8 +38,7 @@ public class Ticket extends BasicEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ticket ticket = (Ticket) o;
-        return getNumber() == ticket.getNumber()
-                && getSeat() == ticket.getSeat()
+        return getSeat() == ticket.getSeat()
                 && getFlight().equals(ticket.getFlight());
     }
 

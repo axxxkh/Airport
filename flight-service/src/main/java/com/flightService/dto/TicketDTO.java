@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class TicketDTO {
     @NotBlank(message = "Flight number is mandatory")
-    private int flightNumber;
+    private long flightNumber;
     @NotBlank(message = "Ticket number can`t be blank")
     private int number;
     @NotBlank(message = "Ticket seat can`t be blank")

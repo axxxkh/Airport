@@ -14,7 +14,7 @@ public interface TicketService {
     byte TICKET_STATUS_FINISHED = 3;
     byte TICKET_CANCELLED = 4;
 
-    public List<TicketDTO> getAvailableTicketsByFlightNumber(int flightNumber);
+    public List<TicketDTO> getAvailableTicketsByFlightNumber(long flightNumber);
     public TicketDTO buyTicket(String jwt, TicketDTO ticket);
     public List<TicketDTO> getTicketsByPassenger(PassengerDTO passenger);
 }
