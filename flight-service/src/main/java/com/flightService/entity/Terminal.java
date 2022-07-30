@@ -17,7 +17,7 @@ import javax.persistence.Id;
 public class Terminal extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @NonNull
     private String name;
     @NonNull

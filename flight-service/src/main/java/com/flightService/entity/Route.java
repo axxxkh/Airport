@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Route extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     @Column(unique = true, nullable = false)
     private String name;
     private boolean active = Boolean.TRUE;

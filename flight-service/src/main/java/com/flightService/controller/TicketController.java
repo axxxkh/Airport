@@ -1,6 +1,7 @@
 package com.flightService.controller;
 
 import com.flightService.dto.TicketDTO;
+import com.flightService.exceptions.TicketException;
 import com.flightService.service.FlightService;
 import com.flightService.service.TicketService;
 import lombok.AllArgsConstructor;
@@ -18,13 +19,22 @@ public class TicketController {
     private TicketService ticketService;
 
     @GetMapping("/{FlightNumber}/")
-    public List<TicketDTO> getAllAvailable(@PathVariable("FlightNumber") int flightNumber) {
-        return ticketService.getAvailableTicketsByFlightNumber(flightNumber);
+    public List<TicketDTO> getAllAvailable(@PathVariable("FlightNumber") long flightNumber) {
+        ticketService.getAvailableTicketsByFlightNumber(11).forEach(System.out::println);
+
+//        return ticketService.getAvailableTicketsByFlightNumber(flightNumber);
+    return null;
     }
 
-    @PostMapping("/{FlightId}/")
-    public TicketDTO buyTicket(@RequestHeader("Id") String id, @RequestBody TicketDTO ticket) {
-        ticketService.buyTicket(id,ticket);
+    @GetMapping("/ticketdto")
+    public TicketDTO test () {
+        return new TicketDTO();
+    }
+
+
+    @PostMapping("/")
+    public TicketDTO buyTicket(@RequestBody TicketDTO ticket) throws TicketException {
+        ticketService.buyTicket(1,ticket);
         return null;
     }
 }

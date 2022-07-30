@@ -34,13 +34,16 @@ public class GatewayConfig {
                         .uri("lb://user-service"))
 
                 .route(r -> r.path("/flight/**")
-                        .filters(f -> f.filter(authenticationFilter).filter(adminAuthenticationFilter))
+                        .filters(f -> f.filter(authenticationFilter))
 //                        .uri("http://localhost:8081/"))
                         .uri("lb://flight-service"))
 
                 .route(r -> r.path("/passenger/**")
                         .filters(f -> f.filter(authenticationFilter))
 //                        .uri("http://localhost:8081/"))
+                        .uri("lb://flight-service"))
+                .route(r -> r.path("/ticket/**")
+                        .filters(f -> f.filter(authenticationFilter))
                         .uri("lb://flight-service"))
                 .build();
     }

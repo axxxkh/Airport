@@ -1,5 +1,6 @@
 package com.flightService.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.lang.NonNull;
 
@@ -17,11 +18,13 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Email
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     @NonNull
+    @ToString.Exclude
+    @JsonIgnore
     private String password;
     @Column(name = "secret_question")
     private String secretQuestion;

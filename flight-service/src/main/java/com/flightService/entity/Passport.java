@@ -20,7 +20,7 @@ public class Passport extends BasicEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "serial_number", nullable = false)
     private String serialNumber;
     @NonNull

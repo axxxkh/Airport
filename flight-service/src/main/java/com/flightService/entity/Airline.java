@@ -15,7 +15,7 @@ import java.util.List;
 public class Airline extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @NonNull
     private String name;
     private int rate;

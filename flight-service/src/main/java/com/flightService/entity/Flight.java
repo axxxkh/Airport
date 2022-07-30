@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Flight extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     @Column(name = "flight_number", nullable = false)
     private int flightNumber;
     private LocalDateTime time;

@@ -4,5 +4,5 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class BasicEntity {
-    public abstract long getId();
+    public abstract Long getId();
 }

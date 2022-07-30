@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class AircraftType extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @NonNull
     private String producer;
     @NonNull

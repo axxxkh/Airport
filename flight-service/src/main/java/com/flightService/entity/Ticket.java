@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Ticket extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private int number;
     @ManyToOne
     @JoinColumn(name = "flight_id", nullable = false)

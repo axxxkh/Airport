@@ -1,7 +1,7 @@
 package com.flightService.service;
 
-import com.flightService.dto.PassengerDTO;
 import com.flightService.dto.TicketDTO;
+import com.flightService.exceptions.TicketException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +14,9 @@ public interface TicketService {
     byte TICKET_STATUS_FINISHED = 3;
     byte TICKET_CANCELLED = 4;
 
-    public List<TicketDTO> getAvailableTicketsByFlightNumber(long flightNumber);
-    public TicketDTO buyTicket(String jwt, TicketDTO ticket);
-    public List<TicketDTO> getTicketsByPassenger(PassengerDTO passenger);
+    List<TicketDTO> getAvailableTicketsByFlightNumber(int flightNumber);
+
+    TicketDTO buyTicket(long passengerId, TicketDTO ticket) throws TicketException;
+
+    List<TicketDTO> getTicketsByPassenger(long passenger);
 }

@@ -32,9 +32,15 @@ public class PassengerController {
     public List<TicketDTO> getTickets(@RequestHeader("Authorization") String jwt) {
         return getPassengers(jwt)
                 .stream()
-                .map(passengerDTO -> ticketService.getTicketsByPassenger(passengerDTO))
+                .map(passengerDTO -> ticketService.getTicketsByPassenger(passengerDTO.getId()))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/test")
+    public List<TicketDTO> freeTickets(){
+        ticketService.getAvailableTicketsByFlightNumber(11).forEach(System.out::println);
+        return null;
     }
 
 

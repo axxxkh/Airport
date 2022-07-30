@@ -16,7 +16,7 @@ import java.util.Set;
 public class Passenger extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @NonNull
     private String name;
     @NonNull

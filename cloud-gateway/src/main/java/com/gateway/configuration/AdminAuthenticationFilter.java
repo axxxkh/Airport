@@ -21,11 +21,11 @@ import java.util.List;
 //@NoArgsConstructor
 //@Data
 public class AdminAuthenticationFilter implements GatewayFilter {
-    private String role;
-
-    public AdminAuthenticationFilter authenticationFilter(String role){
-        return new AdminAuthenticationFilter(role);
-    }
+//    private String role;
+//
+//    public AdminAuthenticationFilter authenticationFilter(String role){
+//        return new AdminAuthenticationFilter(role);
+//    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
