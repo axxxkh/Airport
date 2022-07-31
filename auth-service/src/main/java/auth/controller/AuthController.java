@@ -15,6 +15,9 @@ import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
+
+/* This controller contains open endpoints to login or register user
+*  returns login (email) and issued JWT*/
 public class AuthController {
     private AuthServiceImpl authService;
     private UserClient userClient;
@@ -28,22 +31,6 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) throws UserAuthException {
         return ResponseEntity.ok().body(authService.login(request));
 
-//
-//        try {
-//            Authentication authentication = authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(
-//                            request.getEmail(), request.getPassword())
-//            );
-//
-//            User user = (User) authentication.getPrincipal();
-//            System.out.println(user);
-//            String accessToken = jwtUtil.generateAccessToken(user);
-//            AuthResponse response = new AuthResponse(user.getUsername(), accessToken);
-//            return ResponseEntity.ok().body(response);
-//        } catch (BadCredentialsException ex) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @PostMapping("auth/register")

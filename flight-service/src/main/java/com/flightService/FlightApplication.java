@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableDiscoveryClient
 public class FlightApplication {
     @Bean
     public ModelMapper mapper(){

@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 @Component
+
+/* This util class is responsible for issuing JWT and validating them*/
 public class JwtUtil {
 //    private static final long EXPIRE_DURATION = 24 * 60 * 60 * 1000; // 24 hour
 
@@ -18,7 +20,7 @@ public class JwtUtil {
     private String secretKey;
 
     //    @Value("${jwt.expirationTIme}")
-    private String expirationTime="189000000000";
+    private final String EXPIRATION_TIME ="189000000000";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtil.class);
 
@@ -47,7 +49,7 @@ public class JwtUtil {
     private String doGenerateToken(Map<String, Object> claims, String email) {
         long expirationTimeLong;
 //        if ("ACCESS".equals(type)) {
-        expirationTimeLong = Long.parseLong(expirationTime) * 1000;
+        expirationTimeLong = Long.parseLong(EXPIRATION_TIME) * 1000;
 //        } else {
 //            expirationTimeLong = Long.parseLong(expirationTime) * 1000 * 5;
 //        }

@@ -16,11 +16,11 @@ public class AuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthApplication.class, args);
     }
-
-    @Bean
-    RestTemplate restTemplate (){
-        return new RestTemplate();
-    }
+//
+//    @Bean
+//    RestTemplate restTemplate (){
+//        return new RestTemplate();
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

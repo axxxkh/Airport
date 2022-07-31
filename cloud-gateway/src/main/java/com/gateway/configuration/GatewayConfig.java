@@ -13,38 +13,30 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
+/* This class responsible for gateway configuration and implements filters to predefined routes*/
 public class GatewayConfig {
 
     @Autowired
     private AuthenticationFilter authenticationFilter;
-        @Autowired
-    private AdminAuthenticationFilter adminAuthenticationFilter;
+//        @Autowired
+//    private AdminAuthenticationFilter adminAuthenticationFilter;
 
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(r -> r.path("/auth/**")
                         .filters(f -> f.filter(authenticationFilter))
-//                        .uri("http://localhost:8084/"))
                         .uri("lb://auth-service"))
 
                 .route(r -> r.path("/user/**")
                         .filters(f -> f.filter(authenticationFilter))
-//                        .uri("http://localhost:8087/"))
                         .uri("lb://user-service"))
 
-                .route(r -> r.path("/flight/**")
+                .route(r -> r.path("/flight/**", "/passenger/**", "/ticket/**")
                         .filters(f -> f.filter(authenticationFilter))
-//                        .uri("http://localhost:8081/"))
                         .uri("lb://flight-service"))
 
-                .route(r -> r.path("/passenger/**")
-                        .filters(f -> f.filter(authenticationFilter))
-//                        .uri("http://localhost:8081/"))
-                        .uri("lb://flight-service"))
-                .route(r -> r.path("/ticket/**")
-                        .filters(f -> f.filter(authenticationFilter))
-                        .uri("lb://flight-service"))
                 .build();
     }
 }

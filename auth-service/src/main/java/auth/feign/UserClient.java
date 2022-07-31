@@ -12,17 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @FeignClient(value="user-service", url = "localhost:8087/user")
+/* Feign client to get data from user service (service that contains user information login, password etc */
 public interface UserClient {
-//    @RequestMapping(method = RequestMethod.GET,value = "/")
-//    public List<PersonalDTO> getAll();
-
-//    @RequestMapping(method = RequestMethod.POST, value = "/")
-//    public Optional<User> getUser ();
 
     @RequestMapping(method = RequestMethod.GET,value = "/")
-    public Optional<User> getByEmail(@RequestParam(value = "email") String email);
+    Optional<User> getByEmail(@RequestParam(value = "email") String email);
 
     @RequestMapping(method = RequestMethod.POST, value = "/register/")
-    public User registerUser(@RequestBody User user);
+    User registerUser(@RequestBody User user);
 
 }

@@ -22,6 +22,8 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
+/* This filter is responsible for checking JWT */
 public class AuthenticationFilter implements GatewayFilter {
     @Autowired
     private RouterValidator routerValidator;
