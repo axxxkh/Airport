@@ -25,14 +25,12 @@ public class PassengerController {
     // Return List of PassengerDTOs that attached to user account
     @GetMapping("/")
     public List<PassengerDTO> getPassengers(@RequestHeader("email") String email) {
-        System.out.println(email+" controller 28");
         return passengerService.getAllByEmail(email);
     }
 
     @GetMapping("/tickets")
-    public List<TicketDTO> getTickets(@RequestHeader("id") String email) {
-        System.out.println(email+ "controller 33");
-        return getPassengers("alxxxkh@gmail.com")
+    public List<TicketDTO> getTickets(@RequestHeader("email") String email) {
+        return getPassengers(email)
                 .stream()
                 .map(passengerDTO -> ticketService.getTicketsByPassenger(passengerDTO.getId()))
                 .flatMap(Collection::stream)
