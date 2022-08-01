@@ -24,8 +24,6 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>PersonalFlight</module>
-        <module>Flight</module>
         <module>Eureka-server</module>
         <module>Auth-service</module>
         <module>cloud-gateway</module>

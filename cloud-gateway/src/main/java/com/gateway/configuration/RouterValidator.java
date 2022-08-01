@@ -3,13 +3,14 @@ package com.gateway.configuration;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Predicate;
 
-@Component
+@Configuration
 @AllArgsConstructor
 @NoArgsConstructor
 public class RouterValidator {

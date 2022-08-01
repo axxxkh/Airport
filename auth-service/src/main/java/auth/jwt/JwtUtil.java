@@ -15,7 +15,6 @@ import java.util.Map;
 
 /* This util class is responsible for issuing JWT and validating them*/
 public class JwtUtil {
-//    private static final long EXPIRE_DURATION = 24 * 60 * 60 * 1000; // 24 hour
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -41,7 +40,6 @@ public class JwtUtil {
 
     public String generate(User passenger) {
         Map<String, Object> claims = new HashMap<>();
-//        claims.put("id", passengerDTO.getId());
         claims.put("email", passenger.getEmail());
         claims.put("role", passenger.getRole().getRole());
         return doGenerateToken(claims, passenger.getEmail());
@@ -49,11 +47,8 @@ public class JwtUtil {
 
     private String doGenerateToken(Map<String, Object> claims, String email) {
         long expirationTimeLong;
-//        if ("ACCESS".equals(type)) {
         expirationTimeLong = Long.parseLong(EXPIRATION_TIME) * 1000;
-//        } else {
-//            expirationTimeLong = Long.parseLong(expirationTime) * 1000 * 5;
-//        }
+
         final Date createdDate = new Date();
         final Date expirationDate = new Date(createdDate.getTime() + expirationTimeLong);
 

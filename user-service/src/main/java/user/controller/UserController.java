@@ -17,7 +17,6 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private UserService userService;
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping("/user/register/")
     public User registerUser(@RequestBody User user) {
