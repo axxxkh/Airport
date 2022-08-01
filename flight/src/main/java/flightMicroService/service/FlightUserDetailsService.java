@@ -1,20 +1,16 @@
 package flightMicroService.service;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import flightMicroService.entity.Passenger;
 import flightMicroService.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.val;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +23,15 @@ import java.util.Set;
 public class FlightUserDetailsService implements UserDetailsService {
 
     private PassengerService passengerService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Passenger passenger = passengerService.getByLogin(username);
-        if (passenger== null) {
+        if (passenger == null) {
             throw new UsernameNotFoundException("User not found");
         }
         List<GrantedAuthority> authorities = getUserAuthority(passenger.getRoles());
-        return buildUserForAuthentication(passenger,authorities);
+        return buildUserForAuthentication(passenger, authorities);
     }
 
     private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {

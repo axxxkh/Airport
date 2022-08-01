@@ -12,8 +12,11 @@ public class PersonalMicroService {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+
     @Bean
-    public RestTemplate restTemplate() {return new RestTemplate();}
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     public static void main(String[] args) {
 

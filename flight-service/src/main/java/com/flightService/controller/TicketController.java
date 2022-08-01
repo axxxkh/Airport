@@ -5,10 +5,8 @@ import com.flightService.exceptions.TicketException;
 import com.flightService.service.FlightService;
 import com.flightService.service.TicketService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -23,18 +21,18 @@ public class TicketController {
         ticketService.getAvailableTicketsByFlightNumber(11).forEach(System.out::println);
 
 //        return ticketService.getAvailableTicketsByFlightNumber(flightNumber);
-    return null;
+        return null;
     }
 
     @GetMapping("/ticketdto")
-    public TicketDTO test () {
+    public TicketDTO test() {
         return new TicketDTO();
     }
 
 
     @PostMapping("/")
     public TicketDTO buyTicket(@RequestBody TicketDTO ticket) throws TicketException {
-        ticketService.buyTicket(1,ticket);
+        ticketService.buyTicket(1, ticket);
         return null;
     }
 }

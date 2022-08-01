@@ -38,7 +38,7 @@ public class PassengerController {
     }
 
     @GetMapping("/test")
-    public List<TicketDTO> freeTickets(){
+    public List<TicketDTO> freeTickets() {
         ticketService.getAvailableTicketsByFlightNumber(11).forEach(System.out::println);
         return null;
     }

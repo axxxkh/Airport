@@ -21,7 +21,7 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
-    public String userLogin (String jwt) {
+    public String userLogin(String jwt) {
         return getAllClaimsFromToken(jwt.replace("Bearer ", "")).getSubject();
     }
 

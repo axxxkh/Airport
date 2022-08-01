@@ -29,7 +29,7 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public void delete(RouteDTO routeDTO) {
         Route route = routeRepository.findByName(routeDTO.getName())
-                .orElseThrow(() -> new EntityNotFoundException("Route "+ routeDTO.getName()+ "doesn't found"));
+                .orElseThrow(() -> new EntityNotFoundException("Route " + routeDTO.getName() + "doesn't found"));
         List<Flight> flightList = flightRepository.findByRoute(route);
 
         List<Ticket> ticketList = flightList.stream()

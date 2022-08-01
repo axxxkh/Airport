@@ -1,10 +1,10 @@
 package personalMicroService.repository;
 
-import personalMicroService.entity.BasicEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
+import personalMicroService.entity.BasicEntity;
 
 import java.util.List;
 

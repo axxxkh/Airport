@@ -23,7 +23,6 @@ public class FlightController {
     private FlightService flightService;
 
 
-
     @GetMapping("/")
     public ResponseEntity<List<FlightDTO>> getAll() {
         log.info("Get all flights");

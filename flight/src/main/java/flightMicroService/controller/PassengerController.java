@@ -24,8 +24,8 @@ public class PassengerController {
     }
 
     @GetMapping("/{serialNumber}")
-    public ResponseEntity<PassengerDTO> findBySerialNumber (@PathVariable String serialNumber) {
-       return new ResponseEntity<>(passengerService.getPassengerByPassportNumber(serialNumber),HttpStatus.OK);
+    public ResponseEntity<PassengerDTO> findBySerialNumber(@PathVariable String serialNumber) {
+        return new ResponseEntity<>(passengerService.getPassengerByPassportNumber(serialNumber), HttpStatus.OK);
     }
 
     /*

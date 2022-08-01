@@ -81,7 +81,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<FlightDTO> getFlightsByRoutes(RouteDTO routeDTO) {
-        Route route = routeRepository.findByName(routeDTO.getName()).orElseThrow(()-> new EntityNotFoundException());
+        Route route = routeRepository.findByName(routeDTO.getName()).orElseThrow(() -> new EntityNotFoundException());
         return flightRepository.findByRoute(route)
                 .stream()
                 .map(f -> mapper.map(f, FlightDTO.class))

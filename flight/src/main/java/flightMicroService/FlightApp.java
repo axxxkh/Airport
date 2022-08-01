@@ -23,10 +23,12 @@ public class FlightApp {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     public static void main(String[] args) {
         SpringApplication.run(FlightApp.class, args);
     }

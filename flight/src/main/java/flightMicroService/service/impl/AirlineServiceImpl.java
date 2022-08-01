@@ -17,7 +17,7 @@ public class AirlineServiceImpl implements AirlineService {
     @Override
     public void delete(AirlineDTO airlineDTO) {
         Airline airline = airlineRepository.findByName(airlineDTO.getName())
-                .orElseThrow(()-> new EntityNotFoundException("Airline "+ airlineDTO.getName()+ "doesn`t exist"));
-       airlineRepository.delete(airline);
+                .orElseThrow(() -> new EntityNotFoundException("Airline " + airlineDTO.getName() + "doesn`t exist"));
+        airlineRepository.delete(airline);
     }
 }

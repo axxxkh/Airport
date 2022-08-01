@@ -1,15 +1,13 @@
 package com.flightService.controller;
 
 import com.flightService.dto.FlightDTO;
-import com.flightService.entity.Flight;
 import com.flightService.service.impl.FlightServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -20,7 +18,7 @@ public class FlightController {
     private FlightServiceImpl flightService;
 
     @GetMapping("/")
-    public List<FlightDTO> getAllFlights(@RequestHeader("email")String id){
+    public List<FlightDTO> getAllFlights(@RequestHeader("email") String id) {
         return flightService.getAll();
     }
 

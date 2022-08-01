@@ -2,7 +2,6 @@ package flightMicroService.controller;
 
 import flightMicroService.dto.PassengerDTO;
 import flightMicroService.dto.TicketDTO;
-import flightMicroService.service.FlightService;
 import flightMicroService.service.TicketService;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

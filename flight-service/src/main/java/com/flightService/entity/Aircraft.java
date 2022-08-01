@@ -3,7 +3,6 @@ package com.flightService.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @EqualsAndHashCode(callSuper = true)

@@ -1,7 +1,7 @@
 package personalMicroService.repository;
 
-import personalMicroService.entity.Salary;
 import org.springframework.stereotype.Repository;
+import personalMicroService.entity.Salary;
 
 @Repository
 public interface SalaryRepository extends GenericJPARepository<Salary> {

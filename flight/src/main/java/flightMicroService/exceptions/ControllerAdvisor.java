@@ -12,7 +12,7 @@ public class ControllerAdvisor {
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse EntityNotFoundHandler (EntityNotFoundException entityNotFoundException) {
+    public ErrorResponse EntityNotFoundHandler(EntityNotFoundException entityNotFoundException) {
         return ErrorResponse.builder()
                 .message(entityNotFoundException.getMessage())
                 .status(HttpStatus.NOT_FOUND)

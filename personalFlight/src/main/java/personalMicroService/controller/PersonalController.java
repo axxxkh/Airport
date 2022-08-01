@@ -14,12 +14,12 @@ public class PersonalController {
     private PersonalService personalService;
 
     @GetMapping("/")
-    public List<PersonalDTO> getAll(){
+    public List<PersonalDTO> getAll() {
         return personalService.getAll();
     }
 
     @GetMapping("/{name}")
-    public PersonalDTO getByName(@PathVariable String name){
+    public PersonalDTO getByName(@PathVariable String name) {
         return personalService.getByName(name);
     }
 
@@ -29,7 +29,7 @@ public class PersonalController {
     }
 
     @PostMapping("/")
-    public void addPersonal (@RequestBody  PersonalDTO personalDTO) {
+    public void addPersonal(@RequestBody PersonalDTO personalDTO) {
         personalService.add(personalDTO);
     }
 
@@ -39,7 +39,7 @@ public class PersonalController {
 //    }
 
     @GetMapping("/flight/")
-    public String getFlight(){
+    public String getFlight() {
         return personalService.fromAnotherModule();
     }
 }

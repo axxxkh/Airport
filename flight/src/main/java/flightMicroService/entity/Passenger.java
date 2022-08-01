@@ -2,11 +2,12 @@ package flightMicroService.entity;
 
 import lombok.*;
 import org.springframework.lang.NonNull;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Data
@@ -35,7 +36,7 @@ public class Passenger extends BasicEntity {
     private List<Passport> passports;
     private boolean active = Boolean.TRUE;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(

@@ -18,7 +18,7 @@ public class Gate extends BasicEntity {
     @NonNull
     private int capacity;
     @ManyToOne
-    @JoinColumn(name = "terminal_id",nullable = false)
+    @JoinColumn(name = "terminal_id", nullable = false)
     private Terminal terminal;
     private boolean active = Boolean.TRUE;
 }

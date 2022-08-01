@@ -1,10 +1,11 @@
 package user.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -12,7 +13,7 @@ import java.util.Set;
 @Data
 @Builder
 @Table(name = "roles")
-public class Role{
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

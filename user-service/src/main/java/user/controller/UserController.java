@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import user.entity.User;
 import user.service.UserService;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController

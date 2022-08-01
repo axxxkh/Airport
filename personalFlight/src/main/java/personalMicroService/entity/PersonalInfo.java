@@ -2,7 +2,10 @@ package personalMicroService.entity;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
@@ -16,7 +19,7 @@ public class PersonalInfo extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-//    @OneToOne(cascade = CascadeType.ALL)
+    //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "id_personal")
     private int idPersonal;
     private boolean married;
