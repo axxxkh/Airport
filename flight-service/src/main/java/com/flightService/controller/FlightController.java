@@ -20,12 +20,9 @@ public class FlightController {
     private FlightServiceImpl flightService;
 
     @GetMapping("/")
-    public List<FlightDTO> getAllFlights(@RequestHeader("Id")String id){
-        System.out.println("fff");
-        return null;
+    public List<FlightDTO> getAllFlights(@RequestHeader("email")String id){
+        return flightService.getAll();
     }
-
-
 
 //    @GetMapping("/period/")
 //    public ResponseEntity<List<FlightDTO>> getByPeriod(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,

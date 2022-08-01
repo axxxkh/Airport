@@ -24,13 +24,14 @@ public class PassengerController {
 
     // Return List of PassengerDTOs that attached to user account
     @GetMapping("/")
-    public List<PassengerDTO> getPassengers(@RequestHeader("id") String id) {
-        return passengerService.getAll(id);
+    public List<PassengerDTO> getPassengers(@RequestHeader("email") String email) {
+        return passengerService.getAllByEmail(email);
     }
 
     @GetMapping("/tickets")
-    public List<TicketDTO> getTickets(@RequestHeader("Authorization") String jwt) {
-        return getPassengers(jwt)
+    public List<TicketDTO> getTickets(@RequestHeader("email") String email) {
+        System.out.println(email+ "controller 33");
+        return getPassengers("alxxxkh@gmail.com")
                 .stream()
                 .map(passengerDTO -> ticketService.getTicketsByPassenger(passengerDTO.getId()))
                 .flatMap(Collection::stream)
@@ -42,11 +43,4 @@ public class PassengerController {
         ticketService.getAvailableTicketsByFlightNumber(11).forEach(System.out::println);
         return null;
     }
-
-
-//
-//    @GetMapping("/{passengerId}/")
-//    public List<TicketDTO> getAllTicketsByPassenger (@RequestHeader("Autorization") String jwt) {
-//        passengerService.
-//    }
 }

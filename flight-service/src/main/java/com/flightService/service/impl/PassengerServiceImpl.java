@@ -18,8 +18,11 @@ public class PassengerServiceImpl implements PassengerService {
     private ModelMapper mapper;
 
     @Override
-    public List<PassengerDTO> getAll(String id) {
-        return passengerRepository.getByUser(id)
+    public List<PassengerDTO> getAllByEmail(String email) {
+        passengerRepository.getByUser(email).forEach(System.out::println);
+        System.out.println(email);
+        System.out.println(passengerRepository.getByUser(email).size());
+        return passengerRepository.getByUser(email)
                 .stream()
                 .map(passenger -> mapper.map(passenger, PassengerDTO.class))
                 .collect(Collectors.toList());
