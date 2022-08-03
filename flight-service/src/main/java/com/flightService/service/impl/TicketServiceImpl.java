@@ -6,12 +6,10 @@ import com.flightService.entity.Passenger;
 import com.flightService.entity.Ticket;
 import com.flightService.exceptions.FlightException;
 import com.flightService.exceptions.TicketException;
-import com.flightService.repository.AircraftRepository;
 import com.flightService.repository.FlightRepository;
 import com.flightService.repository.PassengerRepository;
 import com.flightService.repository.TicketRepository;
 import com.flightService.service.TicketService;
-import com.flightService.utils.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -27,10 +25,8 @@ import java.util.stream.IntStream;
 public class TicketServiceImpl implements TicketService {
     private TicketRepository ticketRepository;
     private FlightRepository flightRepository;
-    private AircraftRepository aircraftRepository;
     private PassengerRepository passengerRepository;
     private ModelMapper mapper;
-    private JwtUtil jwtUtil;
 
     @Override
     public List<TicketDTO> getAvailableTicketsByFlightNumber(Integer flightNumber) {
