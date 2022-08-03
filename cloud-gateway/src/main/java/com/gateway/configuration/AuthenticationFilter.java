@@ -17,12 +17,11 @@ import reactor.core.publisher.Mono;
 //@RefreshScope
 @Component
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 
 /* This filter is responsible for checking JWT */
 public class AuthenticationFilter implements GatewayFilter {
-//    @Autowired
+    @Autowired
     private RouterValidator routerValidator;
     @Autowired
     private JwtUtil jwtUtil;

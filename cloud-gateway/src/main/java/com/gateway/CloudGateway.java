@@ -15,8 +15,6 @@ public class CloudGateway {
 //    return new RouterValidator();
 //}
 
-
-
     public static void main(String[] args) {
         SpringApplication.run(CloudGateway.class, args);
     }

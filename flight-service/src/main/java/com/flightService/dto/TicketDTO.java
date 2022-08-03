@@ -18,5 +18,5 @@ public class TicketDTO {
     private int number;
     @NotBlank(message = "Ticket seat can`t be blank")
     private int seat;
-//    private PassengerDTO passengerDTO;
+    private int passengerDTO;
 }

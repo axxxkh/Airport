@@ -1,5 +1,6 @@
 package com.flightService.controller;
 
+import com.flightService.dto.PassengerDTO;
 import com.flightService.dto.TicketDTO;
 import com.flightService.exceptions.TicketException;
 import com.flightService.service.FlightService;
@@ -17,22 +18,18 @@ public class TicketController {
     private TicketService ticketService;
 
     @GetMapping("/{FlightNumber}/")
-    public List<TicketDTO> getAllAvailable(@PathVariable("FlightNumber") long flightNumber) {
-        ticketService.getAvailableTicketsByFlightNumber(11).forEach(System.out::println);
-
-//        return ticketService.getAvailableTicketsByFlightNumber(flightNumber);
-        return null;
+    public List<TicketDTO> getAllAvailable(@PathVariable("FlightNumber") int flightNumber) {
+        return ticketService.getAvailableTicketsByFlightNumber(flightNumber);
     }
 
     @GetMapping("/ticketdto")
     public TicketDTO test() {
-        return new TicketDTO();
+      return   ticketService.getTicketsByPassenger(1).get(0);
     }
 
 
     @PostMapping("/")
     public TicketDTO buyTicket(@RequestBody TicketDTO ticket) throws TicketException {
-        ticketService.buyTicket(1, ticket);
-        return null;
+        return ticketService.buyTicket(1, ticket);
     }
 }
