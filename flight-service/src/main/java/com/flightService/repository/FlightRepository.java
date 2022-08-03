@@ -20,7 +20,7 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
     List<Flight> findFlightsByGate(Gate gate);
 
-    Optional<Flight> findByFlightNumber(int flightNumber);
+    Optional<Flight> findByFlightNumber(Integer flightNumber);
 
     List<Flight> findByActiveTrue();
 

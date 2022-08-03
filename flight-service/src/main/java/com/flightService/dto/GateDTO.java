@@ -11,8 +11,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GateDTO {
-    private int id;
-    private int capacity;
+    private Long id;
+    private Long capacity;
     @NotBlank(message = "Gate terminal is mandatory")
     private TerminalDTO terminal;
 }

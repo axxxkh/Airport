@@ -17,5 +17,5 @@ public class AircraftDTO {
     @NotBlank(message = "Aircraft producer is mandatory")
     private String producer;
     @NotBlank(message = "Aircraft serial number is mandatory")
-    private int serialNumber;
+    private Long serialNumber;
 }

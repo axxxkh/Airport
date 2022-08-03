@@ -22,6 +22,6 @@ public class Aircraft extends BasicEntity {
     @JoinColumn(name = "airline_id")
     private Airline airline;
     @Column(name = "serial_number", nullable = false)
-    private int serialNumber;
+    private Long serialNumber;
     private boolean active = Boolean.TRUE;
 }

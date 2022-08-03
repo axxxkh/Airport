@@ -21,6 +21,6 @@ public class Terminal extends BasicEntity {
     @NonNull
     private String name;
     @NonNull
-    private int capacity;
+    private Integer capacity;
     private boolean active = Boolean.TRUE;
 }

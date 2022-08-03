@@ -4,6 +4,7 @@ import com.flightService.dto.TicketDTO;
 import com.flightService.entity.Flight;
 import com.flightService.entity.Passenger;
 import com.flightService.entity.Ticket;
+import com.flightService.exceptions.FlightException;
 import com.flightService.exceptions.TicketException;
 import com.flightService.repository.AircraftRepository;
 import com.flightService.repository.FlightRepository;
@@ -16,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -31,7 +33,7 @@ public class TicketServiceImpl implements TicketService {
     private JwtUtil jwtUtil;
 
     @Override
-    public List<TicketDTO> getAvailableTicketsByFlightNumber(int flightNumber) {
+    public List<TicketDTO> getAvailableTicketsByFlightNumber(Integer flightNumber) {
         Flight flight = flightRepository.findByFlightNumber(flightNumber).orElseThrow();
 
         List<Ticket> soldAndReservedTickets = ticketRepository.findTicketsByFlightId(flight.getId());
@@ -41,6 +43,7 @@ public class TicketServiceImpl implements TicketService {
                         .flight(flight)
                         .build()
                 ).collect(Collectors.toList());
+
 
         List<Ticket> availableTicket = allTickets
                 .stream()
@@ -53,28 +56,35 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public TicketDTO buyTicket(long passengerId, TicketDTO ticketDTO) throws TicketException {
-        if (getAvailableTicketsByFlightNumber(ticketDTO.getFlightNumber()).contains(ticketDTO)) {
+    public TicketDTO buyTicket(TicketDTO ticketDTO) throws TicketException, FlightException {
+        if (!getAvailableTicketsByFlightNumber(ticketDTO.getFlightNumber()).contains(ticketDTO)) {
             throw new TicketException("This ticket isn`t available");
         }
 
-        if (getTicketsByPassenger(passengerId).contains(ticketDTO)) {
-            throw new TicketException(String.format("Passenger %s already have this ticket", passengerId));
+        if (getTicketsByPassenger(ticketDTO.getPassengerId()).contains(ticketDTO)) {
+            throw new TicketException(String.format("Passenger %s already have this ticket", ticketDTO.getPassengerId()));
         }
 
-        if (getTicketsByPassenger(passengerId)
+        if (getTicketsByPassenger(ticketDTO.getPassengerId())
                 .stream()
-                .anyMatch(ticket -> ticket.getFlightNumber() == ticketDTO.getFlightNumber())) {
-            throw new TicketException(String.format("Passenger %s already have another ticket for this flight", passengerId));
+                .anyMatch(ticket -> ticket.getFlightNumber().equals(ticketDTO.getFlightNumber()))) {
+            throw new TicketException(String.format("Passenger %s already have another ticket for this flight", ticketDTO.getPassengerId()));
         }
 
 
-        Passenger passenger = passengerRepository.getReferenceById(passengerId);
-        Flight flight = flightRepository.findByFlightNumber(ticketDTO.getFlightNumber()).orElseThrow();
+        Passenger passenger = passengerRepository.getReferenceById(ticketDTO.getPassengerId());
+        Flight flight = flightRepository.findByFlightNumber(ticketDTO.getFlightNumber())
+                .orElseThrow(() -> new FlightException(String.format("Flight %s doesn`t exist", ticketDTO.getFlightNumber())));
+
+        if (flight.getTime().isBefore(LocalDateTime.now())) {
+            throw new FlightException(String.format("Flight %s have been started", ticketDTO.getFlightNumber()));
+        }
+
         Ticket ticket = mapper.map(ticketDTO, Ticket.class);
 
         ticket.setFlight(flight);
         ticket.setPassenger(passenger);
+        ticket.setId(null);
         // some logic to generate ticket number
         ticket.setBuyDate(LocalDate.now());
 
@@ -83,7 +93,6 @@ public class TicketServiceImpl implements TicketService {
         passenger.setTickets(tickets);
 
         passengerRepository.save(passenger);
-        ticketRepository.save(ticket);
         return mapper.map(ticket, TicketDTO.class);
     }
 

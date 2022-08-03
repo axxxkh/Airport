@@ -21,6 +21,6 @@ public class AircraftType extends BasicEntity {
     @NonNull
     private String type;
     @NonNull
-    private int capacity;
+    private Integer capacity;
     private boolean active = Boolean.TRUE;
 }

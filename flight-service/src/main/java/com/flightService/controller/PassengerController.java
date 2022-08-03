@@ -5,10 +5,7 @@ import com.flightService.dto.TicketDTO;
 import com.flightService.service.PassengerService;
 import com.flightService.service.TicketService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -37,9 +34,8 @@ public class PassengerController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/test")
-    public List<TicketDTO> freeTickets() {
-        ticketService.getAvailableTicketsByFlightNumber(11).forEach(System.out::println);
-        return null;
+    @GetMapping("/{flightId}/test")
+    public List<TicketDTO> freeTickets(@PathVariable("flightId") int flightId) {
+       return ticketService.getAvailableTicketsByFlightNumber(flightId);
     }
 }

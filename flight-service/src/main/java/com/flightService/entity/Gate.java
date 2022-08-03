@@ -16,7 +16,7 @@ public class Gate extends BasicEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NonNull
-    private int capacity;
+    private Integer capacity;
     @ManyToOne
     @JoinColumn(name = "terminal_id", nullable = false)
     private Terminal terminal;

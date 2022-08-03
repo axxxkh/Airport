@@ -13,5 +13,5 @@ public interface FlightService {
     byte FLIGHT_STATUS_FINISHED = 3;
     byte FLIGHT_STATUS_CANCELLED = 4;
 
-    public List<FlightDTO> getAll();
+    List<FlightDTO> getAll();
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @Configuration
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 

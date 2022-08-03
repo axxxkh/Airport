@@ -19,7 +19,7 @@ public class Flight extends BasicEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "flight_number", nullable = false)
-    private int flightNumber;
+    private Integer flightNumber;
     private LocalDateTime time;
     @Column(name = "flight_status")
     private byte flightStatus;

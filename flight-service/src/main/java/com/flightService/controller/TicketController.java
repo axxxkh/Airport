@@ -2,6 +2,7 @@ package com.flightService.controller;
 
 import com.flightService.dto.PassengerDTO;
 import com.flightService.dto.TicketDTO;
+import com.flightService.exceptions.FlightException;
 import com.flightService.exceptions.TicketException;
 import com.flightService.service.FlightService;
 import com.flightService.service.TicketService;
@@ -24,12 +25,12 @@ public class TicketController {
 
     @GetMapping("/ticketdto")
     public TicketDTO test() {
-      return   ticketService.getTicketsByPassenger(1).get(0);
+     return ticketService.getTicketsByPassenger(1).get(0);
     }
 
 
     @PostMapping("/")
-    public TicketDTO buyTicket(@RequestBody TicketDTO ticket) throws TicketException {
-        return ticketService.buyTicket(1, ticket);
+    public TicketDTO buyTicket(@RequestBody TicketDTO ticket) throws TicketException, FlightException {
+        return ticketService.buyTicket(ticket);
     }
 }

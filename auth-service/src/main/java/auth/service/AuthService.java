@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 public interface AuthService {
 
-    public AuthResponse login(@Valid LoginRequest loginRequest) throws UserAuthException;
+    AuthResponse login(@Valid LoginRequest loginRequest) throws UserAuthException;
 
-    public AuthResponse registerUser(@Valid RegisterRequest request) throws UserRegisterException;
+    AuthResponse registerUser(@Valid RegisterRequest request) throws UserRegisterException;
 }

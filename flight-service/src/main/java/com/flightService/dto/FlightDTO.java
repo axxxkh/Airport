@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @Builder
 public class FlightDTO {
     @NotBlank(message = "Flight number is mandatory")
-    private int flightNumber;
+    private Integer flightNumber;
     @NotBlank(message = "Flight time and date is mandatory")
     private LocalDateTime time;
-    private byte flightStatus;
+    private Byte flightStatus;
     @NotBlank(message = "Flight airline is mandatory")
     private AirlineDTO airline;
     @NotBlank(message = "Aircraft type is mandatory")
