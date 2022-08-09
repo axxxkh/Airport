@@ -32,7 +32,7 @@ public class User {
     private String secretAnswer;
     @Column(name = "active", columnDefinition = "boolean default true")
     private boolean isActive = Boolean.TRUE;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;
     /*

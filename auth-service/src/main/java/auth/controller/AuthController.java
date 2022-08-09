@@ -6,8 +6,11 @@ import auth.dto.RegisterRequest;
 import auth.exceptions.UserAuthException;
 import auth.exceptions.UserRegisterException;
 import auth.feign.UserClient;
+import auth.service.AuthService;
 import auth.service.impl.AuthServiceImpl;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,13 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
+@Data
 @AllArgsConstructor
 
 /* This controller contains open endpoints to login or register user
  *  returns login (email) and issued JWT*/
 public class AuthController {
-    private AuthServiceImpl authService;
-    private UserClient userClient;
+    private AuthService authService;
 
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) throws UserAuthException {

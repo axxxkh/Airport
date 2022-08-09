@@ -20,7 +20,7 @@ public class Passenger extends BasicEntity {
     private String name;
     @NonNull
     private String surname;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "passenger", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "passenger", orphanRemoval = true)
     @ToString.Exclude
     private List<Ticket> tickets;
     @OneToOne

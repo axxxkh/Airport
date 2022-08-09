@@ -19,25 +19,21 @@ public interface GenericJPARepository<T extends BasicEntity> extends JpaReposito
     @Query("select e from #{#entityName} e where e.active=true")
     List<T> findDeleted();
 
-    @Override
-    default void delete(T entity) {
+    default void safeDelete(T entity) {
         deleteById(entity.getId());
     }
 
-    @Override
     @Query("update #{#entityName} e set e.active=false where e.id = ?1")
     @Modifying
-    void deleteById(Long id);
+    void safeDeleteById(Long id);
 
-    @Override
     @Modifying
-    default void deleteAll(Iterable<? extends T> list) {
+    default void safeDeleteAll(Iterable<? extends T> list) {
         list.forEach(this::delete);
     }
 
-    @Override
     @Query("update #{#entityName} e set e.active=false where e.id= ?1")
     @Modifying
-    default void deleteAll() {
+    default void safeDeleteAll() {
     }
 }

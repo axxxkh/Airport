@@ -4,6 +4,7 @@ import com.flightService.dto.FlightDTO;
 import com.flightService.repository.FlightRepository;
 import com.flightService.service.FlightService;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Data
 public class FlightServiceImpl implements FlightService {
     private FlightRepository flightRepository;
     private ModelMapper mapper;
@@ -23,5 +25,4 @@ public class FlightServiceImpl implements FlightService {
                 .map(flight -> mapper.map(flight, FlightDTO.class))
                 .collect(Collectors.toList());
     }
-
 }

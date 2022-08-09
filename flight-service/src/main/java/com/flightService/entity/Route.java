@@ -13,7 +13,7 @@ import javax.persistence.*;
 
 public class Route extends BasicEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true, nullable = false)
     private String name;

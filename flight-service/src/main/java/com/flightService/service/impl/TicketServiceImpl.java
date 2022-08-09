@@ -33,7 +33,7 @@ public class TicketServiceImpl implements TicketService {
         Flight flight = flightRepository.findByFlightNumber(flightNumber).orElseThrow();
 
         List<Ticket> soldAndReservedTickets = ticketRepository.findTicketsByFlightId(flight.getId());
-        List<Ticket> allTickets = IntStream.rangeClosed(1, flight.getCraftId().getTypeId().getCapacity())
+        List<Ticket> allTickets = IntStream.rangeClosed(1, flight.getAircraft().getType().getCapacity())
                 .mapToObj(seat -> Ticket.builder()
                         .seat(seat)
                         .flight(flight)
@@ -80,11 +80,11 @@ public class TicketServiceImpl implements TicketService {
 
         ticket.setFlight(flight);
         ticket.setPassenger(passenger);
-        ticket.setId(null);
         // some logic to generate ticket number
+        ticket.setId(null);
         ticket.setBuyDate(LocalDate.now());
 
-        List<Ticket> tickets = passenger.getTickets();
+        List<Ticket> tickets = ticketRepository.findTicketsByPassengerId(ticketDTO.getPassengerId());
         tickets.add(ticket);
         passenger.setTickets(tickets);
 
