@@ -3,6 +3,7 @@ package com.flightService.controller;
 import com.flightService.dto.FlightDTO;
 import com.flightService.service.impl.FlightServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,8 @@ public class FlightController {
     private FlightServiceImpl flightService;
 
     @GetMapping("/")
-    public List<FlightDTO> getAllFlights(@RequestHeader("email") String id) {
-        return flightService.getAll();
+    public ResponseEntity<List<FlightDTO>> getAllFlights(@RequestHeader("email") String id) {
+        return ResponseEntity.ok().body(flightService.getAll());
     }
 
 //    @GetMapping("/period/")
