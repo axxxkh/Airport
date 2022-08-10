@@ -47,5 +47,14 @@ public class FlightControllerTest {
 
     }
 
+    @Test
+    public void getAllFlightsTwo() throws Exception {
+        ResultActions response = mockMvc.perform(get("/flight/").header("email","alxxxkh@gmail.com"));
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()",is(6)));
+
+    }
+
 
 }
