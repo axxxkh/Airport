@@ -1,6 +1,5 @@
 package com.flightService.controller;
 
-import com.flightService.dto.PassengerDTO;
 import com.flightService.dto.TicketDTO;
 import com.flightService.exceptions.FlightException;
 import com.flightService.exceptions.TicketException;
@@ -19,7 +18,7 @@ public class TicketController {
     private TicketService ticketService;
 
     @GetMapping("/{FlightNumber}/")
-    public List<TicketDTO> getAllAvailable(@PathVariable("FlightNumber") int flightNumber) {
+    public List<TicketDTO> getAllAvailable(@PathVariable("FlightNumber") int flightNumber) throws FlightException {
         return ticketService.getAvailableTicketsByFlightNumber(flightNumber);
     }
 

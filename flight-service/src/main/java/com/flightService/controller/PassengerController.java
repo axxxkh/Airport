@@ -2,6 +2,7 @@ package com.flightService.controller;
 
 import com.flightService.dto.PassengerDTO;
 import com.flightService.dto.TicketDTO;
+import com.flightService.exceptions.FlightException;
 import com.flightService.service.PassengerService;
 import com.flightService.service.TicketService;
 import lombok.AllArgsConstructor;
@@ -35,7 +36,7 @@ public class PassengerController {
     }
 
     @GetMapping("/{flightId}/test")
-    public List<TicketDTO> freeTickets(@PathVariable("flightId") int flightId) {
+    public List<TicketDTO> freeTickets(@PathVariable("flightId") int flightId) throws FlightException {
        return ticketService.getAvailableTicketsByFlightNumber(flightId);
     }
 }

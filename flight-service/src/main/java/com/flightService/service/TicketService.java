@@ -15,7 +15,7 @@ public interface TicketService {
     byte TICKET_STATUS_FINISHED = 3;
     byte TICKET_CANCELLED = 4;
 
-    List<TicketDTO> getAvailableTicketsByFlightNumber(Integer flightNumber);
+    List<TicketDTO> getAvailableTicketsByFlightNumber(Integer flightNumber) throws FlightException;
 
     TicketDTO buyTicket(TicketDTO ticket) throws TicketException, FlightException;
 

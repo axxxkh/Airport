@@ -29,8 +29,8 @@ public class TicketServiceImpl implements TicketService {
     private ModelMapper mapper;
 
     @Override
-    public List<TicketDTO> getAvailableTicketsByFlightNumber(Integer flightNumber) {
-        Flight flight = flightRepository.findByFlightNumber(flightNumber).orElseThrow();
+    public List<TicketDTO> getAvailableTicketsByFlightNumber(Integer flightNumber) throws FlightException {
+        Flight flight = flightRepository.findByFlightNumber(flightNumber).orElseThrow(()-> new FlightException(String.format("the %s flight doesn't exist", flightNumber)));
 
         List<Ticket> soldAndReservedTickets = ticketRepository.findTicketsByFlightId(flight.getId());
         List<Ticket> allTickets = IntStream.rangeClosed(1, flight.getAircraft().getType().getCapacity())
@@ -53,8 +53,16 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDTO buyTicket(TicketDTO ticketDTO) throws TicketException, FlightException {
+        Flight flight = flightRepository.findByFlightNumber(ticketDTO.getFlightNumber())
+                .orElseThrow(() -> new FlightException(String.format("Flight %s doesn't exist", ticketDTO.getFlightNumber())));
+
+        if (flight.getTime().isBefore(LocalDateTime.now())) {
+            throw new FlightException(String.format("Flight %s have been started", ticketDTO.getFlightNumber()));
+        }
+
         if (!getAvailableTicketsByFlightNumber(ticketDTO.getFlightNumber()).contains(ticketDTO)) {
-            throw new TicketException("This ticket isn`t available");
+            throw new TicketException(String.format("Ticket on flight number %s" +
+                    " with seat %s isn`t available",ticketDTO.getFlightNumber(),ticketDTO.getSeat()));
         }
 
         if (getTicketsByPassenger(ticketDTO.getPassengerId()).contains(ticketDTO)) {
@@ -69,12 +77,6 @@ public class TicketServiceImpl implements TicketService {
 
 
         Passenger passenger = passengerRepository.getReferenceById(ticketDTO.getPassengerId());
-        Flight flight = flightRepository.findByFlightNumber(ticketDTO.getFlightNumber())
-                .orElseThrow(() -> new FlightException(String.format("Flight %s doesn`t exist", ticketDTO.getFlightNumber())));
-
-        if (flight.getTime().isBefore(LocalDateTime.now())) {
-            throw new FlightException(String.format("Flight %s have been started", ticketDTO.getFlightNumber()));
-        }
 
         Ticket ticket = mapper.map(ticketDTO, Ticket.class);
 
