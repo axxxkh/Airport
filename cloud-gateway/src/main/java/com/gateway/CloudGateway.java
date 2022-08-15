@@ -10,11 +10,6 @@ import org.springframework.context.annotation.Bean;
 @EnableEurekaClient
 public class CloudGateway {
 
-//@Bean
-//public RouterValidator routerValidator(){
-//    return new RouterValidator();
-//}
-
     public static void main(String[] args) {
         SpringApplication.run(CloudGateway.class, args);
     }
