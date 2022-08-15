@@ -30,7 +30,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<TicketDTO> getAvailableTicketsByFlightNumber(Integer flightNumber) throws FlightException {
-        Flight flight = flightRepository.findByFlightNumber(flightNumber).orElseThrow(()-> new FlightException(String.format("the %s flight doesn't exist", flightNumber)));
+        Flight flight = flightRepository.findByFlightNumber(flightNumber).orElseThrow(() -> new FlightException(String.format("the %s flight doesn't exist", flightNumber)));
 
         List<Ticket> soldAndReservedTickets = ticketRepository.findTicketsByFlightId(flight.getId());
         List<Ticket> allTickets = IntStream.rangeClosed(1, flight.getAircraft().getType().getCapacity())
@@ -53,31 +53,12 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketDTO buyTicket(TicketDTO ticketDTO) throws TicketException, FlightException {
-        Flight flight = flightRepository.findByFlightNumber(ticketDTO.getFlightNumber())
-                .orElseThrow(() -> new FlightException(String.format("Flight %s doesn't exist", ticketDTO.getFlightNumber())));
-
-        if (flight.getTime().isBefore(LocalDateTime.now())) {
-            throw new FlightException(String.format("Flight %s have been started", ticketDTO.getFlightNumber()));
-        }
-
-        if (!getAvailableTicketsByFlightNumber(ticketDTO.getFlightNumber()).contains(ticketDTO)) {
-            throw new TicketException(String.format("Ticket on flight number %s" +
-                    " with seat %s isn`t available",ticketDTO.getFlightNumber(),ticketDTO.getSeat()));
-        }
-
-        if (getTicketsByPassenger(ticketDTO.getPassengerId()).contains(ticketDTO)) {
-            throw new TicketException(String.format("Passenger %s already have this ticket", ticketDTO.getPassengerId()));
-        }
-
-        if (getTicketsByPassenger(ticketDTO.getPassengerId())
-                .stream()
-                .anyMatch(ticket -> ticket.getFlightNumber().equals(ticketDTO.getFlightNumber()))) {
-            throw new TicketException(String.format("Passenger %s already have another ticket for this flight", ticketDTO.getPassengerId()));
-        }
-
+        Flight flight = checkFlightExist(ticketDTO);
+        checkFlightTime(flight);
+        checkTicketAvailable(ticketDTO);
+        checkAnotherTicketForTheSameFlight(ticketDTO);
 
         Passenger passenger = passengerRepository.getReferenceById(ticketDTO.getPassengerId());
-
         Ticket ticket = mapper.map(ticketDTO, Ticket.class);
 
         ticket.setFlight(flight);
@@ -100,5 +81,31 @@ public class TicketServiceImpl implements TicketService {
                 .stream()
                 .map(ticket -> mapper.map(ticket, TicketDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    private Flight checkFlightExist(TicketDTO ticketDTO) throws FlightException {
+        return flightRepository.findByFlightNumber(ticketDTO.getFlightNumber())
+                .orElseThrow(() -> new FlightException(String.format("Flight %s doesn't exist", ticketDTO.getFlightNumber())));
+    }
+
+    private void checkFlightTime(Flight flight) throws FlightException {
+        if (flight.getTime().isBefore(LocalDateTime.now())) {
+            throw new FlightException(String.format("Flight %s have been started", flight.getFlightNumber()));
+        }
+    }
+
+    private void checkTicketAvailable(TicketDTO ticketDTO) throws TicketException, FlightException {
+        if (!getAvailableTicketsByFlightNumber(ticketDTO.getFlightNumber()).contains(ticketDTO)) {
+            throw new TicketException(String.format("Ticket on flight number %s" +
+                    " with seat %s isn`t available", ticketDTO.getFlightNumber(), ticketDTO.getSeat()));
+        }
+    }
+
+    private void checkAnotherTicketForTheSameFlight(TicketDTO ticketDTO) throws TicketException, FlightException {
+        if (getTicketsByPassenger(ticketDTO.getPassengerId())
+                .stream()
+                .anyMatch(ticket -> ticket.getFlightNumber().equals(ticketDTO.getFlightNumber()))) {
+            throw new TicketException(String.format("Passenger %s already have another ticket for this flight", ticketDTO.getPassengerId()));
+        }
     }
 }

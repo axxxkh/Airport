@@ -44,7 +44,6 @@ public class TicketServiceTest {
     @Autowired
     private TicketService ticketService = new TicketServiceImpl(ticketRepository, flightRepository, passengerRepository, mapper);
 
-
     @BeforeTestMethod(value = "buyTicketTest_expectTicket")
     void initUseCase() {
         System.out.println("before method");
@@ -111,7 +110,7 @@ public class TicketServiceTest {
     public void buyTicketTest_expectAlreadyHaveTicketOnFlight() throws TicketException, FlightException {
         TicketDTO ticketDTO = TicketDTO.builder()
                 .seat(32)
-                .flightNumber(13)
+                .flightNumber(12)
                 .passengerId(2L)
                 .number(9999)
                 .build();
