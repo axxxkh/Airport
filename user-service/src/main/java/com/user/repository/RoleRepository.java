@@ -1,8 +1,8 @@
-package user.repository;
+package com.user.repository;
 
+import com.user.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import user.entity.Role;
 
 import java.util.Optional;
 

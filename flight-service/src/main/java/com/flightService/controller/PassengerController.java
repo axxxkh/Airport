@@ -37,6 +37,6 @@ public class PassengerController {
 
     @GetMapping("/{flightId}/test")
     public List<TicketDTO> freeTickets(@PathVariable("flightId") int flightId) throws FlightException {
-       return ticketService.getAvailableTicketsByFlightNumber(flightId);
+        return ticketService.getAvailableTicketsByFlightNumber(flightId);
     }
 }

@@ -1,13 +1,13 @@
-package user.service.impl;
+package com.user.service.impl;
 
+import com.user.entity.Role;
+import com.user.entity.User;
+import com.user.repository.RoleRepository;
+import com.user.repository.UserRepository;
+import com.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
-import user.entity.Role;
-import user.entity.User;
-import user.repository.RoleRepository;
-import user.repository.UserRepository;
-import user.service.UserService;
 
 import java.util.Optional;
 

@@ -1,26 +1,27 @@
 package com.flightService.service;
 
 import com.flightService.dto.FlightDTO;
-import com.flightService.entity.*;
+import com.flightService.entity.Flight;
 import com.flightService.repository.*;
 import com.flightService.service.impl.FlightServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class ServiceTest {
+@Transactional
+public class FlightServiceTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -40,13 +41,7 @@ public class ServiceTest {
     @Autowired
     private FlightService flightService = new FlightServiceImpl(flightRepository, mapper);
 
-
     private final int flightNumber = 9986655;
-
-    @BeforeEach
-    void initUseCase() {
-
-    }
 
     @AfterEach
     public void deleteFlight() {
@@ -55,30 +50,14 @@ public class ServiceTest {
     }
 
     @Test
-    void saveFlight() {
-        Airline airline = airlineRepository.getReferenceById(1L);
-        Aircraft aircraft = aircraftRepository.getReferenceById(1L);
-        Gate gate = gateRepository.getReferenceById(1L);
-
-        Route route = routeRepository.getReferenceById(1L);
-
-        Flight testFlight = Flight.builder()
-                .flightNumber(flightNumber)
-                .airline(airline)
-                .aircraft(aircraft)
-                .gate(gate)
-                .route(route)
-                .time(LocalDateTime.of(2022, 10, 10, 12, 00, 00))
-                .build();
-        Flight flightDB = flightRepository.save(testFlight);
-        Assertions.assertEquals(flightDB, testFlight);
+    public void getAll() {
+        List<FlightDTO> flights = flightService.getAll();
+        Assertions.assertEquals(6, flights.size());
     }
 
     @Test
-    void getAll() {
-        List<Flight> flights = flightRepository.findAll();
-        List<FlightDTO> flights1 = flightService.getAll();
-
-        Assertions.assertEquals(6, flights1.size());
+    public void getByPeriod() {
+        List<FlightDTO> flightList = flightService.getFlightsByPeriod(LocalDate.of(2023, 01, 01), LocalDate.of(2024, 01, 01));
+        Assertions.assertEquals(2, flightList.size());
     }
 }

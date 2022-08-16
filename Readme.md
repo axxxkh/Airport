@@ -9,6 +9,7 @@ Database model divided in four layers: Passenger (include tables Passenger, Pass
 and Route), Facility (tables terminal and gate), Airline (tables airline, aircraft, aircraft_types).
 
 ![](src/main/resources/EER Diagram.png)
+
 ## Entities
 
 - Aircraft
@@ -24,4 +25,4 @@ and Route), Facility (tables terminal and gate), Airline (tables airline, aircra
 - Salary
 - Terminal
 - Ticket
-![](src/main/resources/IT services-2.png)
+  ![](src/main/resources/IT services-2.png)

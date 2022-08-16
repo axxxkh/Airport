@@ -1,6 +1,6 @@
-package user.service;
+package com.user.service;
 
-import user.entity.User;
+import com.user.entity.User;
 
 import java.util.Optional;
 

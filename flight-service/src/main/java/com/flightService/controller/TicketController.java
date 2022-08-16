@@ -24,7 +24,7 @@ public class TicketController {
 
     @GetMapping("/ticketdto")
     public TicketDTO test() {
-     return ticketService.getTicketsByPassenger(1).get(0);
+        return ticketService.getTicketsByPassenger(1).get(0);
     }
 
 
