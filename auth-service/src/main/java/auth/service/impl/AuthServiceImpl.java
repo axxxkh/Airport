@@ -34,15 +34,17 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthResponse login(@Valid LoginRequest loginRequest) throws UserAuthException {
         Optional<User> user = userClient.getByEmail(loginRequest.getEmail());
-
+        String errorMessage;
         if (user.isEmpty()) {
-            LOGGER.error(String.format("User %s  not found", loginRequest.getEmail()));
-            throw new UserAuthException();
+            errorMessage = String.format("User %s not found", loginRequest.getEmail());
+            LOGGER.error(errorMessage);
+            throw new UserAuthException(errorMessage);
         }
 
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.get().getPassword())) {
-            LOGGER.error(String.format("Wrong password for user with email %s", loginRequest.getEmail()));
-            throw new UserAuthException();
+            errorMessage = String.format("Wrong password for user with email %s", loginRequest.getEmail());
+            LOGGER.error(errorMessage);
+            throw new UserAuthException(errorMessage);
         }
         LOGGER.info(String.format("User %s successfully sign in. Issued token ", user.get().getEmail()));
         return AuthResponse.builder()

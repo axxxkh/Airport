@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
-@FeignClient(name = "user-service")
+@FeignClient(value = "user-service", url = "localhost:8087/user")
+//@FeignClient(name = "user-service")
 /* Feign client to get data from user service (service that contains user information login, password etc */
 public interface UserClient {
 

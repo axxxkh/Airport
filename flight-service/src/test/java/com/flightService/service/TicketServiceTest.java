@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -34,11 +33,6 @@ public class TicketServiceTest {
 
     @Autowired
     private TicketService ticketService = new TicketServiceImpl(ticketRepository, flightRepository, passengerRepository, mapper);
-
-    @BeforeTestMethod(value = "buyTicketTest_expectTicket")
-    void initUseCase() {
-        System.out.println("before method");
-    }
 
     @Test
     public void getAvailableTicketsByFlightNumberTest() throws FlightException {
