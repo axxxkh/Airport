@@ -2,34 +2,25 @@ package com.flightService.service;
 
 
 import com.flightService.dto.TicketDTO;
-import com.flightService.exceptions.ExceptionsHandler;
 import com.flightService.exceptions.FlightException;
 import com.flightService.exceptions.TicketException;
 import com.flightService.repository.FlightRepository;
 import com.flightService.repository.PassengerRepository;
 import com.flightService.repository.TicketRepository;
 import com.flightService.service.impl.TicketServiceImpl;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
 @Transactional
 public class TicketServiceTest {
-    @Autowired
-    private MockMvc mockMvc;
 
     @Autowired
     private FlightRepository flightRepository;
@@ -48,14 +39,6 @@ public class TicketServiceTest {
     void initUseCase() {
         System.out.println("before method");
     }
-
-    @Before
-    public void init() {
-        MockMvc mockMvc = standaloneSetup(FlightService.class)
-                .setControllerAdvice(new ExceptionsHandler())
-                .build();
-    }
-
 
     @Test
     public void getAvailableTicketsByFlightNumberTest() throws FlightException {
