@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -23,6 +24,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Data
+@Validated
 public class AuthServiceImpl implements AuthService {
 
     private UserClient userClient;
@@ -54,9 +56,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     public AuthResponse registerUser(@Valid RegisterRequest request) throws UserRegisterException {
+        String errorMessage;
         if (userClient.getByEmail(request.getEmail()).isPresent()) {
-            LOGGER.error(String.format("User with email %s already exist", request.getEmail()));
-            throw new UserRegisterException();
+            errorMessage = String.format("User with email %s already exist", request.getEmail());
+            LOGGER.error(errorMessage);
+            throw new UserRegisterException(errorMessage);
         }
 
         User user = User.builder()
@@ -64,6 +68,7 @@ public class AuthServiceImpl implements AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .secretQuestion(request.getSecretQuestion())
                 .secretAnswer(request.getSecretAnswer())
+                .isActive(true)
                 .role(Role.builder().role("PASSENGER").build())
                 .build();
         user = userClient.registerUser(user);

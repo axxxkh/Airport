@@ -6,6 +6,7 @@ import com.flightService.exceptions.FlightException;
 import com.flightService.service.PassengerService;
 import com.flightService.service.TicketService;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
+@Validated
 @RequestMapping("/passenger")
 public class PassengerController {
 

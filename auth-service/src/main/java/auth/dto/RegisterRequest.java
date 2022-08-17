@@ -4,23 +4,25 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
-
+@Validated
 public class RegisterRequest {
     @NotNull
-    @Email
+    @Email(message = "Wrong format email")
     private String email;
-    @NotNull
+    @NotBlank
     private String password;
-    @NotNull
+    @NotBlank(message = "Secret question can't be blank")
     private String secretQuestion;
-    @NotNull String secretAnswer;
+    @NotBlank(message = "Secret answer can't be blank")
+    private String secretAnswer;
 
 }

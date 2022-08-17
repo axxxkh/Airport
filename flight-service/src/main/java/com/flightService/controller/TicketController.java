@@ -6,11 +6,13 @@ import com.flightService.exceptions.TicketException;
 import com.flightService.service.FlightService;
 import com.flightService.service.TicketService;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/ticket")
 @AllArgsConstructor
 public class TicketController {
