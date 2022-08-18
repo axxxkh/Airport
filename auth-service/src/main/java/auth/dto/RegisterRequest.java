@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Validated
 public class RegisterRequest {

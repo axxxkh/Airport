@@ -23,15 +23,6 @@ import javax.validation.ConstraintViolationException;
 public class AuthServiceTest {
 
     @Autowired
-    UserClient userClient;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
-    JwtUtil jwtUtil = new JwtUtil();
-
-    @Autowired
     public AuthService authService;
 
     private String errorMessage;
@@ -104,7 +95,7 @@ public class AuthServiceTest {
     @Test
     public void registerUserTest_ExpectSuccess() throws UserRegisterException {
         RegisterRequest request = RegisterRequest.builder()
-                .email("axkhkk@gmail.com")
+                .email("TestUserSuccess@gmail.com")
                 .password("123")
                 .secretQuestion("TestQuestion")
                 .secretAnswer("TestAnswer")

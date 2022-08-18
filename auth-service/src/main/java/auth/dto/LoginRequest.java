@@ -12,6 +12,7 @@ import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Validated
 public class LoginRequest implements Serializable {
