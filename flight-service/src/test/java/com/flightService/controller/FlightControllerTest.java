@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,8 +37,6 @@ public class FlightControllerTest {
     @Test
     public void getAllFlightsTest_ExpectFlight() {
         String uri = "http://localhost:" + port + "/flight/";
-        headers.add("email", "alxxxkh@gmail.com");
-        httpEntity = new HttpEntity(headers);
 
         restTemplate.getRestTemplate().setInterceptors(
                 Collections.singletonList((request, body, execution) -> {
@@ -51,5 +49,29 @@ public class FlightControllerTest {
         List<FlightDTO> flightDTOS = Arrays.asList(response.getBody());
         Assertions.assertEquals(200, response.getStatusCodeValue());
         Assertions.assertEquals(6, flightDTOS.size());
+    }
+
+    @Test
+    public void getAllFlightsTest_ExpectFlightXz() {
+        String url = "http://localhost:" + port + "/flight/period/";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+        HttpEntity requestEntity = new HttpEntity<>(headers);
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("startDate", "2023-01-01")
+                .queryParam("endDate", "2024-01-01");
+
+        ResponseEntity<FlightDTO[]> responseEntity = restTemplate.exchange(
+                uriBuilder.toUriString(),
+                HttpMethod.GET,
+                requestEntity,
+                FlightDTO[].class
+        );
+
+        List<FlightDTO> flightDTOS = Arrays.asList(responseEntity.getBody());
+        Assertions.assertEquals(202, responseEntity.getStatusCodeValue());
+        Assertions.assertEquals(2, flightDTOS.size());
     }
 }
