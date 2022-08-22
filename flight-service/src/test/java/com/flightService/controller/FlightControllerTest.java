@@ -35,7 +35,7 @@ public class FlightControllerTest {
     private HttpEntity httpEntity;
 
     @Test
-    public void getAllFlightsTest_ExpectFlight() {
+    public void getAllFlightsTest_ExpectFlights() {
         String uri = "http://localhost:" + port + "/flight/";
 
         restTemplate.getRestTemplate().setInterceptors(

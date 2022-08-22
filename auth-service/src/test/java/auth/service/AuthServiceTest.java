@@ -5,14 +5,11 @@ import auth.dto.LoginRequest;
 import auth.dto.RegisterRequest;
 import auth.exceptions.UserAuthException;
 import auth.exceptions.UserRegisterException;
-import auth.feign.UserClient;
-import auth.jwt.JwtUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
