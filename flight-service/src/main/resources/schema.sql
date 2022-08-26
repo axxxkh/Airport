@@ -1,120 +1,120 @@
 CREATE TABLE roles
-(id bigint not null AUTO_INCREMENT,
-role varchar(20) NOT NULL default "PASSENGER" unique,
-active boolean NOT NULL default true,
-primary key (id));
+(id BIGINT not null AUTO_INCREMENT,
+role VARCHAR(20) NOT NULL DEFAULT "PASSENGER" UNIQUE,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id));
 
 CREATE TABLE user
-(id bigint NOT NULL AUTO_INCREMENT,
-email varchar(50) NOT NULL UNIQUE,
+(id BIGINT NOT NULL AUTO_INCREMENT,
+email VARCHAR(50) NOT NULL UNIQUE,
 password VARCHAR (60) NOT NULL,
 secret_question VARCHAR (50) NOT NULL,
 secret_answer VARCHAR (50) NOT NULL,
-role_id bigint  default 3,
-active boolean NOT NULL default true,
-foreign key (role_id) references roles(id),
-primary key(id));
+role_id BIGINT  DEFAULT 3,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+FOREIGN KEY (role_id) REFERENCES roles(id),
+PRIMARY KEY (id));
 
 CREATE TABLE passport
-(id bigint AUTO_INCREMENT NOT NULL,
-serial_number varchar(30) UNIQUE,
+(id BIGINT AUTO_INCREMENT NOT NULL,
+serial_number VARCHAR(30) UNIQUE,
 birthdate DATE NOT NULL,
 issue_date DATE NOT NULL,
-active boolean NOT NULL default true,
-primary key (id)
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id)
 );
 
 CREATE TABLE passenger
-(id bigint AUTO_INCREMENT NOT NULL,
-user_id bigint NOT NULL,
-name varchar (20) NOT NULL,
-surname varchar (50) NOT NULL,
-passport_id bigint NOT NULL,
-active boolean NOT NULL default true,
-primary key (id),
-foreign key(user_id) references User(id),
-foreign key(passport_id) references Passport(id)
+(id BIGINT AUTO_INCREMENT NOT NULL,
+user_id BIGINT NOT NULL,
+name VARCHAR (20) NOT NULL,
+surname VARCHAR (50) NOT NULL,
+passport_id BIGINT NOT NULL,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id),
+FOREIGN KEY (user_id) REFERENCES user(id),
+FOREIGN KEY (passport_id) REFERENCES passport(id)
 );
 
 CREATE TABLE terminal
-(id bigint AUTO_INCREMENT NOT NULL,
-name varchar(20) NOT NULL,
-capacity int NOT NULL,
-active boolean default true,
-primary key (id)
+(id BIGINT AUTO_INCREMENT NOT NULL,
+name VARCHAR(20) NOT NULL,
+capacity INT NOT NULL,
+active BOOLEAN DEFAULT TRUE,
+PRIMARY KEY (id)
 );
 
 CREATE TABLE gate
-(id bigint AUTO_INCREMENT NOT NULL,
-terminal_id bigint NOT NULL,
-capacity int NOT NULL,
-active boolean default true,
-primary key (id),
-foreign key (terminal_id) references Terminal(id)
+(id BIGINT AUTO_INCREMENT NOT NULL,
+terminal_id BIGINT NOT NULL,
+capacity INT NOT NULL,
+active BOOLEAN DEFAULT TRUE,
+PRIMARY KEY (id),
+FOREIGN KEY (terminal_id) REFERENCES terminal(id)
 );
 
 CREATE TABLE route
-(id bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
+(id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
 name VARCHAR(30),
-active boolean default true
+active BOOLEAN DEFAULT true
 );
 
-CREATE TABLE  aircraft_Type
-(id bigint AUTO_INCREMENT NOT NULL,
-producer varchar(20) NOT NULL,
-type varchar(20) NOT NULL,
-capacity int NOT NULL,
-active boolean default true,
-primary key (id)
+CREATE TABLE  aircraft_type
+(id BIGINT AUTO_INCREMENT NOT NULL,
+producer VARCHAR(20) NOT NULL,
+type VARCHAR(20) NOT NULL,
+capacity INT NOT NULL,
+active BOOLEAN DEFAULT TRUE,
+PRIMARY KEY (id)
 );
 
 CREATE TABLE airline
-(id bigint AUTO_INCREMENT NOT NULL,
-name varchar(20),
-rate int, -- від 1 до 10
-active boolean NOT NULL default true,
-primary key (id)
+(id BIGINT AUTO_INCREMENT NOT NULL,
+name VARCHAR(20),
+rate INT, -- від 1 до 10
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id)
 );
 
 CREATE TABLE aircraft
-(id bigint AUTO_INCREMENT NOT NULL,
-serial_number int NOT NULL UNIQUE,
-airline_id bigint NOT NULL,
-aircraft_type_id bigint NOT NULL,
-active boolean NOT NULL default true,
-primary key (id),
-foreign key (airline_id) references Airline(id),
-foreign key (aircraft_type_id) references Aircraft_type(id)
+(id BIGINT AUTO_INCREMENT NOT NULL,
+serial_number INT NOT NULL UNIQUE,
+airline_id BIGINT NOT NULL,
+aircraft_type_id BIGINT NOT NULL,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id),
+FOREIGN KEY (airline_id) REFERENCES airline(id),
+FOREIGN KEY (aircraft_type_id) REFERENCES aircraft_type(id)
 );
 
 CREATE TABLE flight
-(id bigint AUTO_INCREMENT NOT NULL,
-flight_number varchar(20) NOT NULL UNIQUE,
-time date,
-flight_status smallint NOT NULL, -- 0 - створено, 1 - подано до завантаження, 2 - в польоті, 3 - завершено, 4-  скасовано
-airline_id bigint,
-craft_id bigint,
-gate_id bigint,
-route_id bigint,
-active boolean NOT NULL default true,
-primary key (id),
-foreign key (airline_id) references Airline(id),
-foreign key (craft_id) references Aircraft(id),
-foreign key (gate_id) references Gate(id),
-foreign key (route_id) references Route(id)
+(id BIGINT AUTO_INCREMENT NOT NULL,
+flight_number VARCHAR(20) NOT NULL UNIQUE,
+time DATE,
+flight_status SMALLINT NOT NULL, -- 0 - створено, 1 - подано до завантаження, 2 - в польоті, 3 - завершено, 4-  скасовано
+airline_id BIGINT,
+craft_id BIGINT,
+gate_id BIGINT,
+route_id BIGINT,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id),
+FOREIGN KEY (airline_id) REFERENCES airline(id),
+FOREIGN KEY (craft_id) REFERENCES aircraft(id),
+FOREIGN KEY (gate_id) REFERENCES gate(id),
+FOREIGN KEY (route_id) REFERENCES route(id)
 );
 
 CREATE TABLE ticket
-(id bigint AUTO_INCREMENT NOT NULL,
-number int,
-flight_id bigint NOT NULL,
-seat int NOT NULL,
-passenger_id bigint,
-buy_date date,
-ticket_status smallint NOT NULL, -- 0 not sold, 1 - sold, 2 - boarded, 3 - finished
-active boolean default true,
+(id BIGINT AUTO_INCREMENT NOT NULL,
+number INT,
+flight_id BIGINT NOT NULL,
+seat INT NOT NULL,
+passenger_id BIGINT,
+buy_date DATE,
+ticket_status SMALLINT NOT NULL, -- 0 not sold, 1 - sold, 2 - boarded, 3 - finished
+active BOOLEAN DEFAULT TRUE,
 CONSTRAINT UNIQUE_TICKET UNIQUE (flight_id, seat),
-primary key (id),
-foreign key (flight_id) references Flight(id),
-foreign key (passenger_id) references Passenger(id)
+PRIMARY KEY (id),
+FOREIGN KEY (flight_id) REFERENCES flight(id),
+FOREIGN KEY (passenger_id) REFERENCES passenger(id)
 );

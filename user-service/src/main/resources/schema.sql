@@ -1,37 +1,37 @@
 CREATE TABLE roles
-(id bigint not null AUTO_INCREMENT,
-role varchar(20) NOT NULL default "PASSENGER" unique,
-active boolean NOT NULL default true,
-primary key (id));
+(id BIGINT not null AUTO_INCREMENT,
+role VARCHAR(20) NOT NULL DEFAULT "PASSENGER" UNIQUE,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id));
 
 CREATE TABLE user
-(id bigint NOT NULL AUTO_INCREMENT,
-email varchar(50) NOT NULL UNIQUE,
+(id BIGINT NOT NULL AUTO_INCREMENT,
+email VARCHAR(50) NOT NULL UNIQUE,
 password VARCHAR (60) NOT NULL,
 secret_question VARCHAR (50) NOT NULL,
 secret_answer VARCHAR (50) NOT NULL,
-role_id bigint  default 3,
-active boolean NOT NULL default true,
-foreign key (role_id) references roles(id),
-primary key(id));
+role_id BIGINT  DEFAULT 3,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+FOREIGN KEY (role_id) REFERENCES roles(id),
+PRIMARY KEY (id));
 
 CREATE TABLE passport
-(id bigint AUTO_INCREMENT NOT NULL,
-serial_number varchar(30) UNIQUE,
+(id BIGINT AUTO_INCREMENT NOT NULL,
+serial_number VARCHAR(30) UNIQUE,
 birthdate DATE NOT NULL,
 issue_date DATE NOT NULL,
-active boolean NOT NULL default true,
-primary key (id)
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id)
 );
 
 CREATE TABLE passenger
-(id bigint AUTO_INCREMENT NOT NULL,
-user_id bigint NOT NULL,
-name varchar (20) NOT NULL,
-surname varchar (50) NOT NULL,
-passport_id bigint NOT NULL,
-active boolean NOT NULL default true,
-primary key (id),
-foreign key(user_id) references User(id),
-foreign key(passport_id) references Passport(id)
+(id BIGINT AUTO_INCREMENT NOT NULL,
+user_id BIGINT NOT NULL,
+name VARCHAR (20) NOT NULL,
+surname VARCHAR (50) NOT NULL,
+passport_id BIGINT NOT NULL,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id),
+FOREIGN KEY (user_id) REFERENCES user(id),
+FOREIGN KEY (passport_id) REFERENCES passport(id)
 );

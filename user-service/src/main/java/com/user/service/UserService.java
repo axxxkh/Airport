@@ -4,6 +4,8 @@ import com.user.entity.User;
 import com.user.exceptions.UserAlreadyExist;
 import com.user.exceptions.UserNotFound;
 
+import java.util.Optional;
+
 public interface UserService {
 
     User getByEmail(String email) throws UserNotFound;

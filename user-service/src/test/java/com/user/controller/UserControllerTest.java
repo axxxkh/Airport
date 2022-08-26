@@ -12,15 +12,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Sql({"/drop.sql", "/schema.sql"})
 @Sql("/data.sql")
 @SpringBootTest(classes = UserApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Testcontainers
+@DirtiesContext
 public class UserControllerTest {
     @LocalServerPort
     private int port;
@@ -33,6 +41,21 @@ public class UserControllerTest {
 
     private MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
     private HttpEntity httpEntity;
+
+    @Container
+    public static MySQLContainer<?> mySqlDB = new MySQLContainer<>
+            ("mysql:8.0.28")
+            .withDatabaseName("airport")
+            .withUsername("admin")
+            .withPassword("admin");
+
+    @DynamicPropertySource
+    public static void properties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url",mySqlDB::getJdbcUrl);
+        registry.add("spring.datasource.username", mySqlDB::getUsername);
+        registry.add("spring.datasource.password", mySqlDB::getPassword);
+
+    }
 
     @Test
     public void registerUserTest_ExpectOk() throws JsonProcessingException {

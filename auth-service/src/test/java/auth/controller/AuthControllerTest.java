@@ -22,7 +22,7 @@ import org.springframework.util.MultiValueMap;
 
 @SpringBootTest(classes = AuthApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AuthControllerTest {
+public class AuthControllerTest {
 
     @LocalServerPort
     private int port;
