@@ -12,6 +12,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -19,6 +20,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Sql({ "/drop.sql", "/schema.sql" })
+@Sql("/data.sql")
 @SpringBootTest(classes = FlightApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PassengerControllerTest {
@@ -85,5 +88,4 @@ public class PassengerControllerTest {
         Assertions.assertEquals(200, response.getStatusCodeValue());
         Assertions.assertEquals(347, ticketDTOS.size());
     }
-
 }

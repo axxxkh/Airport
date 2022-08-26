@@ -6,6 +6,7 @@ import com.flightService.exceptions.TicketException;
 import com.flightService.service.FlightService;
 import com.flightService.service.TicketService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,19 +20,19 @@ public class TicketController {
     private FlightService flightService;
     private TicketService ticketService;
 
-    @GetMapping("/{FlightNumber}/")
-    public List<TicketDTO> getAllAvailable(@PathVariable("FlightNumber") int flightNumber) throws FlightException {
-        return ticketService.getAvailableTicketsByFlightNumber(flightNumber);
+    @GetMapping("/{flightNumber}/")
+    public ResponseEntity<List<TicketDTO>> getAllAvailable(@PathVariable("flightNumber") int flightNumber) throws FlightException {
+        return ResponseEntity.ok().body(ticketService.getAvailableTicketsByFlightNumber(flightNumber));
     }
 
-    @GetMapping("/ticketdto")
+    @GetMapping("/")
     public TicketDTO test() {
         return ticketService.getTicketsByPassenger(1).get(0);
     }
 
 
     @PostMapping("/")
-    public TicketDTO buyTicket(@RequestBody TicketDTO ticket) throws TicketException, FlightException {
-        return ticketService.buyTicket(ticket);
+    public ResponseEntity<TicketDTO> buyTicket(@RequestBody TicketDTO ticket) throws TicketException, FlightException {
+        return ResponseEntity.ok().body(ticketService.buyTicket(ticket));
     }
 }

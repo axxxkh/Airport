@@ -16,12 +16,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/com/user/register/")
+    @PostMapping("/user/register/")
     public User registerUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
 
-    @GetMapping("/com/user/")
+    @GetMapping("/user/")
     public Optional<User> getByEmail(@RequestParam String email) {
         return userService.getByEmail(email);
     }

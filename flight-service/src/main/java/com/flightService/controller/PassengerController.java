@@ -6,11 +6,13 @@ import com.flightService.exceptions.FlightException;
 import com.flightService.service.PassengerService;
 import com.flightService.service.TicketService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,21 +26,21 @@ public class PassengerController {
 
     // Return List of PassengerDTOs that attached to user account
     @GetMapping("/")
-    public List<PassengerDTO> getPassengers(@RequestHeader("email") String email) {
-        return passengerService.getAllByEmail(email);
+    public ResponseEntity<List<PassengerDTO>> getPassengers(@RequestHeader("email") String email) {
+        return ResponseEntity.ok().body(passengerService.getAllByEmail(email));
     }
 
     @GetMapping("/tickets")
-    public List<TicketDTO> getTickets(@RequestHeader("email") String email) {
-        return getPassengers(email)
+    public ResponseEntity<List<TicketDTO>> getTickets(@RequestHeader("email") String email) {
+        return ResponseEntity.ok().body(Objects.requireNonNull(getPassengers(email).getBody())
                 .stream()
                 .map(passengerDTO -> ticketService.getTicketsByPassenger(passengerDTO.getId()))
                 .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/{flightId}/tickets")
-    public List<TicketDTO> freeTickets(@PathVariable("flightId") int flightId) throws FlightException {
-        return ticketService.getAvailableTicketsByFlightNumber(flightId);
+    public ResponseEntity<List<TicketDTO>> freeTickets(@PathVariable("flightId") int flightId) throws FlightException {
+        return ResponseEntity.ok().body(ticketService.getAvailableTicketsByFlightNumber(flightId));
     }
 }

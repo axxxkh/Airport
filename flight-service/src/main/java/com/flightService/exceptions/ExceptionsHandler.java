@@ -16,13 +16,13 @@ public class ExceptionsHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionsHandler.class);
 
     @ExceptionHandler(value = {TicketException.class})
-    public ResponseEntity<?> dataNotFoundExceptionHandling(Exception exception, WebRequest request) {
+    public ResponseEntity<?> ticketExceptionHandling(Exception exception, WebRequest request) {
         return new ResponseEntity<>(new ErrorDetails(LocalDateTime.now(), exception.getMessage(),
                 request.getDescription(false)), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> globalExceptionHandling(Exception exception, WebRequest request) {
+    @ExceptionHandler(value = {FlightException.class})
+    public ResponseEntity<?> flightExceptionHandling(Exception exception, WebRequest request) {
         return new ResponseEntity<>(new ErrorDetails(LocalDateTime.now(), exception.getMessage(),
                 request.getDescription(false)), HttpStatus.INTERNAL_SERVER_ERROR);
     }

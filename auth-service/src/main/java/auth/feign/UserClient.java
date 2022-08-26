@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Validated
 @FeignClient(value = "user-service", url = "localhost:8087/user")
+//@FeignClient(name = "user-service", path = "/user")
 //@FeignClient(name = "user-service")
 /* Feign client to get data from user service (service that contains user information login, password etc */
 public interface UserClient {
