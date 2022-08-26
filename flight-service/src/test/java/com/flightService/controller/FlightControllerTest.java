@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@Sql({ "/drop.sql", "/schema.sql" })
+@Sql({"/drop.sql", "/schema.sql"})
 @Sql("/data.sql")
 @SpringBootTest(classes = FlightApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

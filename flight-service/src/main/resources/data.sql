@@ -1,35 +1,35 @@
-INSERT INTO roles
+insert into roles
 (id, role)
 values
 (1, "ADMIN"),
 (2, "STAFF"),
 (3, "PASSENGER");
 
-INSERT INTO user
+insert into user
 (id, email, password, secret_question, secret_answer)
 values
 (1,"bohdan@gmail.com", "$2a$10$fJYHWJD6SK0eDbludARIJ.V3x7LUWCftYcCFX2tzFibd0a8.6Oqxu","name","bohdan"),
 (2,"alxxxkh@gmail.com", "$2a$10$KG7sM3zgF4FzNN7ElSsh4eSPod8TrNMZfaoEF9YRLXIfEFUirMgpO", "name", "alex"); -- 123;
 
-INSERT INTO passport
+insert into passport
 (id, serial_number, birthdate, issue_date)
 values
 (1,"SO1234",'1987-12-28', '2000-10-23'),
 (2,"SO1211",'1988-11-11', '2010-05-22');
 
-INSERT INTO passenger
+insert into passenger
 (id, user_id, passport_id, name, surname)
 values
 (1, 1,1, "Bohdan", "Shchehliuk"),
 (2, 2,2, "Oleksii", "Khomyshen");
 
-INSERT INTO terminal
+insert into terminal
 (id, name, capacity)
 values
 (1, "West",100),
 (2, "East",150);
 
-INSERT INTO gate
+insert into gate
 (id, terminal_id, capacity)
 values
 (1, 1, 60),
@@ -37,20 +37,20 @@ values
 (3, 2, 80),
 (4, 2,70);
 
-INSERT INTO route
+insert into route
 (id, name)
 values
 (1,"Vinnytsya-Jashkiv"),
 (2,"Kiev-Rahnu"),
 (3,"Zhmerynka-Tjapche");
 
-INSERT INTO aircraft_Type
+insert into aircraft_Type
 (id, producer, type, capacity)
 values
 (1, "Boeing", "737",350),
 (2, "Airbus", "A310",320);
 
-INSERT INTO airline
+insert into airline
 (id, name, rate, active)
 values
 (1, "Qatar Airways", 10, true),
@@ -66,7 +66,7 @@ values
 (4,2,1, 234349, true),
 (5,3,2, 234004, true);
 
-INSERT INTO flight
+insert into flight
 (id, flight_number, time, flight_status, airline_id,  craft_id, gate_id, active, route_id)
 values
 (1, 11, '2021-12-31', 1,1,  1, 1, true, 1),
@@ -76,7 +76,7 @@ values
 (5, 15, '2023-12-31', 0, 1, 2, 2, true,3),
 (6, 16, '2023-12-31', 1,3, 5, 1, true,3);
 
-INSERT INTO ticket
+insert into ticket
 (id, number, flight_id , seat, passenger_id, ticket_status, buy_date, active)
 values
 (1, 11111, 1, 34, 1, 1,'2021-11-21', true),

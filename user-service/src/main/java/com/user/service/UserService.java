@@ -1,12 +1,12 @@
 package com.user.service;
 
 import com.user.entity.User;
-
-import java.util.Optional;
+import com.user.exceptions.UserAlreadyExist;
+import com.user.exceptions.UserNotFound;
 
 public interface UserService {
 
-    Optional<User> getByEmail(String email);
+    User getByEmail(String email) throws UserNotFound;
 
-    User saveUser(User user);
+    User saveUser(User user) throws UserAlreadyExist;
 }
