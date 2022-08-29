@@ -14,11 +14,10 @@ import java.util.function.Predicate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
 public class RouterValidator {
 
     public static final List<String> openApiEndpoints = List.of(
-            "/auth/admin",
+            "/auth/register",
             "/auth/login"
     );
 

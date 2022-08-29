@@ -32,7 +32,7 @@ public class AuthController {
         return ResponseEntity.ok().body(authService.login(request));
     }
 
-    @PostMapping(value = "auth/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/auth/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) throws UserRegisterException {
         return ResponseEntity.ok().body(authService.registerUser(request));
     }

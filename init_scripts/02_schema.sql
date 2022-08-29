@@ -1,0 +1,122 @@
+CREATE DATABASE AIRPORT;
+USE AIRPORT;
+CREATE TABLE roles
+(id BIGINT not null AUTO_INCREMENT,
+role VARCHAR(20) NOT NULL DEFAULT "PASSENGER" UNIQUE,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id));
+
+CREATE TABLE user
+(id BIGINT NOT NULL AUTO_INCREMENT,
+email VARCHAR(50) NOT NULL UNIQUE,
+password VARCHAR (60) NOT NULL,
+secret_question VARCHAR (50) NOT NULL,
+secret_answer VARCHAR (50) NOT NULL,
+role_id BIGINT  DEFAULT 3,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+FOREIGN KEY (role_id) REFERENCES roles(id),
+PRIMARY KEY (id));
+
+CREATE TABLE passport
+(id BIGINT AUTO_INCREMENT NOT NULL,
+serial_number VARCHAR(30) UNIQUE,
+birthdate DATE NOT NULL,
+issue_date DATE NOT NULL,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE passenger
+(id BIGINT AUTO_INCREMENT NOT NULL,
+user_id BIGINT NOT NULL,
+name VARCHAR (20) NOT NULL,
+surname VARCHAR (50) NOT NULL,
+passport_id BIGINT NOT NULL,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id),
+FOREIGN KEY (user_id) REFERENCES user(id),
+FOREIGN KEY (passport_id) REFERENCES passport(id)
+);
+
+CREATE TABLE terminal
+(id BIGINT AUTO_INCREMENT NOT NULL,
+name VARCHAR(20) NOT NULL,
+capacity INT NOT NULL,
+active BOOLEAN DEFAULT TRUE,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE gate
+(id BIGINT AUTO_INCREMENT NOT NULL,
+terminal_id BIGINT NOT NULL,
+capacity INT NOT NULL,
+active BOOLEAN DEFAULT TRUE,
+PRIMARY KEY (id),
+FOREIGN KEY (terminal_id) REFERENCES terminal(id)
+);
+
+CREATE TABLE route
+(id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+name VARCHAR(30),
+active BOOLEAN DEFAULT true
+);
+
+CREATE TABLE  aircraft_type
+(id BIGINT AUTO_INCREMENT NOT NULL,
+producer VARCHAR(20) NOT NULL,
+type VARCHAR(20) NOT NULL,
+capacity INT NOT NULL,
+active BOOLEAN DEFAULT TRUE,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE airline
+(id BIGINT AUTO_INCREMENT NOT NULL,
+name VARCHAR(20),
+rate INT, -- від 1 до 10
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE aircraft
+(id BIGINT AUTO_INCREMENT NOT NULL,
+serial_number INT NOT NULL UNIQUE,
+airline_id BIGINT NOT NULL,
+aircraft_type_id BIGINT NOT NULL,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id),
+FOREIGN KEY (airline_id) REFERENCES airline(id),
+FOREIGN KEY (aircraft_type_id) REFERENCES aircraft_type(id)
+);
+
+CREATE TABLE flight
+(id BIGINT AUTO_INCREMENT NOT NULL,
+flight_number VARCHAR(20) NOT NULL UNIQUE,
+time DATE,
+flight_status SMALLINT NOT NULL, -- 0 - створено, 1 - подано до завантаження, 2 - в польоті, 3 - завершено, 4-  скасовано
+airline_id BIGINT,
+craft_id BIGINT,
+gate_id BIGINT,
+route_id BIGINT,
+active BOOLEAN NOT NULL DEFAULT TRUE,
+PRIMARY KEY (id),
+FOREIGN KEY (airline_id) REFERENCES airline(id),
+FOREIGN KEY (craft_id) REFERENCES aircraft(id),
+FOREIGN KEY (gate_id) REFERENCES gate(id),
+FOREIGN KEY (route_id) REFERENCES route(id)
+);
+
+CREATE TABLE ticket
+(id BIGINT AUTO_INCREMENT NOT NULL,
+number INT,
+flight_id BIGINT NOT NULL,
+seat INT NOT NULL,
+passenger_id BIGINT,
+buy_date DATE,
+ticket_status SMALLINT NOT NULL, -- 0 not sold, 1 - sold, 2 - boarded, 3 - finished
+active BOOLEAN DEFAULT TRUE,
+CONSTRAINT UNIQUE_TICKET UNIQUE (flight_id, seat),
+PRIMARY KEY (id),
+FOREIGN KEY (flight_id) REFERENCES flight(id),
+FOREIGN KEY (passenger_id) REFERENCES passenger(id)
+);
