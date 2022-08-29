@@ -30,6 +30,7 @@ public class PassengerController {
         return ResponseEntity.ok().body(passengerService.getAllByEmail(email));
     }
 
+    // Return List of the tickets by passengers which register to account
     @GetMapping("/tickets")
     public ResponseEntity<List<TicketDTO>> getTickets(@RequestHeader("email") String email) {
         return ResponseEntity.ok().body(Objects.requireNonNull(getPassengers(email).getBody())
@@ -39,6 +40,7 @@ public class PassengerController {
                 .collect(Collectors.toList()));
     }
 
+    // Returns available tickets by flight number
     @GetMapping("/{flightId}/tickets")
     public ResponseEntity<List<TicketDTO>> freeTickets(@PathVariable("flightId") int flightId) throws FlightException {
         return ResponseEntity.ok().body(ticketService.getAvailableTicketsByFlightNumber(flightId));

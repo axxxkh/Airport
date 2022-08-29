@@ -11,11 +11,6 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.List;
 
-//@RefreshScope
-//@Component
-//@AllArgsConstructor
-////@NoArgsConstructor
-//@Data
 public class AdminAuthenticationFilter implements GatewayFilter {
 //    private String role;
 //

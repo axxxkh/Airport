@@ -33,7 +33,7 @@ public class AuthenticationFilter implements GatewayFilter {
         if (routerValidator.isSecured.test(request)) {
             if (this.isAuthMissing(request))
                 return this.onError(exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
-// Hardcoded. But it works before without it
+
             String token = this.getAuthHeader(request).replace("Bearer ", "");
 
             if (jwtUtil.isInvalid(token))

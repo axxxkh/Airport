@@ -51,7 +51,7 @@ public class UserControllerTest {
 
     @DynamicPropertySource
     public static void properties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url",mySqlDB::getJdbcUrl);
+        registry.add("spring.datasource.url", mySqlDB::getJdbcUrl);
         registry.add("spring.datasource.username", mySqlDB::getUsername);
         registry.add("spring.datasource.password", mySqlDB::getPassword);
 

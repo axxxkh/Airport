@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+  auth-service:
+    image: authservice
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://eurekaserver:8761/eureka/
+    build: auth-service/
+    restart: unless-stopped
+    links:
+      - eureka_server
+      - user-service
+    depends_on:
+      - user-service
+  user-service:
+    image: userservice
+    extra_hosts:
+      - localhost:192.168.31.151
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://eurekaserver:8761/eureka/
+    build: user-service/
+    restart: unless-stopped
+    links:
+      - eureka_server
+    depends_on:
+      - cloud-gateway
+  cloud-gateway:
+    image: cloudgateway
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://eurekaserver:8761/eureka/
+    build: cloud-gateway
+    restart: unless-stopped
+    links:
+      - eureka_server
+    depends_on:
+      - eureka_server
+    ports:
+      - "9090:8090"
+  eureka_server:
+    #    container_name:
+    hostname: eurekaserver
+    image: eurekaserver
+    build: eureka-server/
+    restart: unless-stopped
+    ports:
+      - "8761:8761"
+  flight-service:
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://eurekaserver:8761/eureka/
+    build: flight-service/
+    restart: unless-stopped
+    links:
+      - eureka_server
+
+
+

@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@Sql({ "/drop.sql", "/schema.sql" })
+@Sql({"/drop.sql", "/schema.sql"})
 @Sql("/data.sql")
 @Testcontainers
 @DirtiesContext
@@ -55,7 +55,7 @@ public class TicketControllerTest {
 
     @DynamicPropertySource
     public static void properties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url",mySqlDB::getJdbcUrl);
+        registry.add("spring.datasource.url", mySqlDB::getJdbcUrl);
         registry.add("spring.datasource.username", mySqlDB::getUsername);
         registry.add("spring.datasource.password", mySqlDB::getPassword);
 

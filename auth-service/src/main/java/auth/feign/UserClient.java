@@ -12,15 +12,13 @@ import javax.validation.constraints.Email;
 import java.util.Optional;
 
 @Validated
-@FeignClient(value = "user-service", url = "localhost:8087/user")
-//@FeignClient(name = "user-service", path = "/user")
-//@FeignClient(name = "user-service")
+@FeignClient("user-service")
 /* Feign client to get data from user service (service that contains user information login, password etc */
 public interface UserClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/")
+    @RequestMapping(method = RequestMethod.GET, value = "/user/")
     Optional<User> getByEmail(@RequestParam(value = "email") @Email String email);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register/")
+    @RequestMapping(method = RequestMethod.POST, value = "/user/register/")
     User registerUser(@RequestBody User user);
 }

@@ -20,17 +20,13 @@ public class TicketController {
     private FlightService flightService;
     private TicketService ticketService;
 
+    //Returns all available tickets for the flight
     @GetMapping("/{flightNumber}/")
     public ResponseEntity<List<TicketDTO>> getAllAvailable(@PathVariable("flightNumber") int flightNumber) throws FlightException {
         return ResponseEntity.ok().body(ticketService.getAvailableTicketsByFlightNumber(flightNumber));
     }
 
-    @GetMapping("/")
-    public TicketDTO test() {
-        return ticketService.getTicketsByPassenger(1).get(0);
-    }
-
-
+    //Returns bought ticket
     @PostMapping("/")
     public ResponseEntity<TicketDTO> buyTicket(@RequestBody TicketDTO ticket) throws TicketException, FlightException {
         return ResponseEntity.ok().body(ticketService.buyTicket(ticket));

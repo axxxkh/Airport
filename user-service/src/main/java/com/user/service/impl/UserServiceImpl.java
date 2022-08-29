@@ -11,8 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @Data
 @AllArgsConstructor
@@ -22,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByEmail(String email) throws UserNotFound {
-        return userRepository.findByEmail(email).orElseThrow(()->new UserNotFound(String.format("User with email %s not found",email)));
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFound(String.format("User with email %s not found", email)));
     }
 
     @Override
@@ -30,7 +28,7 @@ public class UserServiceImpl implements UserService {
         Role role = roleRepository.findByRole(user.getRole().getRole()).orElseThrow();
         user.setRole(role);
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new UserAlreadyExist(String.format("User with email %s already exist",user.getEmail()));
+            throw new UserAlreadyExist(String.format("User with email %s already exist", user.getEmail()));
         }
         return userRepository.save(user);
     }

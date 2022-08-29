@@ -20,11 +20,13 @@ public class FlightController {
 
     private FlightServiceImpl flightService;
 
+    // Returns list of future flights
     @GetMapping("/")
     public ResponseEntity<List<FlightDTO>> getAllFlights(@RequestHeader("email") String id) {
         return ResponseEntity.ok().body(flightService.getAll());
     }
 
+    //Return flights by period
     @GetMapping("/period/")
     public ResponseEntity<List<FlightDTO>> getByPeriod(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                                        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
