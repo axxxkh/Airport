@@ -19,8 +19,6 @@ public class GatewayConfig {
 
     @Autowired
     private AuthenticationFilter authenticationFilter;
-//        @Autowired
-//    private AdminAuthenticationFilter adminAuthenticationFilter;
 
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {

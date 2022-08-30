@@ -25,6 +25,7 @@ services:
       - eureka_server
     depends_on:
       - cloud-gateway
+      - mysqldb
   cloud-gateway:
     image: cloudgateway
     environment:
@@ -55,6 +56,8 @@ services:
     restart: on-failure
     links:
       - eureka_server
+    depends_on:
+      - mysqldb
   mysqldb:
     platform: linux/x86_64
     hostname: sql
@@ -67,5 +70,6 @@ services:
       - MYSQLDB_DOCKER_PORT=3306
     volumes:
       - "./init_scripts:/docker-entrypoint-initdb.d"
+      - ".base/"
 
 

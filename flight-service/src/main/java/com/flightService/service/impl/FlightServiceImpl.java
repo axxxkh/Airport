@@ -11,7 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,7 +27,7 @@ public class FlightServiceImpl implements FlightService {
     public List<FlightDTO> getAll() {
         return flightRepository.findAll()
                 .stream()
-                .filter(f -> f.getTime().isAfter(ChronoLocalDateTime.from(LocalDate.now())))
+                .filter(f -> f.getTime().isAfter(LocalDateTime.now()))
                 .map(flight -> mapper.map(flight, FlightDTO.class))
                 .collect(Collectors.toList());
     }
