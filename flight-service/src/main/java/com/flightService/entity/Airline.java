@@ -23,4 +23,15 @@ public class Airline extends BasicEntity {
     @ToString.Exclude
     private List<Aircraft> airCrafts;
     private boolean active = Boolean.TRUE;
+
+    @Override
+    public String toString() {
+        return "Airline{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rate=" + rate +
+                ", airCrafts=" + airCrafts +
+                ", active=" + active +
+                '}';
+    }
 }

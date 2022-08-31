@@ -14,5 +14,5 @@ import javax.validation.constraints.NotBlank;
 public class AirlineDTO {
     @NotBlank(message = "Airline name is mandatory")
     private String name;
-    private int rate;
+    private Integer rate;
 }

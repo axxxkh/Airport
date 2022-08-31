@@ -1,6 +1,6 @@
 package com.flightService.exceptions;
 
-public class TicketException extends Exception{
+public class TicketException extends Exception {
     public TicketException() {
         super();
     }

@@ -5,49 +5,33 @@ import auth.dto.LoginRequest;
 import auth.dto.RegisterRequest;
 import auth.exceptions.UserAuthException;
 import auth.exceptions.UserRegisterException;
-import auth.feign.UserClient;
-import auth.service.impl.AuthServiceImpl;
+import auth.service.AuthService;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
 @RestController
+@Data
 @AllArgsConstructor
+@Validated
+
 public class AuthController {
-    private AuthServiceImpl authService;
-    private UserClient userClient;
+    private AuthService authService;
 
-    @GetMapping("/auth/some")
-    public LoginRequest some() {
-        return LoginRequest.builder().email("alxxxkh@gmail.com").password("123").build();
-    }
-
-    @PostMapping("/auth/login")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) throws UserAuthException {
+    @PostMapping(path = "/auth/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest request) throws UserAuthException {
         return ResponseEntity.ok().body(authService.login(request));
-
-//
-//        try {
-//            Authentication authentication = authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(
-//                            request.getEmail(), request.getPassword())
-//            );
-//
-//            User user = (User) authentication.getPrincipal();
-//            System.out.println(user);
-//            String accessToken = jwtUtil.generateAccessToken(user);
-//            AuthResponse response = new AuthResponse(user.getUsername(), accessToken);
-//            return ResponseEntity.ok().body(response);
-//        } catch (BadCredentialsException ex) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @PostMapping("auth/register")
-    public AuthResponse register(@RequestBody @Valid RegisterRequest request) throws UserRegisterException {
-        return authService.registerUser(request);
+    @PostMapping(value = "/auth/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) throws UserRegisterException {
+        return ResponseEntity.ok().body(authService.registerUser(request));
     }
 }

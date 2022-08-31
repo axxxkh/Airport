@@ -3,7 +3,6 @@ package com.flightService.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @EqualsAndHashCode(callSuper = true)
@@ -18,11 +17,19 @@ public class Aircraft extends BasicEntity {
     private Long id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "aircraft_type_id", referencedColumnName = "id", nullable = false)
-    private AircraftType typeId;
+    private AircraftType type;
     @ManyToOne
     @JoinColumn(name = "airline_id")
     private Airline airline;
     @Column(name = "serial_number", nullable = false)
-    private int serialNumber;
+    private Long serialNumber;
     private boolean active = Boolean.TRUE;
+
+    @Override
+    public String toString() {
+        return "Aircraft{" +
+                "id=" + id +
+                ", serialNumber=" + serialNumber +
+                '}';
+    }
 }

@@ -17,12 +17,12 @@ public class Ticket extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int number;
+    private Integer number;
     @ManyToOne
     @JoinColumn(name = "flight_id", nullable = false)
     private Flight flight;
     @NonNull
-    private int seat;
+    private Integer seat;
     @Column(name = "ticket_status", nullable = false)
     private byte ticketStatus;
     @ToString.Exclude
@@ -38,7 +38,7 @@ public class Ticket extends BasicEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ticket ticket = (Ticket) o;
-        return getSeat() == ticket.getSeat()
+        return getSeat().equals(ticket.getSeat())
                 && getFlight().equals(ticket.getFlight());
     }
 

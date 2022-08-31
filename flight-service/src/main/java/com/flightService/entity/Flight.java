@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@EqualsAndHashCode(callSuper = true)
+//@EqualsAndHashCode(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,26 +16,36 @@ import java.time.LocalDateTime;
 
 public class Flight extends BasicEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "flight_number", nullable = false)
-    private int flightNumber;
+    private Integer flightNumber;
     private LocalDateTime time;
     @Column(name = "flight_status")
     private byte flightStatus;
     @ManyToOne
     @JoinColumn(name = "airline_id", nullable = false)
     private Airline airline;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "craft_id", nullable = false)
     @NonNull
-    private Aircraft craftId;
-    @ManyToOne
+    private Aircraft aircraft;
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gate_id")
     private Gate gate;
     private boolean active = Boolean.TRUE;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "route_id", nullable = false)
     private Route route;
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", flightNumber=" + flightNumber +
+                ", time=" + time +
+                ", flightStatus=" + flightStatus +
+                '}';
+    }
 }
 

@@ -17,5 +17,5 @@ public interface PassengerRepository extends GenericJPARepository<Passenger> {
     List<Passenger> getByAirline(Long airlineId);
 
     @Query("from Passenger p LEFT JOIN p.user u where u.email= ?1")
-    List<Passenger> getByUser(String login);
+    List<Passenger> getByUser(String email);
 }

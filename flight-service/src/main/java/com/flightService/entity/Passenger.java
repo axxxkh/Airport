@@ -6,7 +6,6 @@ import org.springframework.lang.NonNull;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Data
@@ -21,7 +20,7 @@ public class Passenger extends BasicEntity {
     private String name;
     @NonNull
     private String surname;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "passenger", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "passenger")
     @ToString.Exclude
     private List<Ticket> tickets;
     @OneToOne
@@ -32,14 +31,6 @@ public class Passenger extends BasicEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
-
-//    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(name = "user_roles",
-//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(
-//                    name = "role_id", referencedColumnName = "id"))
-//    private Set<Role> roles;
-
 
     @Override
     public boolean equals(Object o) {
