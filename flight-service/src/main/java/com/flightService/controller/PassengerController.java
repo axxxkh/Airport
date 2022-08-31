@@ -24,13 +24,11 @@ public class PassengerController {
     private PassengerService passengerService;
     private TicketService ticketService;
 
-    // Return List of PassengerDTOs that attached to user account
     @GetMapping("/")
     public ResponseEntity<List<PassengerDTO>> getPassengers(@RequestHeader("email") String email) {
         return ResponseEntity.ok().body(passengerService.getAllByEmail(email));
     }
 
-    // Return List of the tickets by passengers which register to account
     @GetMapping("/tickets")
     public ResponseEntity<List<TicketDTO>> getTickets(@RequestHeader("email") String email) {
         return ResponseEntity.ok().body(Objects.requireNonNull(getPassengers(email).getBody())
@@ -38,11 +36,5 @@ public class PassengerController {
                 .map(passengerDTO -> ticketService.getTicketsByPassenger(passengerDTO.getId()))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()));
-    }
-
-    // Returns available tickets by flight number
-    @GetMapping("/{flightId}/tickets")
-    public ResponseEntity<List<TicketDTO>> freeTickets(@PathVariable("flightId") int flightId) throws FlightException {
-        return ResponseEntity.ok().body(ticketService.getAvailableTicketsByFlightNumber(flightId));
     }
 }
