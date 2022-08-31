@@ -22,8 +22,6 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @Validated
 
-/* This controller contains open endpoints to login or register user
- *  returns login (email) and issued JWT*/
 public class AuthController {
     private AuthService authService;
 
