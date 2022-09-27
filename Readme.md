@@ -8,7 +8,7 @@ This project contains next services
 - eureka-server
 - flight-service
 - user-service
-- 
+
   ![](src/main/resources/IT services-2.png)
 
 Each service has it own responsibilities. Let`s start.
@@ -21,6 +21,6 @@ Flight controller returns flights by selected period or all available flights/
 Passenger controller (each user can have multiple passengers) have endpoints to access all passengers and their tickets.
 Ticket controller  have endpoints to get all free tickets by flight, and buy ticket on flight.
 - eureka-server Netflix Eureka
-- user-service get user infomation from database.
+- user-service get user information from database.
 
 Also docker-compose file to get all containers dockerized.
